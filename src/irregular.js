@@ -633,7 +633,7 @@ irregularSeriesFactory.proto.serialize = function serialize() {
   }
 
   // Throw if there are undefined values (JSON.stringify will omit/nullify them)
-  // Check after circular references, which will hang tsjs._isJsonExpressible()
+  // Check after circular references, which will hang chronology._isJsonExpressible()
   if (!jsonExpressible(jsonTs)) {
     throw new Error(
       "NOT_SERIALIZABLE: Time series contains one or more undefined values, which are not expressible using JSON."

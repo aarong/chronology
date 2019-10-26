@@ -7,32 +7,32 @@ import jsonTsDate from "./jsontsdate";
  * Core app-facing module. A singleton.
  * @type {Object}
  */
-const tsjs = {};
-export default tsjs;
+const chronology = {};
+export default chronology;
 
 /**
  * Factory function for regular time series.
- * @memberof tsjs
+ * @memberof chronology
  * @instance
  * @type {Function}
  * @param {Object} options
  * @returns {RegularSeries}
  * @throws {Error} "INVALID_ARGUMENT: ..."
  */
-tsjs.regular = regular;
+chronology.regular = regular;
 
 /**
  * Factory function for irregular time series.
- * @memberof tsjs
+ * @memberof chronology
  * @instance
  * @type {Function}
  * @returns {IrregularSeries}
  */
-tsjs.irregular = irregular;
+chronology.irregular = irregular;
 
 /**
  * Unserializes a JSON-TimeSeries time series.
- * @memberof tsjs
+ * @memberof chronology
  * @instance
  * @param {String} jsonTs
  * @param {Function} subPeriodBoundaries
@@ -41,7 +41,7 @@ tsjs.irregular = irregular;
  * @throws "INVALID_JSONTS: ..."
  * @throws "NOT_SUPPORTED: ..."
  */
-tsjs.unserialize = function unserialize(jsonTs, subPeriodBoundaries) {
+chronology.unserialize = function unserialize(jsonTs, subPeriodBoundaries) {
   // Check jsonTs type
   if (!check.string(jsonTs)) {
     throw new Error("INVALID_ARGUMENT: String required.");
@@ -92,7 +92,7 @@ tsjs.unserialize = function unserialize(jsonTs, subPeriodBoundaries) {
 
 /**
  * Unserializes a JSON-TimeSeries regular time series.
- * @memberof tsjs
+ * @memberof chronology
  * @instance
  * @private
  * @param {Ojbect} obj
@@ -101,7 +101,7 @@ tsjs.unserialize = function unserialize(jsonTs, subPeriodBoundaries) {
  * @throws "INVALID_JSONTS: ..."
  * @throws "NOT_SUPPORTED: ..."
  */
-tsjs._unserializeRegular = function _unserializeRegular(
+chronology._unserializeRegular = function _unserializeRegular(
   obj,
   subPeriodBoundaries
 ) {
@@ -120,12 +120,12 @@ tsjs._unserializeRegular = function _unserializeRegular(
   }
 
   // BasePeriodType must be valid
-  if (!tsjs.regular._basePeriods.includes(obj.BasePeriod[1])) {
+  if (!chronology.regular._basePeriods.includes(obj.BasePeriod[1])) {
     throw new Error("INVALID_JSONTS: Invalid BasePeriodType.");
   }
 
   // BasePeriodType must be supported
-  if (!tsjs.regular._supportedBasePeriods.includes(obj.BasePeriod[1])) {
+  if (!chronology.regular._supportedBasePeriods.includes(obj.BasePeriod[1])) {
     throw new Error(
       "NOT_SUPPORTED: Sub-millisecond BasePeriodType is not supported."
     );
@@ -169,7 +169,7 @@ tsjs._unserializeRegular = function _unserializeRegular(
   if (subPeriodBoundaries) {
     options.subPeriodBoundaries = subPeriodBoundaries;
   }
-  const rts = tsjs.regular(options);
+  const rts = chronology.regular(options);
 
   // Check and add each observation
   for (let i = 0; i < obj.Observations.length; i += 1) {
@@ -290,7 +290,7 @@ tsjs._unserializeRegular = function _unserializeRegular(
 
 /**
  * Unserializes a JSON-TimeSeries irregular time series.
- * @memberof tsjs
+ * @memberof chronology
  * @instance
  * @private
  * @param {Object} obj
@@ -298,9 +298,9 @@ tsjs._unserializeRegular = function _unserializeRegular(
  * @throws "INVALID_JSONTS: ..."
  * @throws "NOT_SUPPORTED: ..."
  */
-tsjs._unserializeIrregular = function _unserializeIrregular(obj) {
+chronology._unserializeIrregular = function _unserializeIrregular(obj) {
   // Start assembling the object
-  const its = tsjs.irregular();
+  const its = chronology.irregular();
 
   // Check and add each observation
   // Operate in reverse chronological order so you can access

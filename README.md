@@ -134,16 +134,16 @@ Javascript. Runs in Node.js and the browser.
 Install the NPM package:
 
 ```
-npm install time-series-js
+npm install chronology
 ```
 
 Use the module:
 
 ```Javascript
-const tsjs = require("time-series-js");
+const chronology = require("chronology");
 
 // Create and iterate over a regular time series
-const rts = tsjs.regular({ basePeriod: [1, "y"] });
+const rts = chronology.regular({ basePeriod: [1, "y"] });
 rts.period(new Date("2000-01-01Z")).obs.set(1)
   .forward().obs.set(2)
   .forward().obs.set(3);
@@ -156,7 +156,7 @@ rts.each(function(rp) {
 });
 
 // Create and iterate over an irregular time series
-const its = tsjs.irregular();
+const its = chronology.irregular();
 its.add(new Date("2000-01-01Z"), 1, new Date("2000-06-30"));
       .add(new Date("2000-06-30Z"), 2, new Date("2000-07-15"))
       .add(new Date("2000-08-01Z"), 3, new Date("2001-02-01"));
@@ -177,11 +177,12 @@ The browser bundle can be included in a website as follows:
 ```HTML
 <script
   type="text/javascript"
-  src="https://cdn.jsdelivr.net/npm/time-series-js"
+  src="https://cdn.jsdelivr.net/npm/chronology"
 ></script>
 ```
 
-The module is bundled in UMD format and is named `tsjs` in the global scope.
+The module is bundled in UMD format and is named `chronology` in the global
+scope.
 
 ### JSON-TimeSeries Primer
 
@@ -230,7 +231,7 @@ and `RegularPeriod` objects.
 To create a new `RegularSeries` object representing a regular time series:
 
 ```Javascript
-const rts = tsjs.regular(options);
+const rts = chronology.regular(options);
 ```
 
 The `options` argument is an object with the following properties:
@@ -826,7 +827,7 @@ year-end:
 
 ```Javascript
 // Initialize
-var rts = tsjs.regular({
+var rts = chronology.regular({
   basePeriod: [1, "q"],
   anchor: new Date("2000-11-01")
 });
@@ -848,7 +849,7 @@ Initialize, populate, and display a semi-monthly time series:
 
 ```Javascript
 // Initialize
-var rts = tsjs.regular({
+var rts = chronology.regular({
   basePeriod: [1, "m"],
   subPeriods: 2
 });
@@ -871,7 +872,7 @@ Initialize, populate, and display a business day (Monday-Friday) time series:
 ```Javascript
 // Initialize
 var msPerDay = 24 * 60 * 60 * 1000;
-var rts = tsjs.regular({
+var rts = chronology.regular({
   basePeriod: [1, "w"],
   subPeriods: 5,
   subPeriodBoundaries: function(bpStart, bpEnd, spNum) {
@@ -900,7 +901,7 @@ periods:
 
 ```Javascript
 // Initialize
-var rts = tsjs.regular({
+var rts = chronology.regular({
   basePeriod: [1, "ms"],
   subPeriods: 1000
 });
@@ -922,7 +923,7 @@ Increment all observation values by 10 using `rts.map()`:
 
 ```Javascript
 // Initialize
-var rts = tsjs.regular({
+var rts = chronology.regular({
   basePeriod: [1, "y"]
 });
 
@@ -951,7 +952,7 @@ Generate a lagged time series using `rts.transform()`:
 
 ```Javascript
 // Initialize
-var rts = tsjs.regular({
+var rts = chronology.regular({
   basePeriod: [1, "y"]
 });
 
@@ -984,7 +985,7 @@ Sum observation values using `rts.reduce()`:
 
 ```Javascript
 // Initialize
-var rts = tsjs.regular({
+var rts = chronology.regular({
   basePeriod: [1, "y"]
 });
 
@@ -1006,7 +1007,7 @@ Retrieve observations with negative values using `rts.filter()`:
 
 ```Javascript
 // Initialize
-var rts = tsjs.regular({
+var rts = chronology.regular({
   basePeriod: [1, "y"]
 });
 
@@ -1037,7 +1038,7 @@ Serialize and unserialize a regular time series:
 
 ```Javascript
 // Initialize
-var rts = tsjs.regular({
+var rts = chronology.regular({
   basePeriod: [1, "y"]
 });
 
@@ -1058,7 +1059,7 @@ var ser = rts.serialize();
 console.log(ser);
 
 // Unserialize and display
-var rts2 = tsjs.unserialize(ser);
+var rts2 = chronology.unserialize(ser);
 rts2.each(function(rp) {
   console.log(rp.start(), rp.end(), rp.obs.value());
 });
@@ -1077,7 +1078,7 @@ intervals of time. Applications interact with irregular time series using
 To create a new `IrregularSeries` object representing an irregular time series:
 
 ```Javascript
-var its = tsjs.irregular();
+var its = chronology.irregular();
 ```
 
 Errors thrown: None
@@ -1640,7 +1641,7 @@ Initialize, populate, and display an irregular time series:
 
 ```Javascript
 // Initialize
-var its = tsjs.irregular();
+var its = chronology.irregular();
 
 // Populate
 its.add(
@@ -1669,7 +1670,7 @@ Increment all observation values by 10 using `its.map()`:
 
 ```Javascript
 // Initialize
-var its = tsjs.irregular();
+var its = chronology.irregular();
 
 // Populate
 its.add(
@@ -1706,7 +1707,7 @@ Sum observation values using `its.reduce()`:
 
 ```Javascript
 // Initialize
-var its = tsjs.irregular();
+var its = chronology.irregular();
 
 // Populate
 its.add(
@@ -1736,7 +1737,7 @@ Retrieve observations with negative values using `its.filter()`:
 
 ```Javascript
 // Initialize
-var its = tsjs.irregular();
+var its = chronology.irregular();
 
 // Populate
 its.add(
@@ -1775,7 +1776,7 @@ Serialize and unserialize an irregular time series:
 
 ```Javascript
 // Initialize
-var its = tsjs.irregular();
+var its = chronology.irregular();
 
 // Populate
 its.add(
@@ -1804,7 +1805,7 @@ var ser = its.serialize();
 console.log(ser);
 
 // Unserialize and display
-var its2 = tsjs.unserialize(ser);
+var its2 = chronology.unserialize(ser);
 its2.each(function(ip) {
   console.log(ip.start(), ip.end(), ip.obs.value());
 });
@@ -1816,7 +1817,7 @@ Regular and irregular time series represented in JSON-TimeSeries format can be
 unserialized as follows:
 
 ```Javascript
-var ts = tsjs.unserialize(jsonTs, subPeriodBoundaries);
+var ts = chronology.unserialize(jsonTs, subPeriodBoundaries);
 ```
 
 The resulting value of `ts` is either a `RegularSeries` or an `IrregularSeries`
@@ -1851,13 +1852,13 @@ this library.
 
 ### Extending RegularSeries
 
-The prototype for `RegularSeries` objects is exposed as `tsjs.regular.proto` for
-extension.
+The prototype for `RegularSeries` objects is exposed as
+`chronology.regular.proto` for extension.
 
 For example, a `sum()` function can be added as follows:
 
 ```Javascript
-tsjs.regular.proto.sum = function() {
+chronology.regular.proto.sum = function() {
   return this.reduce(function(a, rp) {
     return a + rp.obs.value();
   }, 0);
@@ -1868,7 +1869,7 @@ And used as follows:
 
 ```Javascript
 // Initialize
-var rts = tsjs.regular({
+var rts = chronology.regular({
   basePeriod: [1, "y"]
 });
 
@@ -1885,13 +1886,13 @@ console.log(rts.sum());
 
 ### Extending IrregularSeries
 
-The prototype for `IrregularSeries` objects is exposed as `tsjs.irregular.proto`
-for extension.
+The prototype for `IrregularSeries` objects is exposed as
+`chronology.irregular.proto` for extension.
 
 For example, a `sum()` function can be added as follows:
 
 ```Javascript
-tsjs.irregular.proto.sum = function() {
+chronology.irregular.proto.sum = function() {
   return this.reduce(function(a, ip) {
     return a + ip.obs.value();
   }, 0);
@@ -1902,7 +1903,7 @@ And used as follows:
 
 ```Javascript
 // Initialize
-var its = tsjs.irregular();
+var its = chronology.irregular();
 
 // Populate
 its.add(

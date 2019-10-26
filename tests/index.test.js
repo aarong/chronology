@@ -1,4 +1,4 @@
-import tsjs from "../build/index";
+import chronology from "../build/index";
 
 // Run the examples from the documentation as a basic smoke test
 // Identical for index.js and bundle.js
@@ -6,7 +6,7 @@ import tsjs from "../build/index";
 describe("Initialization example", () => {
   it("Should work", () => {
     // Create and iterate over a regular time series
-    const rts = tsjs.regular({ basePeriod: [1, "y"] });
+    const rts = chronology.regular({ basePeriod: [1, "y"] });
     rts
       .period(new Date("2000-01-01Z"))
       .obs.set(1)
@@ -23,7 +23,7 @@ describe("Initialization example", () => {
     // });
 
     // Create and iterate over an irregular time series
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its
       .add(new Date("2000-01-01Z"), 1, new Date("2000-06-30"))
       .add(new Date("2000-06-30Z"), 2, new Date("2000-07-15"))
@@ -43,7 +43,7 @@ describe("Initialization example", () => {
 describe("RegularSeries examples", () => {
   it("Initialize, populate, and display a quarterly time series with October 31st year-end:", () => {
     // Initialize
-    const rts = tsjs.regular({
+    const rts = chronology.regular({
       basePeriod: [1, "q"],
       anchor: new Date("2000-11-01")
     });
@@ -65,7 +65,7 @@ describe("RegularSeries examples", () => {
 
   it("Initialize, populate, and display a semi-monthly time series:", () => {
     // Initialize
-    const rts = tsjs.regular({
+    const rts = chronology.regular({
       basePeriod: [1, "m"],
       subPeriods: 2
     });
@@ -88,7 +88,7 @@ describe("RegularSeries examples", () => {
   it("Initialize, populate, and display a business day (Monday-Friday) time series:", () => {
     // Initialize
     const msPerDay = 24 * 60 * 60 * 1000;
-    const rts = tsjs.regular({
+    const rts = chronology.regular({
       basePeriod: [1, "w"],
       subPeriods: 5,
       subPeriodBoundaries(bpStart, bpEnd, spNum) {
@@ -116,7 +116,7 @@ describe("RegularSeries examples", () => {
 
   it("Initialize, populate, and display a microsecond-frequency time series using sub periods:", () => {
     // Initialize
-    const rts = tsjs.regular({
+    const rts = chronology.regular({
       basePeriod: [1, "ms"],
       subPeriods: 1000
     });
@@ -143,7 +143,7 @@ describe("RegularSeries examples", () => {
 
   it("Increment all observation values by 10 using `rts.map()`:", () => {
     // Initialize
-    const rts = tsjs.regular({
+    const rts = chronology.regular({
       basePeriod: [1, "y"]
     });
 
@@ -172,7 +172,7 @@ describe("RegularSeries examples", () => {
 
   it("Generate a lagged time series using `rts.transform()`:", () => {
     // Initialize
-    const rts = tsjs.regular({
+    const rts = chronology.regular({
       basePeriod: [1, "y"]
     });
 
@@ -203,7 +203,7 @@ describe("RegularSeries examples", () => {
 
   it("Sum observation values using `rts.reduce()`:", () => {
     // Initialize
-    const rts = tsjs.regular({
+    const rts = chronology.regular({
       basePeriod: [1, "y"]
     });
 
@@ -223,7 +223,7 @@ describe("RegularSeries examples", () => {
 
   it("Retrieve observations with negative values using `rts.filter()`:", () => {
     // Initialize
-    const rts = tsjs.regular({
+    const rts = chronology.regular({
       basePeriod: [1, "y"]
     });
 
@@ -252,7 +252,7 @@ describe("RegularSeries examples", () => {
 
   it("Serialize and unserialize a regular time series:", () => {
     // Initialize
-    const rts = tsjs.regular({
+    const rts = chronology.regular({
       basePeriod: [1, "y"]
     });
 
@@ -273,7 +273,7 @@ describe("RegularSeries examples", () => {
     // console.log(ser);
 
     // // Unserialize and display
-    // const rts2 = tsjs.unserialize(ser);
+    // const rts2 = chronology.unserialize(ser);
     // rts2.each(rp => {
     //   console.log(rp.start(), rp.end(), rp.obs.value());
     // });
@@ -285,7 +285,7 @@ describe("RegularSeries examples", () => {
 describe("IrregularSeries examples", () => {
   it("Initialize, populate, and display an irregular time series:", () => {
     // Initialize
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
 
     // Populate
     its.add(
@@ -314,7 +314,7 @@ describe("IrregularSeries examples", () => {
 
   it("Increment all observation values by 10 using `its.map()`:", () => {
     // Initialize
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
 
     // Populate
     its.add(
@@ -351,7 +351,7 @@ describe("IrregularSeries examples", () => {
 
   it("Sum observation values using `its.reduce()`:", () => {
     // Initialize
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
 
     // Populate
     its.add(
@@ -379,7 +379,7 @@ describe("IrregularSeries examples", () => {
 
   it("Retrieve observations with negative values using `its.filter()`:", () => {
     // Initialize
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
 
     // Populate
     its.add(
@@ -416,7 +416,7 @@ describe("IrregularSeries examples", () => {
 
   it("Serialize and unserialize an irregular time series:", () => {
     // Initialize
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
 
     // Populate
     its.add(
@@ -445,7 +445,7 @@ describe("IrregularSeries examples", () => {
     // console.log(ser);
 
     // Unserialize and display
-    // const its2 = tsjs.unserialize(ser);
+    // const its2 = chronology.unserialize(ser);
     // its2.each(ip => {
     //   console.log(ip.start(), ip.end(), ip.obs.value());
     // });
@@ -456,12 +456,12 @@ describe("IrregularSeries examples", () => {
 
 describe("Extension examples", () => {
   it("Extending RegularSeries", () => {
-    tsjs.regular.proto.sum = function sum() {
+    chronology.regular.proto.sum = function sum() {
       return this.reduce((a, rp) => a + rp.obs.value(), 0);
     };
 
     // Initialize
-    const rts = tsjs.regular({
+    const rts = chronology.regular({
       basePeriod: [1, "y"]
     });
 
@@ -479,12 +479,12 @@ describe("Extension examples", () => {
   });
 
   it("Extending IrregularSeries", () => {
-    tsjs.irregular.proto.sum = function sum() {
+    chronology.irregular.proto.sum = function sum() {
       return this.reduce((a, ip) => a + ip.obs.value(), 0);
     };
 
     // Initialize
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
 
     // Populate
     its.add(

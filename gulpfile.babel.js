@@ -16,7 +16,7 @@ const browserBundleWithmaps = () => {
   const b = browserify({
     entries: path.join(__dirname, "src/main.browser.js"),
     debug: true,
-    standalone: "tsjs"
+    standalone: "chronology"
   });
 
   return b

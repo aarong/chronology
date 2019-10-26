@@ -1,10 +1,10 @@
-import tsjs from "../main";
+import chronology from "../main";
 
 // IrregularSeries objects
 
 describe("The irregular factory function", () => {
   it("should always return an object", () => {
-    expect(tsjs.irregular()).toEqual({
+    expect(chronology.irregular()).toEqual({
       _obs: []
     });
   });
@@ -14,7 +14,7 @@ describe("The irregular factory function", () => {
 
 describe("The irregular._find() function", () => {
   it("should return correctly if there are no observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(its._find(new Date(0))).toEqual({
       before: null,
       at: null,
@@ -23,7 +23,7 @@ describe("The irregular._find() function", () => {
   });
 
   it("should return correctly if there is one observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(1), "val", new Date(100));
     expect(its._find(new Date(0))).toEqual({
       before: null,
@@ -48,7 +48,7 @@ describe("The irregular._find() function", () => {
   });
 
   it("should return correctly if there are two contiguous observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(1), "val", new Date(100));
     its.add(new Date(100), "val", new Date(200));
     expect(its._find(new Date(0))).toEqual({
@@ -68,7 +68,7 @@ describe("The irregular._find() function", () => {
   });
 
   it("should return correctly if there are two non-contiguous observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(1), "val", new Date(100));
     its.add(new Date(201), "val", new Date(300));
     expect(its._find(new Date(0))).toEqual({
@@ -90,7 +90,7 @@ describe("The irregular._find() function", () => {
   });
 
   it("should return correctly if there are three contiguous observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(1), "val", new Date(100));
     its.add(new Date(100), "val", new Date(200));
     its.add(new Date(200), "val", new Date(300));
@@ -113,7 +113,7 @@ describe("The irregular._find() function", () => {
   });
 
   it("should return correctly if there are three non-contiguous observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(1), "val", new Date(100));
     its.add(new Date(201), "val", new Date(300));
     its.add(new Date(401), "val", new Date(500));
@@ -140,7 +140,7 @@ describe("The irregular._find() function", () => {
   });
 
   it("should return correctly for a large number of observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const len = 100;
     for (let i = 0; i < 100 * len; i += 100) {
       its.add(new Date(i), "val", new Date(i + len));
@@ -157,14 +157,14 @@ describe("The irregular._find() function", () => {
 
 describe("The irregular.period() function", () => {
   it("should throw on invalid date", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.period("junk");
     }).toThrow(new Error("INVALID_ARGUMENT: Invalid date."));
   });
 
   it("should return a valid object on success", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(ip).toBeInstanceOf(Object);
     expect(ip._series).toBe(its);
@@ -176,7 +176,7 @@ describe("The irregular.period() function", () => {
 describe("The irregular.add() function", () => {
   let its;
   beforeEach(() => {
-    its = tsjs.irregular();
+    its = chronology.irregular();
   });
 
   it("should throw if start date is invalid", () => {
@@ -289,7 +289,7 @@ describe("The irregular.add() function", () => {
 
 describe("The irregular.set() function", () => {
   it("should succeed as expected", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "A", new Date(10));
     its.add(new Date(20), "B", new Date(30));
     its.add(new Date(40), "C", new Date(50));
@@ -316,21 +316,21 @@ describe("The irregular.set() function", () => {
 
 describe("The irregular.clear() function", () => {
   it("should throw on invalid start date", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.clear("junk", new Date(0));
     }).toThrow(new Error("INVALID_ARGUMENT: Invalid date."));
   });
 
   it("should throw on invalid end date", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.clear(new Date(0), "junk");
     }).toThrow(new Error("INVALID_ARGUMENT: Invalid date."));
   });
 
   it("should throw on equal start == end date", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.clear(new Date(0), new Date(0));
     }).toThrow(
@@ -341,7 +341,7 @@ describe("The irregular.clear() function", () => {
   });
 
   it("should throw on equal start > end date", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.clear(new Date(1), new Date(0));
     }).toThrow(
@@ -352,13 +352,13 @@ describe("The irregular.clear() function", () => {
   });
 
   it("should handle empty series appropriately", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.clear(new Date(0), new Date(10));
     expect(its._obs).toEqual([]);
   });
 
   it("should handle non-deletion appropriately", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "123", new Date(10));
     its.clear(new Date(50), new Date(100));
     expect(its._obs).toEqual([
@@ -371,21 +371,21 @@ describe("The irregular.clear() function", () => {
   });
 
   it("should handle full single observation deletions appropriately - exact boundaries", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "123", new Date(10));
     its.clear(new Date(0), new Date(10));
     expect(its._obs).toEqual([]);
   });
 
   it("should handle full single observation deletion appropriately - generous boundaries", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "123", new Date(10));
     its.clear(new Date(-5), new Date(15));
     expect(its._obs).toEqual([]);
   });
 
   it("should handle left-truncate deletion appropriately - exact boundary", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "123", new Date(10));
     its.clear(new Date(0), new Date(5));
     expect(its._obs).toEqual([
@@ -398,7 +398,7 @@ describe("The irregular.clear() function", () => {
   });
 
   it("should handle left-truncate deletion appropriately - generous boundary", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "123", new Date(10));
     its.clear(new Date(-5), new Date(5));
     expect(its._obs).toEqual([
@@ -411,7 +411,7 @@ describe("The irregular.clear() function", () => {
   });
 
   it("should handle right-truncate deletion appropriately - exact boundary", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "123", new Date(10));
     its.clear(new Date(5), new Date(10));
     expect(its._obs).toEqual([
@@ -424,7 +424,7 @@ describe("The irregular.clear() function", () => {
   });
 
   it("should handle right-truncate deletion appropriately - generous boundary", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "123", new Date(10));
     its.clear(new Date(5), new Date(15));
     expect(its._obs).toEqual([
@@ -437,7 +437,7 @@ describe("The irregular.clear() function", () => {
   });
 
   it("should handle inner-truncate deletion appropriately", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "123", new Date(10));
     its.clear(new Date(2), new Date(8));
     expect(its._obs).toEqual([
@@ -455,7 +455,7 @@ describe("The irregular.clear() function", () => {
   });
 
   it("should handle multi-observation deletion with truncation appropriately", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "1", new Date(10));
     its.add(new Date(20), "2", new Date(30));
     its.add(new Date(40), "3", new Date(50));
@@ -477,14 +477,14 @@ describe("The irregular.clear() function", () => {
 
 describe("The irregular.split() function", () => {
   it("should throw on invalid date", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.split("junk");
     }).toThrow(new Error("INVALID_ARGUMENT: Invalid date."));
   });
 
   it("should throw if there is no observation at the date", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(10));
     expect(() => {
       its.split(new Date(10));
@@ -494,7 +494,7 @@ describe("The irregular.split() function", () => {
   });
 
   it("should change nothing if date referenced start of observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(10));
     its.split(new Date(0));
     expect(its._obs).toEqual([
@@ -507,7 +507,7 @@ describe("The irregular.split() function", () => {
   });
 
   it("should split as appropriate if date was mid-observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(10));
     its.split(new Date(5));
     expect(its._obs).toEqual([
@@ -528,7 +528,7 @@ describe("The irregular.split() function", () => {
 describe("The irregular.count() function", () => {
   let its;
   beforeEach(() => {
-    its = tsjs.irregular();
+    its = chronology.irregular();
   });
 
   it("should return the correct count", () => {
@@ -543,7 +543,7 @@ describe("The irregular.count() function", () => {
 describe("The irregular.first() function", () => {
   let its;
   beforeEach(() => {
-    its = tsjs.irregular();
+    its = chronology.irregular();
   });
 
   it("should throw if the series is empty", () => {
@@ -565,7 +565,7 @@ describe("The irregular.first() function", () => {
 describe("The irregular.last() function", () => {
   let its;
   beforeEach(() => {
-    its = tsjs.irregular();
+    its = chronology.irregular();
   });
 
   it("should throw if the series is empty", () => {
@@ -586,14 +586,14 @@ describe("The irregular.last() function", () => {
 
 describe("The irregular.each() function", () => {
   it("should throw if the argument is not a function", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.each("junk");
     }).toThrow(new Error("INVALID_ARGUMENT: Must supply a function."));
   });
 
   it("should cascade application errors", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val1", new Date(99));
     expect(() => {
       its.each(() => {
@@ -603,14 +603,14 @@ describe("The irregular.each() function", () => {
   });
 
   it("should not call the outside function when there are no obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const spy = jest.fn();
     its.each(spy);
     expect(spy.mock.calls.length).toBe(0);
   });
 
   it("should call the outside function when there are obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(100), "val2", new Date(199));
     its.add(new Date(0), "val1", new Date(99));
     const spy = jest.fn();
@@ -629,7 +629,7 @@ describe("The irregular.each() function", () => {
   });
 
   it("should iterate over later observations added during iteration", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     let callCount = 0;
     its.each(() => {
@@ -642,7 +642,7 @@ describe("The irregular.each() function", () => {
   });
 
   it("should not iterate over earlier observations added during iteration", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     let callCount = 0;
     its.each(() => {
@@ -655,7 +655,7 @@ describe("The irregular.each() function", () => {
   });
 
   it("should return a reference to the time series", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val1", new Date(99));
     expect(its.each(() => {})).toBe(its);
   });
@@ -663,14 +663,14 @@ describe("The irregular.each() function", () => {
 
 describe("The irregular.eachPeriod() function", () => {
   it("should throw if the argument is not a function", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.eachPeriod("junk");
     }).toThrow(new Error("INVALID_ARGUMENT: Must supply a function."));
   });
 
   it("should cascade application errors", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val1", new Date(99));
     expect(() => {
       its.eachPeriod(() => {
@@ -680,14 +680,14 @@ describe("The irregular.eachPeriod() function", () => {
   });
 
   it("should not call the outside function when there are no obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const spy = jest.fn();
     its.eachPeriod(spy);
     expect(spy.mock.calls.length).toBe(0);
   });
 
   it("should call the outside function N times if there are N contiguous obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val1", new Date(100));
     its.add(new Date(100), "val2", new Date(200));
     its.add(new Date(200), "val3", new Date(300));
@@ -712,7 +712,7 @@ describe("The irregular.eachPeriod() function", () => {
   });
 
   it("should call the outside function 2N-1 times if there are N non-contiguous obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val1", new Date(100));
     its.add(new Date(150), "val2", new Date(200));
     its.add(new Date(250), "val3", new Date(300));
@@ -747,7 +747,7 @@ describe("The irregular.eachPeriod() function", () => {
   });
 
   it("should iterate over later observations added during iteration", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     let callCount = 0;
     its.eachPeriod(() => {
@@ -760,7 +760,7 @@ describe("The irregular.eachPeriod() function", () => {
   });
 
   it("should not iterate over earlier observations added during iteration", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     let callCount = 0;
     its.eachPeriod(() => {
@@ -773,7 +773,7 @@ describe("The irregular.eachPeriod() function", () => {
   });
 
   it("should return a reference to the time series", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val1", new Date(99));
     expect(its.eachPeriod(() => {})).toBe(its);
   });
@@ -781,14 +781,14 @@ describe("The irregular.eachPeriod() function", () => {
 
 describe("The irregular.map() function", () => {
   it("should throw on invalid function argument", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.map("junk");
     }).toThrow(new Error("INVALID_ARGUMENT: Invalid function."));
   });
 
   it("should cascade errors thrown by the argument function", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(1));
     expect(() => {
       its.map(() => {
@@ -798,13 +798,13 @@ describe("The irregular.map() function", () => {
   });
 
   it("should return an empty series there are no observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const newSeries = its.map(val => val);
     expect(newSeries._obs.length).toBe(0);
   });
 
   it("should return a transformed series if there are observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     for (let i = 0; i < 10; i += 1) {
       its.add(new Date(i), i, new Date(i + 1));
     }
@@ -825,21 +825,21 @@ describe("The irregular.map() function", () => {
 
 describe("The irregular.reduce() function", () => {
   it("should throw on invalid function argument", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.reduce("junk", 1);
     }).toThrow(new Error("INVALID_ARGUMENT: Invalid function."));
   });
 
   it("should throw on missing initial value argument", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.reduce((p, a) => a);
     }).toThrow(new Error("INVALID_ARGUMENT: Invalid initialAccumulator."));
   });
 
   it("should cascade errors thrown by the argument function", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(1));
     expect(() => {
       its.reduce(() => {
@@ -849,13 +849,13 @@ describe("The irregular.reduce() function", () => {
   });
 
   it("should return the initial value if there are no observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const result = its.reduce(() => 0, "abc");
     expect(result).toBe("abc");
   });
 
   it("should return a result if there are observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     for (let i = 0; i < 10; i += 1) {
       its.add(new Date(i), i, new Date(i + 1));
     }
@@ -869,14 +869,14 @@ describe("The irregular.reduce() function", () => {
 
 describe("The irregular.filter() function", () => {
   it("should throw on invalid function argument", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.filter("junk");
     }).toThrow(new Error("INVALID_ARGUMENT: Invalid function."));
   });
 
   it("should cascade errors thrown by the argument function", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(1));
     expect(() => {
       its.filter(() => {
@@ -886,13 +886,13 @@ describe("The irregular.filter() function", () => {
   });
 
   it("should return an empty series there are no observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const newSeries = its.filter(() => true);
     expect(newSeries._obs.length).toBe(0);
   });
 
   it("should return a filtered series if there are observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     for (let i = 0; i < 10; i += 1) {
       its.add(new Date(i), i, new Date(i + 1));
     }
@@ -914,21 +914,21 @@ describe("The irregular.filter() function", () => {
 
 describe("The irregular.subSeries() function", () => {
   it("should throw on invalid start type", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.subSeries(null, new Date(0));
     }).toThrow(new Error("INVALID_ARGUMENT: Invalid start or end date."));
   });
 
   it("should throw on invalid end type", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.subSeries(new Date(0), "junk");
     }).toThrow(new Error("INVALID_ARGUMENT: Invalid start or end date."));
   });
 
   it("should throw if start is equal to end", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.subSeries(new Date(0), new Date(0));
     }).toThrow(
@@ -937,7 +937,7 @@ describe("The irregular.subSeries() function", () => {
   });
 
   it("should throw if start is after end", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.subSeries(new Date(1), new Date(0));
     }).toThrow(
@@ -946,27 +946,27 @@ describe("The irregular.subSeries() function", () => {
   });
 
   it("should return a correct sub series with no observationss - none overall", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const subSeries = its.subSeries(new Date(0), new Date(10));
     expect(subSeries.count()).toBe(0);
   });
 
   it("should return a correct sub series with no observation - left of all", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(10));
     const subSeries = its.subSeries(new Date(-10), new Date(-5));
     expect(subSeries.count()).toBe(0);
   });
 
   it("should return a correct sub series with no observation - right of all", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(10));
     const subSeries = its.subSeries(new Date(15), new Date(20));
     expect(subSeries.count()).toBe(0);
   });
 
   it("should return a correct sub series with one observation - left span", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(-100), 0, new Date(-90));
     its.add(new Date(0), 123, new Date(10));
     its.add(new Date(90), 0, new Date(100));
@@ -979,7 +979,7 @@ describe("The irregular.subSeries() function", () => {
   });
 
   it("should return a correct sub series with one observation - right span", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(-100), 0, new Date(-90));
     its.add(new Date(0), 123, new Date(10));
     its.add(new Date(90), 0, new Date(100));
@@ -992,7 +992,7 @@ describe("The irregular.subSeries() function", () => {
   });
 
   it("should return a correct sub series with one observation - outer span", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(-100), 0, new Date(-90));
     its.add(new Date(0), 123, new Date(10));
     its.add(new Date(90), 0, new Date(100));
@@ -1005,7 +1005,7 @@ describe("The irregular.subSeries() function", () => {
   });
 
   it("should return a correct sub series with one observation - inner span", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(-100), 0, new Date(-90));
     its.add(new Date(0), 123, new Date(10));
     its.add(new Date(90), 0, new Date(100));
@@ -1018,7 +1018,7 @@ describe("The irregular.subSeries() function", () => {
   });
 
   it("should return a correct sub series with two observations - inner span", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(-100), 0, new Date(-90));
     its.add(new Date(0), 123, new Date(10));
     its.add(new Date(20), 456, new Date(30));
@@ -1036,7 +1036,7 @@ describe("The irregular.subSeries() function", () => {
   });
 
   it("should return a correct sub series with two observations - outer span", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(-100), 0, new Date(-90));
     its.add(new Date(0), 123, new Date(10));
     its.add(new Date(20), 456, new Date(30));
@@ -1054,7 +1054,7 @@ describe("The irregular.subSeries() function", () => {
   });
 
   it("should return a correct sub series with three observations - inner span", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(-100), 0, new Date(-90));
     its.add(new Date(0), 123, new Date(10));
     its.add(new Date(20), 456, new Date(30));
@@ -1077,7 +1077,7 @@ describe("The irregular.subSeries() function", () => {
   });
 
   it("should return a correct sub series with three observations - outer span", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(-100), 0, new Date(-90));
     its.add(new Date(0), 123, new Date(10));
     its.add(new Date(20), 456, new Date(30));
@@ -1102,22 +1102,22 @@ describe("The irregular.subSeries() function", () => {
 
 describe("The irregular.overlay() function", () => {
   it("should throw if argument is not an object", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.overlay(null);
     }).toThrow(new Error("INVALID_ARGUMENT: Invalid series."));
   });
 
   it("should throw if object is not not an IrregularSeries", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(() => {
       its.overlay({});
     }).toThrow(new Error("INVALID_ARGUMENT: Invalid series."));
   });
 
   it("should overlay onto a blank series appropriately", () => {
-    const its1 = tsjs.irregular();
-    const its2 = tsjs.irregular();
+    const its1 = chronology.irregular();
+    const its2 = chronology.irregular();
     its2.add(new Date(0), 123, new Date(10));
     const its3 = its1.overlay(its2);
     expect(its3._obs).toEqual([
@@ -1130,9 +1130,9 @@ describe("The irregular.overlay() function", () => {
   });
 
   it("should overlay a blank series appropriately", () => {
-    const its1 = tsjs.irregular();
+    const its1 = chronology.irregular();
     its1.add(new Date(0), 123, new Date(10));
-    const its2 = tsjs.irregular();
+    const its2 = chronology.irregular();
     const its3 = its1.overlay(its2);
     expect(its3._obs).toEqual([
       {
@@ -1144,11 +1144,11 @@ describe("The irregular.overlay() function", () => {
   });
 
   it("should perform a more complex overlay appropriately", () => {
-    const its1 = tsjs.irregular();
+    const its1 = chronology.irregular();
     its1.add(new Date(0), 1, new Date(10));
     its1.add(new Date(20), 2, new Date(30));
     its1.add(new Date(40), 3, new Date(50));
-    const its2 = tsjs.irregular();
+    const its2 = chronology.irregular();
     its2.add(new Date(10), "A", new Date(20));
     its2.add(new Date(25), "B", new Date(55));
     its2.add(new Date(60), "C", new Date(70));
@@ -1185,13 +1185,13 @@ describe("The irregular.overlay() function", () => {
 
 describe("The irregular.clone() function", () => {
   it("should work with no observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const clone = its.clone();
     expect(clone._obs).toEqual([]);
   });
 
   it("should work with observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(10));
     its.add(new Date(20), 456, new Date(30));
     const clone = its.clone();
@@ -1212,7 +1212,7 @@ describe("The irregular.clone() function", () => {
 
 describe("The irregular.serialize() function", () => {
   it("should throw on undefined value", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
 
     const a = {};
     a.b = a;
@@ -1229,7 +1229,7 @@ describe("The irregular.serialize() function", () => {
   });
 
   it("should throw on circular reference", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
 
     const a = {};
     a.b = a;
@@ -1246,7 +1246,7 @@ describe("The irregular.serialize() function", () => {
   });
 
   it("should succeed with no observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(JSON.parse(its.serialize())).toEqual({
       JsonTs: "irregular",
       Observations: []
@@ -1254,7 +1254,7 @@ describe("The irregular.serialize() function", () => {
   });
 
   it("should serialize compactly", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
 
     its.add(new Date(0), 123, new Date(10));
     its.add(new Date(10), 456, new Date(20));
@@ -1283,7 +1283,7 @@ describe("The irregular.serialize() function", () => {
 
 describe("The irregular.reset() function", () => {
   it("should clear all observations and return its", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(1));
     expect(its.reset()).toBe(its);
     expect(its._obs).toEqual([]);
@@ -1292,7 +1292,7 @@ describe("The irregular.reset() function", () => {
 
 describe("The irregular.type() function", () => {
   it("should return correctly", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     expect(its.type()).toBe("irregular");
   });
 });
@@ -1301,7 +1301,7 @@ describe("The irregular.type() function", () => {
 
 describe("The irregularPeriod.series() function", () => {
   it("should return the series", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(ip.series()).toBe(its);
   });
@@ -1309,7 +1309,7 @@ describe("The irregularPeriod.series() function", () => {
 
 describe("The irregularPeriod.date() function", () => {
   it("should return the reference date", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(ip.date()).toEqual(new Date(0));
   });
@@ -1317,13 +1317,13 @@ describe("The irregularPeriod.date() function", () => {
 
 describe("The irregularPeriod.start() function", () => {
   it("should return null if no observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(ip.start()).toBe(null);
   });
 
   it("should return start of obs if reference date points to obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip1 = its.period(new Date(0));
     expect(ip1.start()).toEqual(new Date(0));
@@ -1332,7 +1332,7 @@ describe("The irregularPeriod.start() function", () => {
   });
 
   it("should return end of previous obs if reference date points to gap", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip1 = its.period(new Date(10));
     expect(ip1.start()).toEqual(new Date(10));
@@ -1341,7 +1341,7 @@ describe("The irregularPeriod.start() function", () => {
   });
 
   it("should return null if before first obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip1 = its.period(new Date(-1));
     expect(ip1.start()).toBe(null);
@@ -1350,13 +1350,13 @@ describe("The irregularPeriod.start() function", () => {
 
 describe("The irregularPeriod.end() function", () => {
   it("should return null if no observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(ip.end()).toBe(null);
   });
 
   it("should return end of obs if reference date points to obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip1 = its.period(new Date(0));
     expect(ip1.end()).toEqual(new Date(10));
@@ -1365,7 +1365,7 @@ describe("The irregularPeriod.end() function", () => {
   });
 
   it("should return start of next obs if reference date points to gap", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip1 = its.period(new Date(-1));
     expect(ip1.end()).toEqual(new Date(0));
@@ -1374,7 +1374,7 @@ describe("The irregularPeriod.end() function", () => {
   });
 
   it("should return null if after last obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip1 = its.period(new Date(10));
     expect(ip1.end()).toBe(null);
@@ -1383,34 +1383,34 @@ describe("The irregularPeriod.end() function", () => {
 
 describe("The irregularPeriod.hasForward() function", () => {
   it("should return false if no observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(ip.hasForward()).toBe(false);
   });
 
   it("should return false if after final observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(10));
     expect(ip.hasForward()).toBe(false);
   });
 
   it("should return false if within final observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(0));
     expect(ip.hasForward()).toBe(false);
   });
 
   it("should return true if before final observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(-1));
     expect(ip.hasForward()).toBe(true);
   });
 
   it("should return true if in a gap", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     its.add(new Date(20), "val", new Date(30));
     const ip = its.period(new Date(15));
@@ -1420,7 +1420,7 @@ describe("The irregularPeriod.hasForward() function", () => {
 
 describe("The irregularPeriod.forward() function", () => {
   it("should throw if no observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(() => {
       ip.forward();
@@ -1428,7 +1428,7 @@ describe("The irregularPeriod.forward() function", () => {
   });
 
   it("should throw if after final observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(10));
     expect(() => {
@@ -1437,7 +1437,7 @@ describe("The irregularPeriod.forward() function", () => {
   });
 
   it("should throw if within final observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(0));
     expect(() => {
@@ -1446,7 +1446,7 @@ describe("The irregularPeriod.forward() function", () => {
   });
 
   it("should return appropriately if before first observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(-1));
     const ip2 = ip.forward();
@@ -1456,7 +1456,7 @@ describe("The irregularPeriod.forward() function", () => {
   });
 
   it("should return appropriately if on observation before final", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     its.add(new Date(10), "val", new Date(20));
     const ip = its.period(new Date(0));
@@ -1467,7 +1467,7 @@ describe("The irregularPeriod.forward() function", () => {
   });
 
   it("should return appropriately if in a gap", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     its.add(new Date(20), "val", new Date(30));
     const ip = its.period(new Date(15));
@@ -1478,7 +1478,7 @@ describe("The irregularPeriod.forward() function", () => {
   });
 
   it("should cycle through a series as expected", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val1", new Date(10));
     its.add(new Date(20), "val2", new Date(30));
     its.add(new Date(30), "val3", new Date(40));
@@ -1503,34 +1503,34 @@ describe("The irregularPeriod.forward() function", () => {
 
 describe("The irregularPeriod.hasBack() function", () => {
   it("should return false if no observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(ip.hasBack()).toBe(false);
   });
 
   it("should return false if before first observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(-1));
     expect(ip.hasBack()).toBe(false);
   });
 
   it("should return false if within first observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(0));
     expect(ip.hasBack()).toBe(false);
   });
 
   it("should return true if after first observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(100));
     expect(ip.hasBack()).toBe(true);
   });
 
   it("should return true if in a gap", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     its.add(new Date(20), "val", new Date(30));
     const ip = its.period(new Date(15));
@@ -1540,7 +1540,7 @@ describe("The irregularPeriod.hasBack() function", () => {
 
 describe("The irregularPeriod.back() function", () => {
   it("should throw if no observations", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(() => {
       ip.back();
@@ -1548,7 +1548,7 @@ describe("The irregularPeriod.back() function", () => {
   });
 
   it("should throw if before first observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(-1));
     expect(() => {
@@ -1557,7 +1557,7 @@ describe("The irregularPeriod.back() function", () => {
   });
 
   it("should throw if within first observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(0));
     expect(() => {
@@ -1566,7 +1566,7 @@ describe("The irregularPeriod.back() function", () => {
   });
 
   it("should return appropriately if past last observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(10));
     const ip2 = ip.back();
@@ -1576,7 +1576,7 @@ describe("The irregularPeriod.back() function", () => {
   });
 
   it("should return appropriately if on a non-first observation with gap before", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     its.add(new Date(20), "val", new Date(30));
     const ip = its.period(new Date(20));
@@ -1587,7 +1587,7 @@ describe("The irregularPeriod.back() function", () => {
   });
 
   it("should return appropriately if on a non-first observation with obs before", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     its.add(new Date(10), "val", new Date(20));
     const ip = its.period(new Date(10));
@@ -1598,7 +1598,7 @@ describe("The irregularPeriod.back() function", () => {
   });
 
   it("should return appropriately if in a gap", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     its.add(new Date(20), "val", new Date(30));
     const ip = its.period(new Date(15));
@@ -1609,7 +1609,7 @@ describe("The irregularPeriod.back() function", () => {
   });
 
   it("should cycle through a series as expected", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val1", new Date(10));
     its.add(new Date(20), "val2", new Date(30));
     its.add(new Date(30), "val3", new Date(40));
@@ -1636,27 +1636,27 @@ describe("The irregularPeriod.back() function", () => {
 
 describe("The irregularPeriod.obs.exists() function", () => {
   it("should return false if empty series", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(-1));
     expect(ip.obs.exists()).toBe(false);
   });
 
   it("should return false if before first observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(-1));
     expect(ip.obs.exists()).toBe(false);
   });
 
   it("should return false if after last observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(11));
     expect(ip.obs.exists()).toBe(false);
   });
 
   it("should return false if it doesn't exist", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     its.add(new Date(20), "val", new Date(30));
     const ip = its.period(new Date(15));
@@ -1664,7 +1664,7 @@ describe("The irregularPeriod.obs.exists() function", () => {
   });
 
   it("should return true if it does exist", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(5));
     expect(ip.obs.exists()).toBe(true);
@@ -1673,7 +1673,7 @@ describe("The irregularPeriod.obs.exists() function", () => {
 
 describe("The irregularPeriod.obs.set() function", () => {
   it("should throw on missing argument", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(() => {
       ip.obs.set();
@@ -1681,7 +1681,7 @@ describe("The irregularPeriod.obs.set() function", () => {
   });
 
   it("should throw if empty series", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(-1));
     expect(() => {
       ip.obs.set("newval");
@@ -1693,7 +1693,7 @@ describe("The irregularPeriod.obs.set() function", () => {
   });
 
   it("should throw if before first observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(-1));
     expect(() => {
@@ -1706,7 +1706,7 @@ describe("The irregularPeriod.obs.set() function", () => {
   });
 
   it("should throw if after last observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(11));
     expect(() => {
@@ -1719,7 +1719,7 @@ describe("The irregularPeriod.obs.set() function", () => {
   });
 
   it("should overwrite existing observation values successfully", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(5));
     ip.obs.set("newval");
@@ -1733,7 +1733,7 @@ describe("The irregularPeriod.obs.set() function", () => {
   });
 
   it("should add new observation values successfully", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val1", new Date(10));
     its.add(new Date(20), "val3", new Date(30));
     const ip = its.period(new Date(15));
@@ -1746,7 +1746,7 @@ describe("The irregularPeriod.obs.set() function", () => {
   });
 
   it("should handle undefined values", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(5));
     ip.obs.set(undefined);
@@ -1760,7 +1760,7 @@ describe("The irregularPeriod.obs.set() function", () => {
   });
 
   it("should return a reference to the period", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(5));
     expect(ip.obs.set(123)).toBe(ip);
@@ -1769,7 +1769,7 @@ describe("The irregularPeriod.obs.set() function", () => {
 
 describe("The irregularPeriod.obs.clear() function", () => {
   it("should throw if empty series", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(-1));
     expect(() => {
       ip.obs.clear();
@@ -1781,7 +1781,7 @@ describe("The irregularPeriod.obs.clear() function", () => {
   });
 
   it("should throw if before first observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(-1));
     expect(() => {
@@ -1794,7 +1794,7 @@ describe("The irregularPeriod.obs.clear() function", () => {
   });
 
   it("should throw if after last observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(11));
     expect(() => {
@@ -1807,7 +1807,7 @@ describe("The irregularPeriod.obs.clear() function", () => {
   });
 
   it("should clear existing observation values successfully", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(5));
     ip.obs.clear();
@@ -1815,7 +1815,7 @@ describe("The irregularPeriod.obs.clear() function", () => {
   });
 
   it("should return success if there is no observation value", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val1", new Date(10));
     its.add(new Date(20), "val3", new Date(30));
     const ip = its.period(new Date(15));
@@ -1827,7 +1827,7 @@ describe("The irregularPeriod.obs.clear() function", () => {
   });
 
   it("should return a reference to the period", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(5));
     expect(ip.obs.clear()).toBe(ip);
@@ -1836,7 +1836,7 @@ describe("The irregularPeriod.obs.clear() function", () => {
 
 describe("The irregularPeriod.obs.value() function", () => {
   it("should throw if empty series", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(-1));
     expect(() => {
       ip.obs.value();
@@ -1848,7 +1848,7 @@ describe("The irregularPeriod.obs.value() function", () => {
   });
 
   it("should throw if before first observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(-1));
     expect(() => {
@@ -1861,7 +1861,7 @@ describe("The irregularPeriod.obs.value() function", () => {
   });
 
   it("should throw if after last observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(11));
     expect(() => {
@@ -1874,7 +1874,7 @@ describe("The irregularPeriod.obs.value() function", () => {
   });
 
   it("should throw if there is no observation", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val1", new Date(10));
     its.add(new Date(20), "val3", new Date(30));
     const ip = its.period(new Date(15));
@@ -1886,14 +1886,14 @@ describe("The irregularPeriod.obs.value() function", () => {
   });
 
   it("should retrieve existing observation values successfully", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), "val", new Date(10));
     const ip = its.period(new Date(5));
     expect(ip.obs.value()).toBe("val");
   });
 
   it("should handle undefined values", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), undefined, new Date(10));
     const ip = its.period(new Date(5));
     expect(ip.obs.value()).toBe(undefined);
@@ -1902,13 +1902,13 @@ describe("The irregularPeriod.obs.value() function", () => {
 
 describe("The irregularPeriod.obs.hasForward() function", () => {
   it("should return false if empty series", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(ip.obs.hasForward()).toBe(false);
   });
 
   it("should return false if on last obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(-100), 123, new Date(-50));
     its.add(new Date(0), 123, new Date(100));
     const ip = its.period(new Date(50));
@@ -1916,14 +1916,14 @@ describe("The irregularPeriod.obs.hasForward() function", () => {
   });
 
   it("should return false if past last obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     const ip = its.period(new Date(150));
     expect(ip.obs.hasForward()).toBe(false);
   });
 
   it("should return true if on an obs and there is a later obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     its.add(new Date(200), 123, new Date(300));
     const ip = its.period(new Date(50));
@@ -1931,7 +1931,7 @@ describe("The irregularPeriod.obs.hasForward() function", () => {
   });
 
   it("should return true if on a gap and there is a later obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     its.add(new Date(200), 123, new Date(300));
     const ip = its.period(new Date(150));
@@ -1941,7 +1941,7 @@ describe("The irregularPeriod.obs.hasForward() function", () => {
 
 describe("The irregularPeriod.obs.forward() function", () => {
   it("should throw if empty series", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(() => {
       ip.obs.forward();
@@ -1949,7 +1949,7 @@ describe("The irregularPeriod.obs.forward() function", () => {
   });
 
   it("should throw if on last obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(-100), 123, new Date(-50));
     its.add(new Date(0), 123, new Date(100));
     const ip = its.period(new Date(50));
@@ -1959,7 +1959,7 @@ describe("The irregularPeriod.obs.forward() function", () => {
   });
 
   it("should throw if past last obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     const ip = its.period(new Date(150));
     expect(() => {
@@ -1968,7 +1968,7 @@ describe("The irregularPeriod.obs.forward() function", () => {
   });
 
   it("should return appropriately if on an obs and there is a later obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     its.add(new Date(200), 123, new Date(300));
     const ip = its.period(new Date(50)).obs.forward();
@@ -1978,7 +1978,7 @@ describe("The irregularPeriod.obs.forward() function", () => {
   });
 
   it("should return appropriately if on a gap and there is a later obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     its.add(new Date(200), 123, new Date(300));
     const ip = its.period(new Date(150)).obs.forward();
@@ -1990,13 +1990,13 @@ describe("The irregularPeriod.obs.forward() function", () => {
 
 describe("The irregularPeriod.obs.hasBack() function", () => {
   it("should return false if empty series", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(ip.obs.hasBack()).toBe(false);
   });
 
   it("should return false if on first obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     its.add(new Date(200), 123, new Date(300));
     const ip = its.period(new Date(50));
@@ -2004,14 +2004,14 @@ describe("The irregularPeriod.obs.hasBack() function", () => {
   });
 
   it("should return false if before first obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     const ip = its.period(new Date(-50));
     expect(ip.obs.hasBack()).toBe(false);
   });
 
   it("should return true if on an obs and there is an earlier obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     its.add(new Date(200), 123, new Date(300));
     const ip = its.period(new Date(250));
@@ -2019,7 +2019,7 @@ describe("The irregularPeriod.obs.hasBack() function", () => {
   });
 
   it("should return true if on a gap and there is an earlier obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     its.add(new Date(200), 123, new Date(300));
     const ip = its.period(new Date(150));
@@ -2029,7 +2029,7 @@ describe("The irregularPeriod.obs.hasBack() function", () => {
 
 describe("The irregularPeriod.obs.back() function", () => {
   it("should throw if empty series", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     const ip = its.period(new Date(0));
     expect(() => {
       ip.obs.back();
@@ -2037,7 +2037,7 @@ describe("The irregularPeriod.obs.back() function", () => {
   });
 
   it("should throw if on first obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     its.add(new Date(200), 123, new Date(300));
     const ip = its.period(new Date(50));
@@ -2047,7 +2047,7 @@ describe("The irregularPeriod.obs.back() function", () => {
   });
 
   it("should throw if before first obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     const ip = its.period(new Date(-50));
     expect(() => {
@@ -2056,7 +2056,7 @@ describe("The irregularPeriod.obs.back() function", () => {
   });
 
   it("should return appropriately if on an obs and there is an earlier obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     its.add(new Date(200), 123, new Date(300));
     const ip = its.period(new Date(250)).obs.back();
@@ -2066,7 +2066,7 @@ describe("The irregularPeriod.obs.back() function", () => {
   });
 
   it("should return appropriately if on a gap and there is an earlier obs", () => {
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
     its.add(new Date(0), 123, new Date(100));
     its.add(new Date(200), 123, new Date(300));
     const ip = its.period(new Date(150)).obs.back();

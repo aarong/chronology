@@ -1,28 +1,28 @@
-import tsjs from "../main";
+import chronology from "../main";
 
-describe("The tsjs.regular() function", () => {
+describe("The chronology.regular() function", () => {
   it("should map to the regular() factory function", () => {
-    expect(tsjs.regular({ basePeriod: [1, "y"] })).toBeInstanceOf(Object);
+    expect(chronology.regular({ basePeriod: [1, "y"] })).toBeInstanceOf(Object);
   });
 });
 
-describe("The tsjs.irregular() function", () => {
+describe("The chronology.irregular() function", () => {
   it("should map to the irregular() factory function", () => {
-    expect(tsjs.irregular({})).toBeInstanceOf(Object);
+    expect(chronology.irregular({})).toBeInstanceOf(Object);
   });
 });
 
-describe("The tsjs.unserialize() function", () => {
+describe("The chronology.unserialize() function", () => {
   describe("core validation", () => {
     it("should throw on non-string argument", () => {
       expect(() => {
-        tsjs.unserialize(false);
+        chronology.unserialize(false);
       }).toThrow(new Error("INVALID_ARGUMENT: String required."));
     });
 
     it("should throw on non-function subPeriodBoundaries", () => {
       expect(() => {
-        tsjs.unserialize("{}", "junk");
+        chronology.unserialize("{}", "junk");
       }).toThrow(
         new Error("INVALID_ARGUMENT: Invalid subPeriodBoundaries function.")
       );
@@ -30,19 +30,19 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid JSON", () => {
       expect(() => {
-        tsjs.unserialize("junk");
+        chronology.unserialize("junk");
       }).toThrow(new Error("INVALID_JSONTS: Invalid JSON."));
     });
 
     it("should throw on non-object", () => {
       expect(() => {
-        tsjs.unserialize("123");
+        chronology.unserialize("123");
       }).toThrow(new Error("INVALID_JSONTS: Must be an object."));
     });
 
     it("should throw on missing JsonTs", () => {
       expect(() => {
-        tsjs.unserialize("{}");
+        chronology.unserialize("{}");
       }).toThrow(
         new Error("INVALID_JSONTS: JsonTs parameter must be a string.")
       );
@@ -50,7 +50,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid JsonTs type", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: 123
           })
@@ -62,7 +62,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid JsonTs value", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "junk"
           })
@@ -76,7 +76,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on missing Observations", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular"
           })
@@ -88,7 +88,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid Observations type", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             Observations: {}
@@ -103,7 +103,7 @@ describe("The tsjs.unserialize() function", () => {
   describe("for regular series", () => {
     it("should throw on missing BasePeriod", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             Observations: []
@@ -118,7 +118,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid BasePeriod type", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: 123,
@@ -134,7 +134,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid BasePeriod length", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1],
@@ -150,7 +150,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid BasePeriodNumber - bad type", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [false, "y"],
@@ -166,7 +166,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid BasePeriodNumber - not strictly positive", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [0, "y"],
@@ -182,7 +182,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid BasePeriodNumber - not integer", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1.1, "y"],
@@ -198,7 +198,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid BasePeriodType - bad type", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, false],
@@ -210,7 +210,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid BasePeriodType - invalid choice", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, "junk"],
@@ -222,7 +222,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid BasePeriodType - not supported", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, "e-6"],
@@ -238,7 +238,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid Anchor type if specified", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
@@ -251,7 +251,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid Anchor type if specified", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
@@ -264,7 +264,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid Anchor string if specified", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
@@ -277,7 +277,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on unsupported anchor precision if specified", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
@@ -294,7 +294,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid SubPeriods if specified - bad type", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
@@ -311,7 +311,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid SubPeriods if specified - not integer", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
@@ -328,7 +328,7 @@ describe("The tsjs.unserialize() function", () => {
 
     it("should throw on invalid SubPeriods if specified - not strictly positive", () => {
       expect(() => {
-        tsjs.unserialize(
+        chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
@@ -346,7 +346,7 @@ describe("The tsjs.unserialize() function", () => {
     describe("for each observation", () => {
       it("should throw if bad observation - type", () => {
         expect(() => {
-          tsjs.unserialize(
+          chronology.unserialize(
             JSON.stringify({
               JsonTs: "regular",
               BasePeriod: [1, "ms"],
@@ -358,7 +358,7 @@ describe("The tsjs.unserialize() function", () => {
 
       it("should throw if bad observation - array length too short", () => {
         expect(() => {
-          tsjs.unserialize(
+          chronology.unserialize(
             JSON.stringify({
               JsonTs: "regular",
               BasePeriod: [1, "ms"],
@@ -370,7 +370,7 @@ describe("The tsjs.unserialize() function", () => {
 
       it("should throw if bad observation - array length too long", () => {
         expect(() => {
-          tsjs.unserialize(
+          chronology.unserialize(
             JSON.stringify({
               JsonTs: "regular",
               BasePeriod: [1, "ms"],
@@ -383,7 +383,7 @@ describe("The tsjs.unserialize() function", () => {
       describe("for observations of type 1: [bpd, spn, val]", () => {
         it("should throw on bad base period date type", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -395,7 +395,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw on bad base period date string", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -407,7 +407,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw on unsupported base period date precision", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -423,7 +423,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw on bad sub period number - type", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -435,7 +435,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw on bad sub period number - fractional", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -448,7 +448,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw on bad sub period number - too high", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -461,7 +461,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw on bad sub period number - too low", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -474,7 +474,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if duplicate", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -491,7 +491,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if not chronologically sequenced - prev was type 1", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -508,7 +508,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if not chronologically sequenced - prev was type 2", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -525,7 +525,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if not chronologically sequenced - prev was type 3", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -544,7 +544,7 @@ describe("The tsjs.unserialize() function", () => {
       describe("for observations of type 2: [bpd, val]", () => {
         it("should throw if sub periods > 1", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -559,7 +559,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw on bad base period date type", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -571,7 +571,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw on bad base period date string", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -583,7 +583,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw on unsupported base period date precision", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -599,7 +599,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if not chronologically sequenced - prev was type 1", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -616,7 +616,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if not chronologically sequenced - prev was type 2", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -633,7 +633,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if not chronologically sequenced - prev was type 3", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -652,7 +652,7 @@ describe("The tsjs.unserialize() function", () => {
       describe("for observations of type 3: [val]", () => {
         it("should throw if first", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
@@ -670,7 +670,7 @@ describe("The tsjs.unserialize() function", () => {
 
       describe("success", () => {
         it("should succeed with all optional parameters", () => {
-          const rts = tsjs.unserialize(
+          const rts = chronology.unserialize(
             JSON.stringify({
               JsonTs: "REGULAR",
               BasePeriod: [1, "ms"],
@@ -686,7 +686,7 @@ describe("The tsjs.unserialize() function", () => {
         });
 
         it("should succeed with no optional parameters - not weekly", () => {
-          const rts = tsjs.unserialize(
+          const rts = chronology.unserialize(
             JSON.stringify({
               JsonTs: "regular",
               BasePeriod: [1, "ms"],
@@ -700,7 +700,7 @@ describe("The tsjs.unserialize() function", () => {
         });
 
         it("should succeed with no optional parameters - weekly", () => {
-          const rts = tsjs.unserialize(
+          const rts = chronology.unserialize(
             JSON.stringify({
               JsonTs: "regular",
               BasePeriod: [1, "w"],
@@ -714,7 +714,7 @@ describe("The tsjs.unserialize() function", () => {
         });
 
         it("should represent all observation types correctly", () => {
-          const rts = tsjs.unserialize(
+          const rts = chronology.unserialize(
             JSON.stringify({
               JsonTs: "regular",
               BasePeriod: [1, "y"],
@@ -737,7 +737,7 @@ describe("The tsjs.unserialize() function", () => {
         });
 
         it("should use the subPeriodBoundaries provided", () => {
-          const rts = tsjs.unserialize(
+          const rts = chronology.unserialize(
             JSON.stringify({
               JsonTs: "regular",
               BasePeriod: [1, "y"],
@@ -776,7 +776,7 @@ describe("The tsjs.unserialize() function", () => {
     describe("for each observation", () => {
       it("should throw if bad observation - type", () => {
         expect(() => {
-          tsjs.unserialize(
+          chronology.unserialize(
             JSON.stringify({
               JsonTs: "irregular",
               Observations: [false]
@@ -787,7 +787,7 @@ describe("The tsjs.unserialize() function", () => {
 
       it("should throw if bad observation - array length too short", () => {
         expect(() => {
-          tsjs.unserialize(
+          chronology.unserialize(
             JSON.stringify({
               JsonTs: "irregular",
               Observations: [["1970Z"]]
@@ -798,7 +798,7 @@ describe("The tsjs.unserialize() function", () => {
 
       it("should throw if bad observation - array length too long", () => {
         expect(() => {
-          tsjs.unserialize(
+          chronology.unserialize(
             JSON.stringify({
               JsonTs: "irregular",
               Observations: [["1970Z", "val", "1971Z", false]]
@@ -810,7 +810,7 @@ describe("The tsjs.unserialize() function", () => {
       describe("for observations of type 1: [sd, val]", () => {
         it("should throw if the date is invalid - type", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [[false, "val"], ["1970Z", "val", "1971Z"]]
@@ -821,7 +821,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if the date is invalid - syntax", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [["junk", "val"], ["1970Z", "val", "1971Z"]]
@@ -832,7 +832,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if the date has unsupported precision", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [
@@ -850,7 +850,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if this is the final observation", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [["1970Z", "val"]]
@@ -865,7 +865,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if not chronologically sequenced - next is type 1", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [
@@ -884,7 +884,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if not chronologically sequenced - next is type 2", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [["1970Z", "val"], ["1970Z", "val", "1972Z"]]
@@ -901,7 +901,7 @@ describe("The tsjs.unserialize() function", () => {
       describe("for observations of type 2: [sd, val, ed]", () => {
         it("should throw if the start date is invalid - type", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [[false, "val", "1971Z"]]
@@ -912,7 +912,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if the start date is invalid - syntax", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [["junk", "val", "1971Z"]]
@@ -923,7 +923,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if the start date has unsupported precision", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [["2000-01-01T00:00:00.000000Z", "val", "1971Z"]]
@@ -938,7 +938,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if the end date is invalid - type", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [["1971Z", "val", false]]
@@ -949,7 +949,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if the end date is invalid - syntax", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [["1971Z", "val", "junk"]]
@@ -960,7 +960,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if the end date has unsupported precision", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [["2000Z", "val", "2000-01-01T00:00:00.000000Z"]]
@@ -975,7 +975,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if the end date is not strictly after the start date", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [["1971Z", "val", "1971Z"]]
@@ -990,7 +990,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if not chronologically sequenced - next is type 1", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [
@@ -1009,7 +1009,7 @@ describe("The tsjs.unserialize() function", () => {
 
         it("should throw if not chronologically sequenced - next is type 2", () => {
           expect(() => {
-            tsjs.unserialize(
+            chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
                 Observations: [
@@ -1027,7 +1027,7 @@ describe("The tsjs.unserialize() function", () => {
       });
 
       it("on success, should represent the time series correctly", () => {
-        const its = tsjs.unserialize(
+        const its = chronology.unserialize(
           JSON.stringify({
             JsonTs: "irregular",
             Observations: [
@@ -1084,13 +1084,13 @@ describe("The tsjs.unserialize() function", () => {
   });
 });
 
-describe("The tsjs.regular.proto reference", () => {
+describe("The chronology.regular.proto reference", () => {
   it("should allow extension", () => {
-    tsjs.regular.proto.sum = function sum() {
+    chronology.regular.proto.sum = function sum() {
       return this.reduce((a, p) => a + p.obs.value(), 0);
     };
 
-    const rts = tsjs.regular({ basePeriod: [1, "y"] });
+    const rts = chronology.regular({ basePeriod: [1, "y"] });
 
     let p = rts.period(new Date(0), 1);
     p.obs.set(1);
@@ -1101,13 +1101,13 @@ describe("The tsjs.regular.proto reference", () => {
   });
 });
 
-describe("The tsjs.irregular.proto reference", () => {
+describe("The chronology.irregular.proto reference", () => {
   it("should allow extension", () => {
-    tsjs.irregular.proto.sum = function sum() {
+    chronology.irregular.proto.sum = function sum() {
       return this.reduce((a, p) => a + p.obs.value(), 0);
     };
 
-    const its = tsjs.irregular();
+    const its = chronology.irregular();
 
     its.add(new Date(0), 1, new Date(10));
     its.add(new Date(10), 2, new Date(11));
