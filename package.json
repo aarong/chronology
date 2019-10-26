@@ -3,6 +3,7 @@
   "version": "0.0.3",
   "description": "A flexible library for representing and manipulating time series data.",
   "main": "index.js",
+  "jsdelivr": "bundle.js",
   "scripts": {
     "docs": "documentation build src/main.js -f html -o docs --access public --access private --access undefined --sort-order alpha",
     "build": "npm run test-src && gulp build && npm run test-build",
