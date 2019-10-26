@@ -1,0 +1,87 @@
+{
+  "name": "chronology",
+  "version": "0.0.1",
+  "description": "A flexible library for representing and manipulating time series data.",
+  "main": "index.js",
+  "scripts": {
+    "docs": "documentation build src/main.js -f html -o docs --access public --access private --access undefined --sort-order alpha",
+    "build": "npm run test-src && gulp build && npm run test-build",
+    "lint-src": "eslint src/**",
+    "lint-build-tests": "eslint tests/*",
+    "test": "npm run test-src",
+    "test-src": "npm run lint-src && jest /src",
+    "test-build": "npm run lint-build-tests && jest /tests",
+    "coverage": "jest --coverage",
+    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
+  },
+  "dependencies": {
+    "check-types": "^7.4.0",
+    "json-expressible": "^1.0.1",
+    "moment": "^2.24.0",
+    "source-map-support": "^0.5.11"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/register": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-plugin-add-module-exports": "^1.0.0",
+    "babelify": "^10.0.0",
+    "browserify": "^16.2.3",
+    "coveralls": "^3.0.3",
+    "del": "^4.0.0",
+    "documentation": "^9.1.1",
+    "eslint": "^5.12.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "ghooks": "^2.0.4",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-cli": "^2.0.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "prettier": "^1.14.3",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js}"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aarong/chronology.git"
+  },
+  "keywords": [
+    "json",
+    "time series",
+    "timeseries"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aarong/chronology/issues"
+  },
+  "homepage": "https://github.com/aarong/chronology#readme",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run build"
+    }
+  },
+  "browserslist": [
+    "> 0.25%",
+    "maintained node versions",
+    "not dead"
+  ]
+}
