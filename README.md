@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.com/aarong/time-series-js.svg?branch=master)](https://travis-ci.com/aarong/time-series-js)
-[![Coverage Status](https://coveralls.io/repos/github/aarong/time-series-js/badge.svg?branch=master)](https://coveralls.io/github/aarong/time-series-js?branch=master)
+[![Build Status](https://travis-ci.com/aarong/chronology.svg?branch=master)](https://travis-ci.com/aarong/chronology)
+[![Coverage Status](https://coveralls.io/repos/github/aarong/chronology/badge.svg?branch=master)](https://coveralls.io/github/aarong/chronology?branch=master)
 
-# TimeSeries.js
+# Chronology.js
 
-A flexible library for representing and manipulating time series data
+A flexible library for representing and manipulating time series data in
 Javascript. Runs in Node.js and the browser.
 
 - Create, query, and manipulate regular and irregular time series
