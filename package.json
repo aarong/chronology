@@ -1,6 +1,6 @@
 {
   "name": "chronology",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "A flexible library for representing and manipulating time series data.",
   "main": "index.js",
   "jsdelivr": "bundle.js",
