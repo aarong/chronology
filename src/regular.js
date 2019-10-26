@@ -1124,6 +1124,13 @@ regularSeriesFactory.proto.serialize = function serialize() {
   // Add observations
   const series = this;
   this.each(rp => {
+    // Throw if observation value is not JSON-expressible
+    if (!jsonExpressible(rp.obs.value())) {
+      throw new Error(
+        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible."
+      );
+    }
+
     // Is this observation adjacent to a previous one?
     let adjacent = false;
     if (rp.obs.hasBack()) {
@@ -1151,26 +1158,8 @@ regularSeriesFactory.proto.serialize = function serialize() {
     }
   });
 
-  // Try to serialize (fails on circular reference)
-  let ser;
-  try {
-    ser = JSON.stringify(jsonTs);
-  } catch (e) {
-    throw new Error(
-      "NOT_SERIALIZABLE: JSON.stringify() failed to serialize one or more observation values, likely due to a circular reference."
-    );
-  }
-
-  // Throw if there are undefined values (JSON.stringify will omit/nullify them)
-  // Check after circular references, which will hang chronology._isJsonExpressible()
-  if (!jsonExpressible(jsonTs)) {
-    throw new Error(
-      "NOT_SERIALIZABLE: Time series contains one or more undefined values, which are not expressible using JSON."
-    );
-  }
-
   // Success
-  return ser;
+  return JSON.stringify(jsonTs);
 };
 
 // RegularPeriod objects

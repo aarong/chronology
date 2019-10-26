@@ -606,6 +606,13 @@ irregularSeriesFactory.proto.serialize = function serialize() {
 
   // Add observations
   this.each(ip => {
+    // Throw if observation value is not JSON-expressible
+    if (!jsonExpressible(ip.obs.value())) {
+      throw new Error(
+        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible."
+      );
+    }
+
     const obs = [jsonTsDate.create(ip.start(), "ms"), ip.obs.value()];
 
     // Is this observation contiguous with the next?
@@ -622,26 +629,8 @@ irregularSeriesFactory.proto.serialize = function serialize() {
     jsonTs.Observations.push(obs);
   });
 
-  // Try to serialize - fails on circular reference
-  let ser;
-  try {
-    ser = JSON.stringify(jsonTs);
-  } catch (e) {
-    throw new Error(
-      "NOT_SERIALIZABLE: JSON.stringify() failed to serialize one or more observation values, likely due to a circular reference."
-    );
-  }
-
-  // Throw if there are undefined values (JSON.stringify will omit/nullify them)
-  // Check after circular references, which will hang chronology._isJsonExpressible()
-  if (!jsonExpressible(jsonTs)) {
-    throw new Error(
-      "NOT_SERIALIZABLE: Time series contains one or more undefined values, which are not expressible using JSON."
-    );
-  }
-
   // Success
-  return ser;
+  return JSON.stringify(jsonTs);
 };
 
 /**

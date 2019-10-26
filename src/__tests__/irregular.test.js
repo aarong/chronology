@@ -1223,7 +1223,7 @@ describe("The irregular.serialize() function", () => {
       its.serialize();
     }).toThrow(
       new Error(
-        "NOT_SERIALIZABLE: Time series contains one or more undefined values, which are not expressible using JSON."
+        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible."
       )
     );
   });
@@ -1240,7 +1240,7 @@ describe("The irregular.serialize() function", () => {
       its.serialize();
     }).toThrow(
       new Error(
-        "NOT_SERIALIZABLE: JSON.stringify() failed to serialize one or more observation values, likely due to a circular reference."
+        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible."
       )
     );
   });
