@@ -247,15 +247,15 @@ The `options` argument is an object with the following properties:
 
   The `basePeriodType` (string) must be one of:
 
-      - `y` - Year
-      - `m` - Month
-      - `w` - Week
-      - `d` - Day
-      - `h` - Hour
-      - `n` - Minute
-      - `s` - Second
-      - `ms` - Millisecond
-      - `e-3` - Millisecond
+  - `y` - Year
+  - `m` - Month
+  - `w` - Week
+  - `d` - Day
+  - `h` - Hour
+  - `n` - Minute
+  - `s` - Second
+  - `ms` - Millisecond
+  - `e-3` - Millisecond
 
   Higher frequencies are not supported as base periods, as Javascript dates
   operate only at millisecond precision. However, higher frequencies can be
