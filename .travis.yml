@@ -8,21 +8,25 @@ jobs:
   include:
     - stage: Test
       language: node_js
-      node_js: "6"
+      node_js: "8"
       script:
         - npm run build # test-src, build, test-build
         - npm run coveralls
     - stage: Test
       language: node_js
-      node_js: "8"
+      node_js: "10"
       script: npm run build # test-src, build, test-build
     - stage: Test
       language: node_js
-      node_js: "10"
+      node_js: "12"
+      script: npm run build # test-src, build, test-build
+    - stage: Test
+      language: node_js
+      node_js: "14"
       script: npm run build # test-src, build, test-build
     - stage: Deploy # Runs on each build, but only publishes on new version
       language: node_js
-      node_js: "6" # Maximum compatibility
+      node_js: "8" # Maximum compatibility
       script:
         - npm run build
       deploy: # Can't use npm provider because you need to publish the build folder
