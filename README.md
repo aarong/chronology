@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/aarong/chronology.svg?branch=master)](https://travis-ci.com/aarong/chronology)
+[![Build Status](https://travis-ci.com/aarong/chronology.svg?branch=master)](https://travis-ci.com/github/aarong/chronology)
 [![Coverage Status](https://coveralls.io/repos/github/aarong/chronology/badge.svg?branch=master)](https://coveralls.io/github/aarong/chronology?branch=master)
 
 # Chronology.js
