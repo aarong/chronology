@@ -24,7 +24,7 @@ describe("The chronology.unserialize() function", () => {
       expect(() => {
         chronology.unserialize("{}", "junk");
       }).toThrow(
-        new Error("INVALID_ARGUMENT: Invalid subPeriodBoundaries function.")
+        new Error("INVALID_ARGUMENT: Invalid subPeriodBoundaries function."),
       );
     });
 
@@ -44,7 +44,7 @@ describe("The chronology.unserialize() function", () => {
       expect(() => {
         chronology.unserialize("{}");
       }).toThrow(
-        new Error("INVALID_JSONTS: JsonTs parameter must be a string.")
+        new Error("INVALID_JSONTS: JsonTs parameter must be a string."),
       );
     });
 
@@ -52,11 +52,11 @@ describe("The chronology.unserialize() function", () => {
       expect(() => {
         chronology.unserialize(
           JSON.stringify({
-            JsonTs: 123
-          })
+            JsonTs: 123,
+          }),
         );
       }).toThrow(
-        new Error("INVALID_JSONTS: JsonTs parameter must be a string.")
+        new Error("INVALID_JSONTS: JsonTs parameter must be a string."),
       );
     });
 
@@ -64,13 +64,13 @@ describe("The chronology.unserialize() function", () => {
       expect(() => {
         chronology.unserialize(
           JSON.stringify({
-            JsonTs: "junk"
-          })
+            JsonTs: "junk",
+          }),
         );
       }).toThrow(
         new Error(
-          "INVALID_JSONTS: JsonTs parameter must be 'regular' or 'irregular'."
-        )
+          "INVALID_JSONTS: JsonTs parameter must be 'regular' or 'irregular'.",
+        ),
       );
     });
 
@@ -78,11 +78,11 @@ describe("The chronology.unserialize() function", () => {
       expect(() => {
         chronology.unserialize(
           JSON.stringify({
-            JsonTs: "regular"
-          })
+            JsonTs: "regular",
+          }),
         );
       }).toThrow(
-        new Error("INVALID_JSONTS: Observations parameter must be an array.")
+        new Error("INVALID_JSONTS: Observations parameter must be an array."),
       );
     });
 
@@ -91,11 +91,11 @@ describe("The chronology.unserialize() function", () => {
         chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
-            Observations: {}
-          })
+            Observations: {},
+          }),
         );
       }).toThrow(
-        new Error("INVALID_JSONTS: Observations parameter must be an array.")
+        new Error("INVALID_JSONTS: Observations parameter must be an array."),
       );
     });
   });
@@ -106,13 +106,13 @@ describe("The chronology.unserialize() function", () => {
         chronology.unserialize(
           JSON.stringify({
             JsonTs: "regular",
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(
         new Error(
-          "INVALID_JSONTS: BasePeriod parameter must be array of length 2."
-        )
+          "INVALID_JSONTS: BasePeriod parameter must be array of length 2.",
+        ),
       );
     });
 
@@ -122,13 +122,13 @@ describe("The chronology.unserialize() function", () => {
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: 123,
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(
         new Error(
-          "INVALID_JSONTS: BasePeriod parameter must be array of length 2."
-        )
+          "INVALID_JSONTS: BasePeriod parameter must be array of length 2.",
+        ),
       );
     });
 
@@ -138,13 +138,13 @@ describe("The chronology.unserialize() function", () => {
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1],
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(
         new Error(
-          "INVALID_JSONTS: BasePeriod parameter must be array of length 2."
-        )
+          "INVALID_JSONTS: BasePeriod parameter must be array of length 2.",
+        ),
       );
     });
 
@@ -154,13 +154,13 @@ describe("The chronology.unserialize() function", () => {
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [false, "y"],
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(
         new Error(
-          "INVALID_JSONTS: BasePeriodNumber parameter must be a strictly positive integer."
-        )
+          "INVALID_JSONTS: BasePeriodNumber parameter must be a strictly positive integer.",
+        ),
       );
     });
 
@@ -170,13 +170,13 @@ describe("The chronology.unserialize() function", () => {
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [0, "y"],
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(
         new Error(
-          "INVALID_JSONTS: BasePeriodNumber parameter must be a strictly positive integer."
-        )
+          "INVALID_JSONTS: BasePeriodNumber parameter must be a strictly positive integer.",
+        ),
       );
     });
 
@@ -186,13 +186,13 @@ describe("The chronology.unserialize() function", () => {
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1.1, "y"],
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(
         new Error(
-          "INVALID_JSONTS: BasePeriodNumber parameter must be a strictly positive integer."
-        )
+          "INVALID_JSONTS: BasePeriodNumber parameter must be a strictly positive integer.",
+        ),
       );
     });
 
@@ -202,8 +202,8 @@ describe("The chronology.unserialize() function", () => {
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, false],
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(new Error("INVALID_JSONTS: Invalid BasePeriodType."));
     });
@@ -214,8 +214,8 @@ describe("The chronology.unserialize() function", () => {
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, "junk"],
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(new Error("INVALID_JSONTS: Invalid BasePeriodType."));
     });
@@ -226,13 +226,13 @@ describe("The chronology.unserialize() function", () => {
           JSON.stringify({
             JsonTs: "regular",
             BasePeriod: [1, "e-6"],
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(
         new Error(
-          "NOT_SUPPORTED: Sub-millisecond BasePeriodType is not supported."
-        )
+          "NOT_SUPPORTED: Sub-millisecond BasePeriodType is not supported.",
+        ),
       );
     });
 
@@ -243,8 +243,8 @@ describe("The chronology.unserialize() function", () => {
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
             Anchor: 123,
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(new Error("INVALID_JSONTS: Invalid Anchor parameter."));
     });
@@ -256,8 +256,8 @@ describe("The chronology.unserialize() function", () => {
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
             Anchor: 123,
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(new Error("INVALID_JSONTS: Invalid Anchor parameter."));
     });
@@ -269,8 +269,8 @@ describe("The chronology.unserialize() function", () => {
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
             Anchor: "not a date",
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(new Error("INVALID_JSONTS: Invalid Anchor parameter."));
     });
@@ -282,13 +282,13 @@ describe("The chronology.unserialize() function", () => {
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
             Anchor: "2000-01-01T00:00:00.000000Z",
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(
         new Error(
-          "NOT_SUPPORTED: Anchor specified beyond millisecond precision."
-        )
+          "NOT_SUPPORTED: Anchor specified beyond millisecond precision.",
+        ),
       );
     });
 
@@ -299,13 +299,13 @@ describe("The chronology.unserialize() function", () => {
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
             SubPeriods: [],
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(
         new Error(
-          "INVALID_JSONTS: SubPeriods parameter must be a positive integer if specified."
-        )
+          "INVALID_JSONTS: SubPeriods parameter must be a positive integer if specified.",
+        ),
       );
     });
 
@@ -316,13 +316,13 @@ describe("The chronology.unserialize() function", () => {
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
             SubPeriods: 1.1,
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(
         new Error(
-          "INVALID_JSONTS: SubPeriods parameter must be a positive integer if specified."
-        )
+          "INVALID_JSONTS: SubPeriods parameter must be a positive integer if specified.",
+        ),
       );
     });
 
@@ -333,13 +333,13 @@ describe("The chronology.unserialize() function", () => {
             JsonTs: "regular",
             BasePeriod: [1, "ms"],
             SubPeriods: 0,
-            Observations: []
-          })
+            Observations: [],
+          }),
         );
       }).toThrow(
         new Error(
-          "INVALID_JSONTS: SubPeriods parameter must be a positive integer if specified."
-        )
+          "INVALID_JSONTS: SubPeriods parameter must be a positive integer if specified.",
+        ),
       );
     });
 
@@ -350,8 +350,8 @@ describe("The chronology.unserialize() function", () => {
             JSON.stringify({
               JsonTs: "regular",
               BasePeriod: [1, "ms"],
-              Observations: [false]
-            })
+              Observations: [false],
+            }),
           );
         }).toThrow(new Error("INVALID_JSONTS: Invalid observation."));
       });
@@ -362,8 +362,8 @@ describe("The chronology.unserialize() function", () => {
             JSON.stringify({
               JsonTs: "regular",
               BasePeriod: [1, "ms"],
-              Observations: [[]]
-            })
+              Observations: [[]],
+            }),
           );
         }).toThrow(new Error("INVALID_JSONTS: Invalid observation."));
       });
@@ -374,8 +374,8 @@ describe("The chronology.unserialize() function", () => {
             JSON.stringify({
               JsonTs: "regular",
               BasePeriod: [1, "ms"],
-              Observations: [[1, 2, 3, 4]]
-            })
+              Observations: [[1, 2, 3, 4]],
+            }),
           );
         }).toThrow(new Error("INVALID_JSONTS: Invalid observation."));
       });
@@ -387,8 +387,8 @@ describe("The chronology.unserialize() function", () => {
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
-                Observations: [[1, 1, 123]]
-              })
+                Observations: [[1, 1, 123]],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid base period date."));
         });
@@ -399,8 +399,8 @@ describe("The chronology.unserialize() function", () => {
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
-                Observations: [["junk", 1, 123]]
-              })
+                Observations: [["junk", 1, 123]],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid base period date."));
         });
@@ -411,13 +411,13 @@ describe("The chronology.unserialize() function", () => {
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
-                Observations: [["2000-01-01T00:00:00.000000Z", 1, 123]]
-              })
+                Observations: [["2000-01-01T00:00:00.000000Z", 1, 123]],
+              }),
             );
           }).toThrow(
             new Error(
-              "NOT_SUPPORTED: Base period date specified beyond millisecond precision."
-            )
+              "NOT_SUPPORTED: Base period date specified beyond millisecond precision.",
+            ),
           );
         });
 
@@ -427,8 +427,8 @@ describe("The chronology.unserialize() function", () => {
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
-                Observations: [["2010Z", "junk", 123]]
-              })
+                Observations: [["2010Z", "junk", 123]],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid sub period number."));
         });
@@ -440,8 +440,8 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
                 SubPeriods: 2,
-                Observations: [["2010Z", 1.1, 123]]
-              })
+                Observations: [["2010Z", 1.1, 123]],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid sub period number."));
         });
@@ -453,8 +453,8 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
                 SubPeriods: 2,
-                Observations: [["2010Z", 3, 123]]
-              })
+                Observations: [["2010Z", 3, 123]],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid sub period number."));
         });
@@ -466,8 +466,8 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
                 SubPeriods: 2,
-                Observations: [["2010Z", 0, 123]]
-              })
+                Observations: [["2010Z", 0, 123]],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid sub period number."));
         });
@@ -479,13 +479,16 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
                 SubPeriods: 2,
-                Observations: [["2010Z", 1, 123], ["2010Z", 1, 123]]
-              })
+                Observations: [
+                  ["2010Z", 1, 123],
+                  ["2010Z", 1, 123],
+                ],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: Observation collision or observations not in chronological order."
-            )
+              "INVALID_JSONTS: Observation collision or observations not in chronological order.",
+            ),
           );
         });
 
@@ -496,13 +499,16 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
                 SubPeriods: 2,
-                Observations: [["2010Z", 1, 123], ["2009Z", 1, 123]]
-              })
+                Observations: [
+                  ["2010Z", 1, 123],
+                  ["2009Z", 1, 123],
+                ],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: Observation collision or observations not in chronological order."
-            )
+              "INVALID_JSONTS: Observation collision or observations not in chronological order.",
+            ),
           );
         });
 
@@ -513,13 +519,16 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
                 SubPeriods: 1,
-                Observations: [["2010Z", 123], ["2009Z", 1, 123]]
-              })
+                Observations: [
+                  ["2010Z", 123],
+                  ["2009Z", 1, 123],
+                ],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: Observation collision or observations not in chronological order."
-            )
+              "INVALID_JSONTS: Observation collision or observations not in chronological order.",
+            ),
           );
         });
 
@@ -530,13 +539,13 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
                 SubPeriods: 2,
-                Observations: [["2010Z", 1, 123], ["abc"], ["2010Z", 2, 123]]
-              })
+                Observations: [["2010Z", 1, 123], ["abc"], ["2010Z", 2, 123]],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: Observation collision or observations not in chronological order."
-            )
+              "INVALID_JSONTS: Observation collision or observations not in chronological order.",
+            ),
           );
         });
       });
@@ -549,11 +558,11 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
                 SubPeriods: 2,
-                Observations: [["2010Z", 123]]
-              })
+                Observations: [["2010Z", 123]],
+              }),
             );
           }).toThrow(
-            new Error("INVALID_JSONTS: Observation must specify sub period.")
+            new Error("INVALID_JSONTS: Observation must specify sub period."),
           );
         });
 
@@ -563,8 +572,8 @@ describe("The chronology.unserialize() function", () => {
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
-                Observations: [[1, 123]]
-              })
+                Observations: [[1, 123]],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid base period date."));
         });
@@ -575,8 +584,8 @@ describe("The chronology.unserialize() function", () => {
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
-                Observations: [["junk", 123]]
-              })
+                Observations: [["junk", 123]],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid base period date."));
         });
@@ -587,13 +596,13 @@ describe("The chronology.unserialize() function", () => {
               JSON.stringify({
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
-                Observations: [["2000-01-01T00:00:00.000000Z", 123]]
-              })
+                Observations: [["2000-01-01T00:00:00.000000Z", 123]],
+              }),
             );
           }).toThrow(
             new Error(
-              "NOT_SUPPORTED: Base period date specified beyond millisecond precision."
-            )
+              "NOT_SUPPORTED: Base period date specified beyond millisecond precision.",
+            ),
           );
         });
 
@@ -604,13 +613,16 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
                 SubPeriods: 1,
-                Observations: [["2010Z", 1, 123], ["2010Z", 123]]
-              })
+                Observations: [
+                  ["2010Z", 1, 123],
+                  ["2010Z", 123],
+                ],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: Observation collision or observations not in chronological order."
-            )
+              "INVALID_JSONTS: Observation collision or observations not in chronological order.",
+            ),
           );
         });
 
@@ -621,13 +633,16 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
                 SubPeriods: 1,
-                Observations: [["2010Z", 123], ["2009Z", 123]]
-              })
+                Observations: [
+                  ["2010Z", 123],
+                  ["2009Z", 123],
+                ],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: Observation collision or observations not in chronological order."
-            )
+              "INVALID_JSONTS: Observation collision or observations not in chronological order.",
+            ),
           );
         });
 
@@ -638,13 +653,13 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
                 SubPeriods: 1,
-                Observations: [["2010Z", 123], ["abc"], ["2010Z", 123]]
-              })
+                Observations: [["2010Z", 123], ["abc"], ["2010Z", 123]],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: Observation collision or observations not in chronological order."
-            )
+              "INVALID_JSONTS: Observation collision or observations not in chronological order.",
+            ),
           );
         });
       });
@@ -657,13 +672,13 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "regular",
                 BasePeriod: [1, "ms"],
                 SubPeriods: 1,
-                Observations: [["abc"]]
-              })
+                Observations: [["abc"]],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: First observation must specify an explicit period."
-            )
+              "INVALID_JSONTS: First observation must specify an explicit period.",
+            ),
           );
         });
       });
@@ -676,8 +691,8 @@ describe("The chronology.unserialize() function", () => {
               BasePeriod: [1, "ms"],
               Anchor: "2010Z",
               SubPeriods: 12,
-              Observations: []
-            })
+              Observations: [],
+            }),
           );
           expect(rts.type()).toBe("regular");
           expect(rts.basePeriod()).toEqual([1, "ms"]);
@@ -690,8 +705,8 @@ describe("The chronology.unserialize() function", () => {
             JSON.stringify({
               JsonTs: "regular",
               BasePeriod: [1, "ms"],
-              Observations: []
-            })
+              Observations: [],
+            }),
           );
           expect(rts.type()).toBe("regular");
           expect(rts.basePeriod()).toEqual([1, "ms"]);
@@ -704,8 +719,8 @@ describe("The chronology.unserialize() function", () => {
             JSON.stringify({
               JsonTs: "regular",
               BasePeriod: [1, "w"],
-              Observations: []
-            })
+              Observations: [],
+            }),
           );
           expect(rts.type()).toBe("regular");
           expect(rts.basePeriod()).toEqual([1, "w"]);
@@ -719,20 +734,20 @@ describe("The chronology.unserialize() function", () => {
               JsonTs: "regular",
               BasePeriod: [1, "y"],
               SubPeriods: 1,
-              Observations: [["2000Z", 1, 123], [456], ["2005Z", 789], [10]]
-            })
+              Observations: [["2000Z", 1, 123], [456], ["2005Z", 789], [10]],
+            }),
           );
           expect(
-            rts.period(new Date("2000-01-01T00:00:00.0Z")).obs.value()
+            rts.period(new Date("2000-01-01T00:00:00.0Z")).obs.value(),
           ).toBe(123);
           expect(
-            rts.period(new Date("2001-01-01T00:00:00.0Z")).obs.value()
+            rts.period(new Date("2001-01-01T00:00:00.0Z")).obs.value(),
           ).toBe(456);
           expect(
-            rts.period(new Date("2005-01-01T00:00:00.0Z")).obs.value()
+            rts.period(new Date("2005-01-01T00:00:00.0Z")).obs.value(),
           ).toBe(789);
           expect(
-            rts.period(new Date("2006-01-01T00:00:00.0Z")).obs.value()
+            rts.period(new Date("2006-01-01T00:00:00.0Z")).obs.value(),
           ).toBe(10);
         });
 
@@ -742,22 +757,22 @@ describe("The chronology.unserialize() function", () => {
               JsonTs: "regular",
               BasePeriod: [1, "y"],
               SubPeriods: 2,
-              Observations: []
+              Observations: [],
             }),
             (bpStart, bpEnd, spNum) => {
               if (spNum === 1) {
                 // First day
                 return {
                   start: bpStart,
-                  end: new Date(bpStart.getTime() + 24 * 60 * 60 * 1000)
+                  end: new Date(bpStart.getTime() + 24 * 60 * 60 * 1000),
                 };
               }
               // Rest of the year
               return {
                 start: new Date(bpStart.getTime() + 24 * 60 * 60 * 1000),
-                end: bpEnd
+                end: bpEnd,
               };
-            }
+            },
           );
 
           const p1 = rts.period(new Date("2000-01-01T00:00:00.0Z"));
@@ -779,8 +794,8 @@ describe("The chronology.unserialize() function", () => {
           chronology.unserialize(
             JSON.stringify({
               JsonTs: "irregular",
-              Observations: [false]
-            })
+              Observations: [false],
+            }),
           );
         }).toThrow(new Error("INVALID_JSONTS: Invalid observation."));
       });
@@ -790,8 +805,8 @@ describe("The chronology.unserialize() function", () => {
           chronology.unserialize(
             JSON.stringify({
               JsonTs: "irregular",
-              Observations: [["1970Z"]]
-            })
+              Observations: [["1970Z"]],
+            }),
           );
         }).toThrow(new Error("INVALID_JSONTS: Invalid observation."));
       });
@@ -801,8 +816,8 @@ describe("The chronology.unserialize() function", () => {
           chronology.unserialize(
             JSON.stringify({
               JsonTs: "irregular",
-              Observations: [["1970Z", "val", "1971Z", false]]
-            })
+              Observations: [["1970Z", "val", "1971Z", false]],
+            }),
           );
         }).toThrow(new Error("INVALID_JSONTS: Invalid observation."));
       });
@@ -813,8 +828,11 @@ describe("The chronology.unserialize() function", () => {
             chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
-                Observations: [[false, "val"], ["1970Z", "val", "1971Z"]]
-              })
+                Observations: [
+                  [false, "val"],
+                  ["1970Z", "val", "1971Z"],
+                ],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid start date."));
         });
@@ -824,8 +842,11 @@ describe("The chronology.unserialize() function", () => {
             chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
-                Observations: [["junk", "val"], ["1970Z", "val", "1971Z"]]
-              })
+                Observations: [
+                  ["junk", "val"],
+                  ["1970Z", "val", "1971Z"],
+                ],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid start date."));
         });
@@ -837,14 +858,14 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "irregular",
                 Observations: [
                   ["2000-01-01T00:00:00.000000Z", "val"],
-                  ["1970Z", "val", "1971Z"]
-                ]
-              })
+                  ["1970Z", "val", "1971Z"],
+                ],
+              }),
             );
           }).toThrow(
             new Error(
-              "NOT_SUPPORTED: Start date specified beyond millisecond precision."
-            )
+              "NOT_SUPPORTED: Start date specified beyond millisecond precision.",
+            ),
           );
         });
 
@@ -853,13 +874,13 @@ describe("The chronology.unserialize() function", () => {
             chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
-                Observations: [["1970Z", "val"]]
-              })
+                Observations: [["1970Z", "val"]],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: End date required for final observation."
-            )
+              "INVALID_JSONTS: End date required for final observation.",
+            ),
           );
         });
 
@@ -871,14 +892,14 @@ describe("The chronology.unserialize() function", () => {
                 Observations: [
                   ["1970Z", "val"],
                   ["1970Z", "val"],
-                  ["1971Z", "val", "1972Z"]
-                ]
-              })
+                  ["1971Z", "val", "1972Z"],
+                ],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: Observation collision or observations not in chronological order."
-            )
+              "INVALID_JSONTS: Observation collision or observations not in chronological order.",
+            ),
           );
         });
 
@@ -887,13 +908,16 @@ describe("The chronology.unserialize() function", () => {
             chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
-                Observations: [["1970Z", "val"], ["1970Z", "val", "1972Z"]]
-              })
+                Observations: [
+                  ["1970Z", "val"],
+                  ["1970Z", "val", "1972Z"],
+                ],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: Observation collision or observations not in chronological order."
-            )
+              "INVALID_JSONTS: Observation collision or observations not in chronological order.",
+            ),
           );
         });
       });
@@ -904,8 +928,8 @@ describe("The chronology.unserialize() function", () => {
             chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
-                Observations: [[false, "val", "1971Z"]]
-              })
+                Observations: [[false, "val", "1971Z"]],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid start date."));
         });
@@ -915,8 +939,8 @@ describe("The chronology.unserialize() function", () => {
             chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
-                Observations: [["junk", "val", "1971Z"]]
-              })
+                Observations: [["junk", "val", "1971Z"]],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid start date."));
         });
@@ -926,13 +950,13 @@ describe("The chronology.unserialize() function", () => {
             chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
-                Observations: [["2000-01-01T00:00:00.000000Z", "val", "1971Z"]]
-              })
+                Observations: [["2000-01-01T00:00:00.000000Z", "val", "1971Z"]],
+              }),
             );
           }).toThrow(
             new Error(
-              "NOT_SUPPORTED: Start date specified beyond millisecond precision."
-            )
+              "NOT_SUPPORTED: Start date specified beyond millisecond precision.",
+            ),
           );
         });
 
@@ -941,8 +965,8 @@ describe("The chronology.unserialize() function", () => {
             chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
-                Observations: [["1971Z", "val", false]]
-              })
+                Observations: [["1971Z", "val", false]],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid end date."));
         });
@@ -952,8 +976,8 @@ describe("The chronology.unserialize() function", () => {
             chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
-                Observations: [["1971Z", "val", "junk"]]
-              })
+                Observations: [["1971Z", "val", "junk"]],
+              }),
             );
           }).toThrow(new Error("INVALID_JSONTS: Invalid end date."));
         });
@@ -963,13 +987,13 @@ describe("The chronology.unserialize() function", () => {
             chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
-                Observations: [["2000Z", "val", "2000-01-01T00:00:00.000000Z"]]
-              })
+                Observations: [["2000Z", "val", "2000-01-01T00:00:00.000000Z"]],
+              }),
             );
           }).toThrow(
             new Error(
-              "NOT_SUPPORTED: End date specified beyond millisecond precision."
-            )
+              "NOT_SUPPORTED: End date specified beyond millisecond precision.",
+            ),
           );
         });
 
@@ -978,13 +1002,13 @@ describe("The chronology.unserialize() function", () => {
             chronology.unserialize(
               JSON.stringify({
                 JsonTs: "irregular",
-                Observations: [["1971Z", "val", "1971Z"]]
-              })
+                Observations: [["1971Z", "val", "1971Z"]],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: Observation end date must be strictly later than start date."
-            )
+              "INVALID_JSONTS: Observation end date must be strictly later than start date.",
+            ),
           );
         });
 
@@ -996,14 +1020,14 @@ describe("The chronology.unserialize() function", () => {
                 Observations: [
                   ["1969Z", "val", "1970-01-01T00:00:00.001Z"],
                   ["1970Z", "val"],
-                  ["1971Z", "val", "1972Z"]
-                ]
-              })
+                  ["1971Z", "val", "1972Z"],
+                ],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: Observation collision or observations not in chronological order."
-            )
+              "INVALID_JSONTS: Observation collision or observations not in chronological order.",
+            ),
           );
         });
 
@@ -1014,14 +1038,14 @@ describe("The chronology.unserialize() function", () => {
                 JsonTs: "irregular",
                 Observations: [
                   ["1969Z", "val", "1970-01-01T00:00:00.001Z"],
-                  ["1970Z", "val", "1972Z"]
-                ]
-              })
+                  ["1970Z", "val", "1972Z"],
+                ],
+              }),
             );
           }).toThrow(
             new Error(
-              "INVALID_JSONTS: Observation collision or observations not in chronological order."
-            )
+              "INVALID_JSONTS: Observation collision or observations not in chronological order.",
+            ),
           );
         });
       });
@@ -1035,9 +1059,9 @@ describe("The chronology.unserialize() function", () => {
               ["2000Z", 2],
               ["2001Z", 3, "2002Z"],
               ["2003Z", 4],
-              ["2004Z", 5, "2005Z"]
-            ]
-          })
+              ["2004Z", 5, "2005Z"],
+            ],
+          }),
         );
 
         let ip = its.period(new Date("1998-06-01Z"));

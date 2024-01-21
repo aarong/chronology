@@ -5,7 +5,7 @@ import chronology from "../main";
 describe("The irregular factory function", () => {
   it("should always return an object", () => {
     expect(chronology.irregular()).toEqual({
-      _obs: []
+      _obs: [],
     });
   });
 });
@@ -18,7 +18,7 @@ describe("The irregular._find() function", () => {
     expect(its._find(new Date(0))).toEqual({
       before: null,
       at: null,
-      after: null
+      after: null,
     });
   });
 
@@ -28,22 +28,22 @@ describe("The irregular._find() function", () => {
     expect(its._find(new Date(0))).toEqual({
       before: null,
       at: null,
-      after: 0
+      after: 0,
     });
     expect(its._find(new Date(1))).toEqual({
       before: null,
       at: 0,
-      after: null
+      after: null,
     });
     expect(its._find(new Date(99))).toEqual({
       before: null,
       at: 0,
-      after: null
+      after: null,
     });
     expect(its._find(new Date(100))).toEqual({
       before: 0,
       at: null,
-      after: null
+      after: null,
     });
   });
 
@@ -54,7 +54,7 @@ describe("The irregular._find() function", () => {
     expect(its._find(new Date(0))).toEqual({
       before: null,
       at: null,
-      after: 0
+      after: 0,
     });
     expect(its._find(new Date(1))).toEqual({ before: null, at: 0, after: 1 });
     expect(its._find(new Date(99))).toEqual({ before: null, at: 0, after: 1 });
@@ -63,7 +63,7 @@ describe("The irregular._find() function", () => {
     expect(its._find(new Date(200))).toEqual({
       before: 1,
       at: null,
-      after: null
+      after: null,
     });
   });
 
@@ -74,7 +74,7 @@ describe("The irregular._find() function", () => {
     expect(its._find(new Date(0))).toEqual({
       before: null,
       at: null,
-      after: 0
+      after: 0,
     });
     expect(its._find(new Date(1))).toEqual({ before: null, at: 0, after: 1 });
     expect(its._find(new Date(99))).toEqual({ before: null, at: 0, after: 1 });
@@ -85,7 +85,7 @@ describe("The irregular._find() function", () => {
     expect(its._find(new Date(300))).toEqual({
       before: 1,
       at: null,
-      after: null
+      after: null,
     });
   });
 
@@ -97,7 +97,7 @@ describe("The irregular._find() function", () => {
     expect(its._find(new Date(0))).toEqual({
       before: null,
       at: null,
-      after: 0
+      after: 0,
     });
     expect(its._find(new Date(1))).toEqual({ before: null, at: 0, after: 1 });
     expect(its._find(new Date(99))).toEqual({ before: null, at: 0, after: 1 });
@@ -108,7 +108,7 @@ describe("The irregular._find() function", () => {
     expect(its._find(new Date(300))).toEqual({
       before: 2,
       at: null,
-      after: null
+      after: null,
     });
   });
 
@@ -120,7 +120,7 @@ describe("The irregular._find() function", () => {
     expect(its._find(new Date(0))).toEqual({
       before: null,
       at: null,
-      after: 0
+      after: 0,
     });
     expect(its._find(new Date(1))).toEqual({ before: null, at: 0, after: 1 });
     expect(its._find(new Date(99))).toEqual({ before: null, at: 0, after: 1 });
@@ -135,7 +135,7 @@ describe("The irregular._find() function", () => {
     expect(its._find(new Date(500))).toEqual({
       before: 2,
       at: null,
-      after: null
+      after: null,
     });
   });
 
@@ -148,7 +148,7 @@ describe("The irregular._find() function", () => {
     expect(its._find(new Date(5000))).toEqual({
       before: 49,
       at: 50,
-      after: 51
+      after: 51,
     });
   });
 });
@@ -196,8 +196,8 @@ describe("The irregular.add() function", () => {
       its.add(new Date(1), 1, new Date(0));
     }).toThrow(
       new Error(
-        "INVALID_ARGUMENT: End date must by strictly later than the start date."
-      )
+        "INVALID_ARGUMENT: End date must by strictly later than the start date.",
+      ),
     );
   });
 
@@ -206,8 +206,8 @@ describe("The irregular.add() function", () => {
       its.add(new Date(0), 1, new Date(0));
     }).toThrow(
       new Error(
-        "INVALID_ARGUMENT: End date must by strictly later than the start date."
-      )
+        "INVALID_ARGUMENT: End date must by strictly later than the start date.",
+      ),
     );
   });
 
@@ -217,8 +217,8 @@ describe("The irregular.add() function", () => {
       its.add(new Date(0), "val", new Date(101));
     }).toThrow(
       new Error(
-        "COLLISION: New observation would overlap an existing observation."
-      )
+        "COLLISION: New observation would overlap an existing observation.",
+      ),
     );
   });
 
@@ -228,8 +228,8 @@ describe("The irregular.add() function", () => {
       its.add(new Date(199), "val", new Date(300));
     }).toThrow(
       new Error(
-        "COLLISION: New observation would overlap an existing observation."
-      )
+        "COLLISION: New observation would overlap an existing observation.",
+      ),
     );
   });
 
@@ -239,8 +239,8 @@ describe("The irregular.add() function", () => {
       its.add(new Date(0), "val", new Date(300));
     }).toThrow(
       new Error(
-        "COLLISION: New observation would overlap an existing observation."
-      )
+        "COLLISION: New observation would overlap an existing observation.",
+      ),
     );
   });
 
@@ -250,8 +250,8 @@ describe("The irregular.add() function", () => {
       its.add(new Date(125), "val", new Date(175));
     }).toThrow(
       new Error(
-        "COLLISION: New observation would overlap an existing observation."
-      )
+        "COLLISION: New observation would overlap an existing observation.",
+      ),
     );
   });
 
@@ -262,7 +262,7 @@ describe("The irregular.add() function", () => {
   it("should update its._obs appropriately if the call was valid", () => {
     its.add(new Date(100), "val", new Date(200));
     const expected = [
-      { start: new Date(100), value: "val", end: new Date(200) }
+      { start: new Date(100), value: "val", end: new Date(200) },
     ];
     expect(its._obs).toEqual(expected);
 
@@ -298,18 +298,18 @@ describe("The irregular.set() function", () => {
       {
         start: new Date(0),
         value: "A",
-        end: new Date(5)
+        end: new Date(5),
       },
       {
         start: new Date(5),
         value: "D",
-        end: new Date(45)
+        end: new Date(45),
       },
       {
         start: new Date(45),
         value: "C",
-        end: new Date(50)
-      }
+        end: new Date(50),
+      },
     ]);
   });
 });
@@ -335,8 +335,8 @@ describe("The irregular.clear() function", () => {
       its.clear(new Date(0), new Date(0));
     }).toThrow(
       new Error(
-        "INVALID_ARGUMENT: Start date must be strictly before end date."
-      )
+        "INVALID_ARGUMENT: Start date must be strictly before end date.",
+      ),
     );
   });
 
@@ -346,8 +346,8 @@ describe("The irregular.clear() function", () => {
       its.clear(new Date(1), new Date(0));
     }).toThrow(
       new Error(
-        "INVALID_ARGUMENT: Start date must be strictly before end date."
-      )
+        "INVALID_ARGUMENT: Start date must be strictly before end date.",
+      ),
     );
   });
 
@@ -365,8 +365,8 @@ describe("The irregular.clear() function", () => {
       {
         start: new Date(0),
         value: "123",
-        end: new Date(10)
-      }
+        end: new Date(10),
+      },
     ]);
   });
 
@@ -392,8 +392,8 @@ describe("The irregular.clear() function", () => {
       {
         start: new Date(5),
         value: "123",
-        end: new Date(10)
-      }
+        end: new Date(10),
+      },
     ]);
   });
 
@@ -405,8 +405,8 @@ describe("The irregular.clear() function", () => {
       {
         start: new Date(5),
         value: "123",
-        end: new Date(10)
-      }
+        end: new Date(10),
+      },
     ]);
   });
 
@@ -418,8 +418,8 @@ describe("The irregular.clear() function", () => {
       {
         start: new Date(0),
         value: "123",
-        end: new Date(5)
-      }
+        end: new Date(5),
+      },
     ]);
   });
 
@@ -431,8 +431,8 @@ describe("The irregular.clear() function", () => {
       {
         start: new Date(0),
         value: "123",
-        end: new Date(5)
-      }
+        end: new Date(5),
+      },
     ]);
   });
 
@@ -444,13 +444,13 @@ describe("The irregular.clear() function", () => {
       {
         start: new Date(0),
         value: "123",
-        end: new Date(2)
+        end: new Date(2),
       },
       {
         start: new Date(8),
         value: "123",
-        end: new Date(10)
-      }
+        end: new Date(10),
+      },
     ]);
   });
 
@@ -464,13 +464,13 @@ describe("The irregular.clear() function", () => {
       {
         start: new Date(0),
         value: "1",
-        end: new Date(5)
+        end: new Date(5),
       },
       {
         start: new Date(45),
         value: "3",
-        end: new Date(50)
-      }
+        end: new Date(50),
+      },
     ]);
   });
 });
@@ -489,7 +489,7 @@ describe("The irregular.split() function", () => {
     expect(() => {
       its.split(new Date(10));
     }).toThrow(
-      new Error("MISSING: There is no observation at the specified date.")
+      new Error("MISSING: There is no observation at the specified date."),
     );
   });
 
@@ -501,8 +501,8 @@ describe("The irregular.split() function", () => {
       {
         start: new Date(0),
         value: 123,
-        end: new Date(10)
-      }
+        end: new Date(10),
+      },
     ]);
   });
 
@@ -514,13 +514,13 @@ describe("The irregular.split() function", () => {
       {
         start: new Date(0),
         value: 123,
-        end: new Date(5)
+        end: new Date(5),
       },
       {
         start: new Date(5),
         value: 123,
-        end: new Date(10)
-      }
+        end: new Date(10),
+      },
     ]);
   });
 });
@@ -799,7 +799,7 @@ describe("The irregular.map() function", () => {
 
   it("should return an empty series there are no observations", () => {
     const its = chronology.irregular();
-    const newSeries = its.map(val => val);
+    const newSeries = its.map((val) => val);
     expect(newSeries._obs.length).toBe(0);
   });
 
@@ -809,7 +809,7 @@ describe("The irregular.map() function", () => {
       its.add(new Date(i), i, new Date(i + 1));
     }
 
-    const newSeries = its.map(val => val * 2);
+    const newSeries = its.map((val) => val * 2);
 
     let newPeriod = newSeries.first();
     for (let i = 0; i < 10; i += 1) {
@@ -897,7 +897,7 @@ describe("The irregular.filter() function", () => {
       its.add(new Date(i), i, new Date(i + 1));
     }
 
-    const newSeries = its.filter(period => period.obs.value() < 5);
+    const newSeries = its.filter((period) => period.obs.value() < 5);
 
     let period = newSeries.first();
     for (let i = 0; i < 5; i += 1) {
@@ -932,7 +932,9 @@ describe("The irregular.subSeries() function", () => {
     expect(() => {
       its.subSeries(new Date(0), new Date(0));
     }).toThrow(
-      new Error("INVALID_ARGUMENT: End date must be strictly after start date.")
+      new Error(
+        "INVALID_ARGUMENT: End date must be strictly after start date.",
+      ),
     );
   });
 
@@ -941,7 +943,9 @@ describe("The irregular.subSeries() function", () => {
     expect(() => {
       its.subSeries(new Date(1), new Date(0));
     }).toThrow(
-      new Error("INVALID_ARGUMENT: End date must be strictly after start date.")
+      new Error(
+        "INVALID_ARGUMENT: End date must be strictly after start date.",
+      ),
     );
   });
 
@@ -1124,8 +1128,8 @@ describe("The irregular.overlay() function", () => {
       {
         start: new Date(0),
         value: 123,
-        end: new Date(10)
-      }
+        end: new Date(10),
+      },
     ]);
   });
 
@@ -1138,8 +1142,8 @@ describe("The irregular.overlay() function", () => {
       {
         start: new Date(0),
         value: 123,
-        end: new Date(10)
-      }
+        end: new Date(10),
+      },
     ]);
   });
 
@@ -1157,28 +1161,28 @@ describe("The irregular.overlay() function", () => {
       {
         start: new Date(0),
         value: 1,
-        end: new Date(10)
+        end: new Date(10),
       },
       {
         start: new Date(10),
         value: "A",
-        end: new Date(20)
+        end: new Date(20),
       },
       {
         start: new Date(20),
         value: 2,
-        end: new Date(25)
+        end: new Date(25),
       },
       {
         start: new Date(25),
         value: "B",
-        end: new Date(55)
+        end: new Date(55),
       },
       {
         start: new Date(60),
         value: "C",
-        end: new Date(70)
-      }
+        end: new Date(70),
+      },
     ]);
   });
 });
@@ -1199,13 +1203,13 @@ describe("The irregular.clone() function", () => {
       {
         start: new Date(0),
         value: 123,
-        end: new Date(10)
+        end: new Date(10),
       },
       {
         start: new Date(20),
         value: 456,
-        end: new Date(30)
-      }
+        end: new Date(30),
+      },
     ]);
   });
 });
@@ -1223,8 +1227,8 @@ describe("The irregular.serialize() function", () => {
       its.serialize();
     }).toThrow(
       new Error(
-        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible."
-      )
+        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible.",
+      ),
     );
   });
 
@@ -1240,8 +1244,8 @@ describe("The irregular.serialize() function", () => {
       its.serialize();
     }).toThrow(
       new Error(
-        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible."
-      )
+        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible.",
+      ),
     );
   });
 
@@ -1249,7 +1253,7 @@ describe("The irregular.serialize() function", () => {
     const its = chronology.irregular();
     expect(JSON.parse(its.serialize())).toEqual({
       JsonTs: "irregular",
-      Observations: []
+      Observations: [],
     });
   });
 
@@ -1275,8 +1279,8 @@ describe("The irregular.serialize() function", () => {
         ["1970-01-01T00:00:00.050Z", "a string"],
         ["1970-01-01T00:00:00.060Z", ["an array"], "1970-01-01T00:00:00.070Z"],
         ["1970-01-01T00:00:00.080Z", false],
-        ["1970-01-01T00:00:00.090Z", null, "1970-01-01T00:00:00.100Z"]
-      ]
+        ["1970-01-01T00:00:00.090Z", null, "1970-01-01T00:00:00.100Z"],
+      ],
     });
   });
 });
@@ -1687,8 +1691,8 @@ describe("The irregularPeriod.obs.set() function", () => {
       ip.obs.set("newval");
     }).toThrow(
       new Error(
-        "INVALID_PERIOD: Cannot assign a value to the period before the first observation, the period after the last observation, or to an empty series."
-      )
+        "INVALID_PERIOD: Cannot assign a value to the period before the first observation, the period after the last observation, or to an empty series.",
+      ),
     );
   });
 
@@ -1700,8 +1704,8 @@ describe("The irregularPeriod.obs.set() function", () => {
       ip.obs.set("newval");
     }).toThrow(
       new Error(
-        "INVALID_PERIOD: Cannot assign a value to the period before the first observation, the period after the last observation, or to an empty series."
-      )
+        "INVALID_PERIOD: Cannot assign a value to the period before the first observation, the period after the last observation, or to an empty series.",
+      ),
     );
   });
 
@@ -1713,8 +1717,8 @@ describe("The irregularPeriod.obs.set() function", () => {
       ip.obs.set("newval");
     }).toThrow(
       new Error(
-        "INVALID_PERIOD: Cannot assign a value to the period before the first observation, the period after the last observation, or to an empty series."
-      )
+        "INVALID_PERIOD: Cannot assign a value to the period before the first observation, the period after the last observation, or to an empty series.",
+      ),
     );
   });
 
@@ -1727,8 +1731,8 @@ describe("The irregularPeriod.obs.set() function", () => {
       {
         start: new Date(0),
         value: "newval",
-        end: new Date(10)
-      }
+        end: new Date(10),
+      },
     ]);
   });
 
@@ -1741,7 +1745,7 @@ describe("The irregularPeriod.obs.set() function", () => {
     expect(its._obs).toEqual([
       { start: new Date(0), value: "val1", end: new Date(10) },
       { start: new Date(10), value: "val2", end: new Date(20) },
-      { start: new Date(20), value: "val3", end: new Date(30) }
+      { start: new Date(20), value: "val3", end: new Date(30) },
     ]);
   });
 
@@ -1754,8 +1758,8 @@ describe("The irregularPeriod.obs.set() function", () => {
       {
         start: new Date(0),
         value: undefined,
-        end: new Date(10)
-      }
+        end: new Date(10),
+      },
     ]);
   });
 
@@ -1775,8 +1779,8 @@ describe("The irregularPeriod.obs.clear() function", () => {
       ip.obs.clear();
     }).toThrow(
       new Error(
-        "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation."
-      )
+        "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation.",
+      ),
     );
   });
 
@@ -1788,8 +1792,8 @@ describe("The irregularPeriod.obs.clear() function", () => {
       ip.obs.clear();
     }).toThrow(
       new Error(
-        "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation."
-      )
+        "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation.",
+      ),
     );
   });
 
@@ -1801,8 +1805,8 @@ describe("The irregularPeriod.obs.clear() function", () => {
       ip.obs.clear();
     }).toThrow(
       new Error(
-        "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation."
-      )
+        "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation.",
+      ),
     );
   });
 
@@ -1822,7 +1826,7 @@ describe("The irregularPeriod.obs.clear() function", () => {
     ip.obs.clear();
     expect(its._obs).toEqual([
       { start: new Date(0), value: "val1", end: new Date(10) },
-      { start: new Date(20), value: "val3", end: new Date(30) }
+      { start: new Date(20), value: "val3", end: new Date(30) },
     ]);
   });
 
@@ -1842,8 +1846,8 @@ describe("The irregularPeriod.obs.value() function", () => {
       ip.obs.value();
     }).toThrow(
       new Error(
-        "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation."
-      )
+        "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation.",
+      ),
     );
   });
 
@@ -1855,8 +1859,8 @@ describe("The irregularPeriod.obs.value() function", () => {
       ip.obs.value();
     }).toThrow(
       new Error(
-        "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation."
-      )
+        "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation.",
+      ),
     );
   });
 
@@ -1868,8 +1872,8 @@ describe("The irregularPeriod.obs.value() function", () => {
       ip.obs.value();
     }).toThrow(
       new Error(
-        "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation."
-      )
+        "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation.",
+      ),
     );
   });
 
@@ -1881,7 +1885,9 @@ describe("The irregularPeriod.obs.value() function", () => {
     expect(() => {
       ip.obs.value();
     }).toThrow(
-      new Error("MISSING: There is no observation spanning the reference date.")
+      new Error(
+        "MISSING: There is no observation spanning the reference date.",
+      ),
     );
   });
 

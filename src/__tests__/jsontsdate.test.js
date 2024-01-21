@@ -9,28 +9,28 @@ describe("The jsonTsDate.create() function", () => {
 
   it("should return correctly", () => {
     expect(jsonTsDate.create(new Date("1970-01-01T00:00:00.000Z"))).toBe(
-      "1970Z"
+      "1970Z",
     );
     expect(jsonTsDate.create(new Date("1970-02-01T00:00:00.000Z"))).toBe(
-      "1970-02Z"
+      "1970-02Z",
     );
     expect(jsonTsDate.create(new Date("1970-01-02T00:00:00.000Z"))).toBe(
-      "1970-01-02Z"
+      "1970-01-02Z",
     );
     expect(jsonTsDate.create(new Date("1970-01-01T01:00:00.000Z"))).toBe(
-      "1970-01-01T01Z"
+      "1970-01-01T01Z",
     );
     expect(jsonTsDate.create(new Date("1970-01-01T00:01:00.000Z"))).toBe(
-      "1970-01-01T00:01Z"
+      "1970-01-01T00:01Z",
     );
     expect(jsonTsDate.create(new Date("1970-01-01T00:00:01.000Z"))).toBe(
-      "1970-01-01T00:00:01Z"
+      "1970-01-01T00:00:01Z",
     );
     expect(jsonTsDate.create(new Date("1970-01-01T00:00:00.001Z"))).toBe(
-      "1970-01-01T00:00:00.001Z"
+      "1970-01-01T00:00:00.001Z",
     );
     expect(jsonTsDate.create(new Date("1970-02-03T04:05:06.007Z"))).toBe(
-      "1970-02-03T04:05:06.007Z"
+      "1970-02-03T04:05:06.007Z",
     );
   });
 });
@@ -229,12 +229,12 @@ describe("The jsonTsDate.parse() function", () => {
     expect(() => {
       jsonTsDate.parse("2000-01-01T00:00:00.000000");
     }).toThrow(
-      new Error("NOT_SUPPORTED: Sub-millisecond precision is not supported.")
+      new Error("NOT_SUPPORTED: Sub-millisecond precision is not supported."),
     );
     expect(() => {
       jsonTsDate.parse("2000-01-01T00:00:00.000000000");
     }).toThrow(
-      new Error("NOT_SUPPORTED: Sub-millisecond precision is not supported.")
+      new Error("NOT_SUPPORTED: Sub-millisecond precision is not supported."),
     );
 
     // Invalid time zone
@@ -247,163 +247,163 @@ describe("The jsonTsDate.parse() function", () => {
     // Specified to year
     expect(jsonTsDate.parse("1999")).toEqual(new Date("1999-01-01T00:00:00.0"));
     expect(jsonTsDate.parse("1999Z")).toEqual(
-      new Date("1999-01-01T00:00:00.0Z")
+      new Date("1999-01-01T00:00:00.0Z"),
     );
     expect(jsonTsDate.parse("1999+12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0+12:00")
+      new Date("1999-01-01T00:00:00.0+12:00"),
     );
     expect(jsonTsDate.parse("1999-12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0-12:00")
+      new Date("1999-01-01T00:00:00.0-12:00"),
     );
 
     // Specified to month
     expect(jsonTsDate.parse("1999-01")).toEqual(
-      new Date("1999-01-01T00:00:00.0")
+      new Date("1999-01-01T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-01Z")).toEqual(
-      new Date("1999-01-01T00:00:00.0Z")
+      new Date("1999-01-01T00:00:00.0Z"),
     );
     expect(jsonTsDate.parse("1999-01+12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0+12:00")
+      new Date("1999-01-01T00:00:00.0+12:00"),
     );
     expect(jsonTsDate.parse("1999-01-12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0-12:00")
+      new Date("1999-01-01T00:00:00.0-12:00"),
     );
 
     // Specified to day
     expect(jsonTsDate.parse("1999-01-01")).toEqual(
-      new Date("1999-01-01T00:00:00.0")
+      new Date("1999-01-01T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-01-01Z")).toEqual(
-      new Date("1999-01-01T00:00:00.0Z")
+      new Date("1999-01-01T00:00:00.0Z"),
     );
     expect(jsonTsDate.parse("1999-01-01+12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0+12:00")
+      new Date("1999-01-01T00:00:00.0+12:00"),
     );
     expect(jsonTsDate.parse("1999-01-01-12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0-12:00")
+      new Date("1999-01-01T00:00:00.0-12:00"),
     );
 
     // Specified to day - number of days in month
     expect(jsonTsDate.parse("1999-01-31")).toEqual(
-      new Date("1999-01-31T00:00:00.0")
+      new Date("1999-01-31T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-02-28")).toEqual(
-      new Date("1999-02-28T00:00:00.0")
+      new Date("1999-02-28T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-03-31")).toEqual(
-      new Date("1999-03-31T00:00:00.0")
+      new Date("1999-03-31T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-04-30")).toEqual(
-      new Date("1999-04-30T00:00:00.0")
+      new Date("1999-04-30T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-05-31")).toEqual(
-      new Date("1999-05-31T00:00:00.0")
+      new Date("1999-05-31T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-06-30")).toEqual(
-      new Date("1999-06-30T00:00:00.0")
+      new Date("1999-06-30T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-07-31")).toEqual(
-      new Date("1999-07-31T00:00:00.0")
+      new Date("1999-07-31T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-08-31")).toEqual(
-      new Date("1999-08-31T00:00:00.0")
+      new Date("1999-08-31T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-09-30")).toEqual(
-      new Date("1999-09-30T00:00:00.0")
+      new Date("1999-09-30T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-10-31")).toEqual(
-      new Date("1999-10-31T00:00:00.0")
+      new Date("1999-10-31T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-11-30")).toEqual(
-      new Date("1999-11-30T00:00:00.0")
+      new Date("1999-11-30T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-12-31")).toEqual(
-      new Date("1999-12-31T00:00:00.0")
+      new Date("1999-12-31T00:00:00.0"),
     );
 
     // Specified to the day - leap years
     expect(jsonTsDate.parse("1999-02-28")).toEqual(
-      new Date("1999-02-28T00:00:00.0")
+      new Date("1999-02-28T00:00:00.0"),
     );
     expect(jsonTsDate.parse("2004-02-29")).toEqual(
-      new Date("2004-02-29T00:00:00.0")
+      new Date("2004-02-29T00:00:00.0"),
     );
     expect(jsonTsDate.parse("2100-02-28")).toEqual(
-      new Date("2100-02-28T00:00:00.0")
+      new Date("2100-02-28T00:00:00.0"),
     );
     expect(jsonTsDate.parse("2000-02-29")).toEqual(
-      new Date("2000-02-29T00:00:00.0")
+      new Date("2000-02-29T00:00:00.0"),
     );
 
     // Specified to hour
     expect(jsonTsDate.parse("1999-01-01T00")).toEqual(
-      new Date("1999-01-01T00:00:00.0")
+      new Date("1999-01-01T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-01-01T00Z")).toEqual(
-      new Date("1999-01-01T00:00:00.0Z")
+      new Date("1999-01-01T00:00:00.0Z"),
     );
     expect(jsonTsDate.parse("1999-01-01T00+12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0+12:00")
+      new Date("1999-01-01T00:00:00.0+12:00"),
     );
     expect(jsonTsDate.parse("1999-01-01T00-12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0-12:00")
+      new Date("1999-01-01T00:00:00.0-12:00"),
     );
 
     // Specified to minute
     expect(jsonTsDate.parse("1999-01-01T00:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0")
+      new Date("1999-01-01T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-01-01T00:00Z")).toEqual(
-      new Date("1999-01-01T00:00:00.0Z")
+      new Date("1999-01-01T00:00:00.0Z"),
     );
     expect(jsonTsDate.parse("1999-01-01T00:00+12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0+12:00")
+      new Date("1999-01-01T00:00:00.0+12:00"),
     );
     expect(jsonTsDate.parse("1999-01-01T00:00-12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0-12:00")
+      new Date("1999-01-01T00:00:00.0-12:00"),
     );
 
     // Specified to second
     expect(jsonTsDate.parse("1999-01-01T00:00:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0")
+      new Date("1999-01-01T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-01-01T00:00:00Z")).toEqual(
-      new Date("1999-01-01T00:00:00.0Z")
+      new Date("1999-01-01T00:00:00.0Z"),
     );
     expect(jsonTsDate.parse("1999-01-01T00:00:00+12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0+12:00")
+      new Date("1999-01-01T00:00:00.0+12:00"),
     );
     expect(jsonTsDate.parse("1999-01-01T00:00:00-12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0-12:00")
+      new Date("1999-01-01T00:00:00.0-12:00"),
     );
 
     // Specified to millisecond
     expect(jsonTsDate.parse("1999-01-01T00:00:00.000")).toEqual(
-      new Date("1999-01-01T00:00:00.0")
+      new Date("1999-01-01T00:00:00.0"),
     );
     expect(jsonTsDate.parse("1999-01-01T00:00:00.000Z")).toEqual(
-      new Date("1999-01-01T00:00:00.0Z")
+      new Date("1999-01-01T00:00:00.0Z"),
     );
     expect(jsonTsDate.parse("1999-01-01T00:00:00.000+12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0+12:00")
+      new Date("1999-01-01T00:00:00.0+12:00"),
     );
     expect(jsonTsDate.parse("1999-01-01T00:00:00.000-12:00")).toEqual(
-      new Date("1999-01-01T00:00:00.0-12:00")
+      new Date("1999-01-01T00:00:00.0-12:00"),
     );
 
     // Random date parts
     expect(jsonTsDate.parse("1234-12-23T12:34:56.789")).toEqual(
-      new Date("1234-12-23T12:34:56.789")
+      new Date("1234-12-23T12:34:56.789"),
     );
     expect(jsonTsDate.parse("1234-12-23T12:34:56.789Z")).toEqual(
-      new Date("1234-12-23T12:34:56.789Z")
+      new Date("1234-12-23T12:34:56.789Z"),
     );
     expect(jsonTsDate.parse("1234-12-23T12:34:56.789+12:34")).toEqual(
-      new Date("1234-12-23T12:34:56.789+12:34")
+      new Date("1234-12-23T12:34:56.789+12:34"),
     );
     expect(jsonTsDate.parse("1234-12-23T12:34:56.789-23:45")).toEqual(
-      new Date("1234-12-23T12:34:56.789-23:45")
+      new Date("1234-12-23T12:34:56.789-23:45"),
     );
   });
 });

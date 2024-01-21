@@ -45,7 +45,7 @@ describe("RegularSeries examples", () => {
     // Initialize
     const rts = chronology.regular({
       basePeriod: [1, "q"],
-      anchor: new Date("2000-11-01")
+      anchor: new Date("2000-11-01"),
     });
 
     // Populate
@@ -67,7 +67,7 @@ describe("RegularSeries examples", () => {
     // Initialize
     const rts = chronology.regular({
       basePeriod: [1, "m"],
-      subPeriods: 2
+      subPeriods: 2,
     });
 
     // Populate
@@ -94,9 +94,9 @@ describe("RegularSeries examples", () => {
       subPeriodBoundaries(bpStart, bpEnd, spNum) {
         return {
           start: new Date(bpStart.getTime() + (spNum - 1) * msPerDay),
-          end: new Date(bpStart.getTime() + spNum * msPerDay)
+          end: new Date(bpStart.getTime() + spNum * msPerDay),
         };
-      }
+      },
     });
 
     // Populate
@@ -118,7 +118,7 @@ describe("RegularSeries examples", () => {
     // Initialize
     const rts = chronology.regular({
       basePeriod: [1, "ms"],
-      subPeriods: 1000
+      subPeriods: 1000,
     });
 
     // Populate
@@ -144,7 +144,7 @@ describe("RegularSeries examples", () => {
   it("Increment all observation values by 10 using `rts.map()`:", () => {
     // Initialize
     const rts = chronology.regular({
-      basePeriod: [1, "y"]
+      basePeriod: [1, "y"],
     });
 
     // Populate
@@ -173,7 +173,7 @@ describe("RegularSeries examples", () => {
   it("Generate a lagged time series using `rts.transform()`:", () => {
     // Initialize
     const rts = chronology.regular({
-      basePeriod: [1, "y"]
+      basePeriod: [1, "y"],
     });
 
     // Populate
@@ -204,7 +204,7 @@ describe("RegularSeries examples", () => {
   it("Sum observation values using `rts.reduce()`:", () => {
     // Initialize
     const rts = chronology.regular({
-      basePeriod: [1, "y"]
+      basePeriod: [1, "y"],
     });
 
     // Populate
@@ -224,7 +224,7 @@ describe("RegularSeries examples", () => {
   it("Retrieve observations with negative values using `rts.filter()`:", () => {
     // Initialize
     const rts = chronology.regular({
-      basePeriod: [1, "y"]
+      basePeriod: [1, "y"],
     });
 
     // Populate
@@ -253,7 +253,7 @@ describe("RegularSeries examples", () => {
   it("Serialize and unserialize a regular time series:", () => {
     // Initialize
     const rts = chronology.regular({
-      basePeriod: [1, "y"]
+      basePeriod: [1, "y"],
     });
 
     // Populate
@@ -291,17 +291,17 @@ describe("IrregularSeries examples", () => {
     its.add(
       new Date("2000-01-01T00:00:00.000Z"),
       "value 1",
-      new Date("2001-02-03T12:34:56.789Z")
+      new Date("2001-02-03T12:34:56.789Z"),
     );
     its.add(
       new Date("2003-04-05T00:12:34.567Z"),
       "value 2",
-      new Date("2003-04-05T12:45:56.789Z")
+      new Date("2003-04-05T12:45:56.789Z"),
     );
     its.add(
       new Date("2003-04-05T12:45:56.789Z"),
       "value 3",
-      new Date("2004-01-01T00:00:00.000Z")
+      new Date("2004-01-01T00:00:00.000Z"),
     );
 
     // Display
@@ -320,17 +320,17 @@ describe("IrregularSeries examples", () => {
     its.add(
       new Date("2000-01-01T00:00:00.000Z"),
       1,
-      new Date("2001-02-03T12:34:56.789Z")
+      new Date("2001-02-03T12:34:56.789Z"),
     );
     its.add(
       new Date("2003-04-05T00:12:34.567Z"),
       2,
-      new Date("2003-04-05T12:45:56.789Z")
+      new Date("2003-04-05T12:45:56.789Z"),
     );
     its.add(
       new Date("2003-04-05T12:45:56.789Z"),
       3,
-      new Date("2004-01-01T00:00:00.000Z")
+      new Date("2004-01-01T00:00:00.000Z"),
     );
 
     // // Display original
@@ -357,17 +357,17 @@ describe("IrregularSeries examples", () => {
     its.add(
       new Date("2000-01-01T00:00:00.000Z"),
       1,
-      new Date("2001-02-03T12:34:56.789Z")
+      new Date("2001-02-03T12:34:56.789Z"),
     );
     its.add(
       new Date("2003-04-05T00:12:34.567Z"),
       2,
-      new Date("2003-04-05T12:45:56.789Z")
+      new Date("2003-04-05T12:45:56.789Z"),
     );
     its.add(
       new Date("2003-04-05T12:45:56.789Z"),
       3,
-      new Date("2004-01-01T00:00:00.000Z")
+      new Date("2004-01-01T00:00:00.000Z"),
     );
 
     // Sum and display
@@ -385,17 +385,17 @@ describe("IrregularSeries examples", () => {
     its.add(
       new Date("2000-01-01T00:00:00.000Z"),
       -1,
-      new Date("2001-02-03T12:34:56.789Z")
+      new Date("2001-02-03T12:34:56.789Z"),
     );
     its.add(
       new Date("2003-04-05T00:12:34.567Z"),
       0,
-      new Date("2003-04-05T12:45:56.789Z")
+      new Date("2003-04-05T12:45:56.789Z"),
     );
     its.add(
       new Date("2003-04-05T12:45:56.789Z"),
       1,
-      new Date("2004-01-01T00:00:00.000Z")
+      new Date("2004-01-01T00:00:00.000Z"),
     );
 
     // Display original
@@ -422,17 +422,17 @@ describe("IrregularSeries examples", () => {
     its.add(
       new Date("2000-01-01T00:00:00.000Z"),
       -1,
-      new Date("2001-02-03T12:34:56.789Z")
+      new Date("2001-02-03T12:34:56.789Z"),
     );
     its.add(
       new Date("2003-04-05T00:12:34.567Z"),
       0,
-      new Date("2003-04-05T12:45:56.789Z")
+      new Date("2003-04-05T12:45:56.789Z"),
     );
     its.add(
       new Date("2003-04-05T12:45:56.789Z"),
       1,
-      new Date("2004-01-01T00:00:00.000Z")
+      new Date("2004-01-01T00:00:00.000Z"),
     );
 
     // Display original
@@ -462,7 +462,7 @@ describe("Extension examples", () => {
 
     // Initialize
     const rts = chronology.regular({
-      basePeriod: [1, "y"]
+      basePeriod: [1, "y"],
     });
 
     // Populate
@@ -490,17 +490,17 @@ describe("Extension examples", () => {
     its.add(
       new Date("2000-01-01T00:00:00.000Z"),
       1,
-      new Date("2001-02-03T12:34:56.789Z")
+      new Date("2001-02-03T12:34:56.789Z"),
     );
     its.add(
       new Date("2003-04-05T00:12:34.567Z"),
       2,
-      new Date("2003-04-05T12:45:56.789Z")
+      new Date("2003-04-05T12:45:56.789Z"),
     );
     its.add(
       new Date("2003-04-05T12:45:56.789Z"),
       3,
-      new Date("2004-01-01T00:00:00.000Z")
+      new Date("2004-01-01T00:00:00.000Z"),
     );
 
     // Use the sum function

@@ -74,7 +74,7 @@ chronology.unserialize = function unserialize(jsonTs, subPeriodBoundaries) {
   const type = obj.JsonTs.toLowerCase();
   if (type !== "regular" && type !== "irregular") {
     throw new Error(
-      "INVALID_JSONTS: JsonTs parameter must be 'regular' or 'irregular'."
+      "INVALID_JSONTS: JsonTs parameter must be 'regular' or 'irregular'.",
     );
   }
 
@@ -103,19 +103,19 @@ chronology.unserialize = function unserialize(jsonTs, subPeriodBoundaries) {
  */
 chronology._unserializeRegular = function _unserializeRegular(
   obj,
-  subPeriodBoundaries
+  subPeriodBoundaries,
 ) {
   // BasePeriod property must be an array of length 2
   if (!check.array(obj.BasePeriod) || obj.BasePeriod.length !== 2) {
     throw new Error(
-      "INVALID_JSONTS: BasePeriod parameter must be array of length 2."
+      "INVALID_JSONTS: BasePeriod parameter must be array of length 2.",
     );
   }
 
   // BasePeriodNumber must be a positive integer
   if (!check.integer(obj.BasePeriod[0]) || obj.BasePeriod[0] < 1) {
     throw new Error(
-      "INVALID_JSONTS: BasePeriodNumber parameter must be a strictly positive integer."
+      "INVALID_JSONTS: BasePeriodNumber parameter must be a strictly positive integer.",
     );
   }
 
@@ -127,7 +127,7 @@ chronology._unserializeRegular = function _unserializeRegular(
   // BasePeriodType must be supported
   if (!chronology.regular._supportedBasePeriods.includes(obj.BasePeriod[1])) {
     throw new Error(
-      "NOT_SUPPORTED: Sub-millisecond BasePeriodType is not supported."
+      "NOT_SUPPORTED: Sub-millisecond BasePeriodType is not supported.",
     );
   }
 
@@ -139,7 +139,7 @@ chronology._unserializeRegular = function _unserializeRegular(
     } catch (e) {
       if (e.message.substr(0, 14) === "NOT_SUPPORTED:") {
         throw new Error(
-          "NOT_SUPPORTED: Anchor specified beyond millisecond precision."
+          "NOT_SUPPORTED: Anchor specified beyond millisecond precision.",
         );
       } else {
         throw new Error("INVALID_JSONTS: Invalid Anchor parameter.");
@@ -153,7 +153,7 @@ chronology._unserializeRegular = function _unserializeRegular(
     (!check.integer(obj.SubPeriods) || obj.SubPeriods < 1)
   ) {
     throw new Error(
-      "INVALID_JSONTS: SubPeriods parameter must be a positive integer if specified."
+      "INVALID_JSONTS: SubPeriods parameter must be a positive integer if specified.",
     );
   }
   const subPeriods = obj.SubPeriods || 1;
@@ -161,7 +161,7 @@ chronology._unserializeRegular = function _unserializeRegular(
   // Start assembling the object
   const options = {
     basePeriod: obj.BasePeriod,
-    subPeriods
+    subPeriods,
   };
   if (anchor) {
     options.anchor = anchor;
@@ -195,7 +195,7 @@ chronology._unserializeRegular = function _unserializeRegular(
       } catch (e) {
         if (e.message.substr(0, 14) === "NOT_SUPPORTED:") {
           throw new Error(
-            "NOT_SUPPORTED: Base period date specified beyond millisecond precision."
+            "NOT_SUPPORTED: Base period date specified beyond millisecond precision.",
           );
         } else {
           throw new Error("INVALID_JSONTS: Invalid base period date.");
@@ -215,11 +215,11 @@ chronology._unserializeRegular = function _unserializeRegular(
           last.basePeriodStart(),
           last.subPeriod(),
           basePeriodDate,
-          subPeriod
+          subPeriod,
         );
         if (comp >= 0) {
           throw new Error(
-            "INVALID_JSONTS: Observation collision or observations not in chronological order."
+            "INVALID_JSONTS: Observation collision or observations not in chronological order.",
           );
         }
       }
@@ -241,7 +241,7 @@ chronology._unserializeRegular = function _unserializeRegular(
       } catch (e) {
         if (e.message.substr(0, 14) === "NOT_SUPPORTED:") {
           throw new Error(
-            "NOT_SUPPORTED: Base period date specified beyond millisecond precision."
+            "NOT_SUPPORTED: Base period date specified beyond millisecond precision.",
           );
         } else {
           throw new Error("INVALID_JSONTS: Invalid base period date.");
@@ -255,11 +255,11 @@ chronology._unserializeRegular = function _unserializeRegular(
           last.basePeriodStart(),
           last.subPeriod(),
           basePeriodDate,
-          1
+          1,
         );
         if (comp >= 0) {
           throw new Error(
-            "INVALID_JSONTS: Observation collision or observations not in chronological order."
+            "INVALID_JSONTS: Observation collision or observations not in chronological order.",
           );
         }
       }
@@ -272,15 +272,12 @@ chronology._unserializeRegular = function _unserializeRegular(
       // Throw if first
       if (i === 0) {
         throw new Error(
-          "INVALID_JSONTS: First observation must specify an explicit period."
+          "INVALID_JSONTS: First observation must specify an explicit period.",
         );
       }
 
       // Add the observation
-      rts
-        .last()
-        .forward()
-        .obs.set(obs[0]);
+      rts.last().forward().obs.set(obs[0]);
     }
   }
 
@@ -324,7 +321,7 @@ chronology._unserializeIrregular = function _unserializeIrregular(obj) {
       // Ensure this is not the last observation, which must have an explicit end
       if (its.count() === 0) {
         throw new Error(
-          "INVALID_JSONTS: End date required for final observation."
+          "INVALID_JSONTS: End date required for final observation.",
         );
       }
 
@@ -335,7 +332,7 @@ chronology._unserializeIrregular = function _unserializeIrregular(obj) {
       } catch (e) {
         if (e.message.substr(0, 14) === "NOT_SUPPORTED:") {
           throw new Error(
-            "NOT_SUPPORTED: Start date specified beyond millisecond precision."
+            "NOT_SUPPORTED: Start date specified beyond millisecond precision.",
           );
         } else {
           throw new Error("INVALID_JSONTS: Invalid start date.");
@@ -346,7 +343,7 @@ chronology._unserializeIrregular = function _unserializeIrregular(obj) {
       const endDate = its.first().start();
       if (startDate >= endDate) {
         throw new Error(
-          "INVALID_JSONTS: Observation collision or observations not in chronological order."
+          "INVALID_JSONTS: Observation collision or observations not in chronological order.",
         );
       }
 
@@ -362,7 +359,7 @@ chronology._unserializeIrregular = function _unserializeIrregular(obj) {
       } catch (e) {
         if (e.message.substr(0, 14) === "NOT_SUPPORTED:") {
           throw new Error(
-            "NOT_SUPPORTED: Start date specified beyond millisecond precision."
+            "NOT_SUPPORTED: Start date specified beyond millisecond precision.",
           );
         } else {
           throw new Error("INVALID_JSONTS: Invalid start date.");
@@ -376,7 +373,7 @@ chronology._unserializeIrregular = function _unserializeIrregular(obj) {
       } catch (e) {
         if (e.message.substr(0, 14) === "NOT_SUPPORTED:") {
           throw new Error(
-            "NOT_SUPPORTED: End date specified beyond millisecond precision."
+            "NOT_SUPPORTED: End date specified beyond millisecond precision.",
           );
         } else {
           throw new Error("INVALID_JSONTS: Invalid end date.");
@@ -386,14 +383,14 @@ chronology._unserializeIrregular = function _unserializeIrregular(obj) {
       // Validate start/end combo
       if (startDate >= endDate) {
         throw new Error(
-          "INVALID_JSONTS: Observation end date must be strictly later than start date."
+          "INVALID_JSONTS: Observation end date must be strictly later than start date.",
         );
       }
 
       // Check chronology - end must be before or equal to next start, if present
       if (its.count() > 0 && endDate > its.first().start()) {
         throw new Error(
-          "INVALID_JSONTS: Observation collision or observations not in chronological order."
+          "INVALID_JSONTS: Observation collision or observations not in chronological order.",
         );
       }
 

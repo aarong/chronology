@@ -43,7 +43,7 @@ export default function regularSeriesFactory(options) {
   if (
     !check.string(options.basePeriod[1]) ||
     !regularSeriesFactory._supportedBasePeriods.includes(
-      options.basePeriod[1].toLowerCase()
+      options.basePeriod[1].toLowerCase(),
     )
   ) {
     throw new Error("INVALID_ARGUMENT: Invalid options.basePeriod.");
@@ -92,7 +92,7 @@ export default function regularSeriesFactory(options) {
     subPeriods: options.subPeriods || 1,
     subPeriodBoundaries: options.subPeriodBoundaries
       ? options.subPeriodBoundaries
-      : regularSeriesFactory._uniformSubPeriodBoundaries
+      : regularSeriesFactory._uniformSubPeriodBoundaries,
   };
 
   /**
@@ -158,7 +158,7 @@ regularSeriesFactory._basePeriods = [
   "e-9",
   "e-12",
   "e-15",
-  "e-18"
+  "e-18",
 ];
 
 /**
@@ -177,7 +177,7 @@ regularSeriesFactory._supportedBasePeriods = [
   "n",
   "s",
   "ms",
-  "e-3"
+  "e-3",
 ];
 
 /**
@@ -196,7 +196,7 @@ regularSeriesFactory._momentPeriods = {
   n: "m",
   s: "s",
   ms: "ms",
-  "e-3": "ms"
+  "e-3": "ms",
 };
 
 /**
@@ -215,7 +215,7 @@ regularSeriesFactory._basePeriodMs = {
   n: 60 * 1000,
   s: 1000,
   ms: 1,
-  "e-3": 1
+  "e-3": 1,
 };
 
 /**
@@ -233,22 +233,23 @@ regularSeriesFactory._basePeriodMs = {
  * @param {number} subPeriod
  * @returns {Object}
  */
-regularSeriesFactory._uniformSubPeriodBoundaries = function _uniformSubPeriodBoundaries(
-  basePeriodStart,
-  basePeriodEnd,
-  subPeriod
-) {
-  const basePeriodMs = basePeriodEnd - basePeriodStart;
-  const subPeriodMs = basePeriodMs / this._options.subPeriods; // fractional
-  const start = new Date(
-    basePeriodStart.getTime() + Math.round((subPeriod - 1) * subPeriodMs)
-  );
-  const end = new Date(
-    basePeriodStart.getTime() + Math.round(subPeriod * subPeriodMs)
-  );
+regularSeriesFactory._uniformSubPeriodBoundaries =
+  function _uniformSubPeriodBoundaries(
+    basePeriodStart,
+    basePeriodEnd,
+    subPeriod,
+  ) {
+    const basePeriodMs = basePeriodEnd - basePeriodStart;
+    const subPeriodMs = basePeriodMs / this._options.subPeriods; // fractional
+    const start = new Date(
+      basePeriodStart.getTime() + Math.round((subPeriod - 1) * subPeriodMs),
+    );
+    const end = new Date(
+      basePeriodStart.getTime() + Math.round(subPeriod * subPeriodMs),
+    );
 
-  return { start, end };
-};
+    return { start, end };
+  };
 
 // Private instance functions
 
@@ -260,82 +261,83 @@ regularSeriesFactory._uniformSubPeriodBoundaries = function _uniformSubPeriodBou
  * @private
  * @throws {Error} "INVALID_ARGUMENT: ..."
  */
-regularSeriesFactory.proto._testSubPeriodBoundaries = function _testSubPeriodBoundaries() {
-  // Decide which sub periods to test for each base period
-  // Only test the first and last X sub periods for series with a large
-  // number of sub periods, otherwise the factory function will hang
-  const maxSubPeriods = 20; // Even - 10 on each side
-  const testSubPeriods = [];
-  if (this._options.subPeriods <= maxSubPeriods) {
-    for (let i = 1; i <= this._options.subPeriods; i += 1) {
-      testSubPeriods.push(i);
-    }
-  } else {
-    for (let i = 1; i <= maxSubPeriods / 2; i += 1) {
-      testSubPeriods.push(i);
-    }
-    for (
-      let i = this._options.subPeriods - maxSubPeriods + 1;
-      i <= this._options.subPeriods;
-      i += 1
-    ) {
-      testSubPeriods.push(i);
-    }
-  }
-
-  // Test a few base periods centered on the anchor (i = base period index)
-  for (let i = -3; i < 3; i += 1) {
-    const baseBoundaries = this._basePeriodBoundaries(i);
-    let earliestStart = baseBoundaries.start; // Incremented each sub period
-
-    // For each sub period in this base period
-    for (let j = 0; j < testSubPeriods.length; j += 1) {
-      const subPeriod = testSubPeriods[j];
-      const result = this._subPeriodBoundaries(i, subPeriod);
-
-      // Function must return object
-      if (!check.object(result)) {
-        throw new Error(
-          "INVALID_ARGUMENT: Invalid value returned by options.subPeriodBoundaries."
-        );
+regularSeriesFactory.proto._testSubPeriodBoundaries =
+  function _testSubPeriodBoundaries() {
+    // Decide which sub periods to test for each base period
+    // Only test the first and last X sub periods for series with a large
+    // number of sub periods, otherwise the factory function will hang
+    const maxSubPeriods = 20; // Even - 10 on each side
+    const testSubPeriods = [];
+    if (this._options.subPeriods <= maxSubPeriods) {
+      for (let i = 1; i <= this._options.subPeriods; i += 1) {
+        testSubPeriods.push(i);
       }
-
-      // Function must return either (date, date) or (null, null)
-      if (
-        !(
-          (check.date(result.start) && check.date(result.end)) ||
-          (check.null(result.start) && check.null(result.end))
-        )
+    } else {
+      for (let i = 1; i <= maxSubPeriods / 2; i += 1) {
+        testSubPeriods.push(i);
+      }
+      for (
+        let i = this._options.subPeriods - maxSubPeriods + 1;
+        i <= this._options.subPeriods;
+        i += 1
       ) {
-        throw new Error(
-          "INVALID_ARGUMENT: Invalid value returned by options.subPeriodBoundaries."
-        );
+        testSubPeriods.push(i);
       }
-
-      // Function must return start in valid range (if not null)
-      if (
-        result.start &&
-        !(result.start >= earliestStart && result.start < baseBoundaries.end)
-      ) {
-        throw new Error(
-          "INVALID_ARGUMENT: Invalid start date returned by options.subPeriodBoundaries."
-        );
-      }
-
-      // Function must return end in valid range (if not null)
-      if (
-        result.end &&
-        !(result.end > result.start && result.end <= baseBoundaries.end)
-      ) {
-        throw new Error(
-          "INVALID_ARGUMENT: Invalid end date returned by options.subPeriodBoundaries."
-        );
-      }
-
-      earliestStart = result.end;
     }
-  }
-};
+
+    // Test a few base periods centered on the anchor (i = base period index)
+    for (let i = -3; i < 3; i += 1) {
+      const baseBoundaries = this._basePeriodBoundaries(i);
+      let earliestStart = baseBoundaries.start; // Incremented each sub period
+
+      // For each sub period in this base period
+      for (let j = 0; j < testSubPeriods.length; j += 1) {
+        const subPeriod = testSubPeriods[j];
+        const result = this._subPeriodBoundaries(i, subPeriod);
+
+        // Function must return object
+        if (!check.object(result)) {
+          throw new Error(
+            "INVALID_ARGUMENT: Invalid value returned by options.subPeriodBoundaries.",
+          );
+        }
+
+        // Function must return either (date, date) or (null, null)
+        if (
+          !(
+            (check.date(result.start) && check.date(result.end)) ||
+            (check.null(result.start) && check.null(result.end))
+          )
+        ) {
+          throw new Error(
+            "INVALID_ARGUMENT: Invalid value returned by options.subPeriodBoundaries.",
+          );
+        }
+
+        // Function must return start in valid range (if not null)
+        if (
+          result.start &&
+          !(result.start >= earliestStart && result.start < baseBoundaries.end)
+        ) {
+          throw new Error(
+            "INVALID_ARGUMENT: Invalid start date returned by options.subPeriodBoundaries.",
+          );
+        }
+
+        // Function must return end in valid range (if not null)
+        if (
+          result.end &&
+          !(result.end > result.start && result.end <= baseBoundaries.end)
+        ) {
+          throw new Error(
+            "INVALID_ARGUMENT: Invalid end date returned by options.subPeriodBoundaries.",
+          );
+        }
+
+        earliestStart = result.end;
+      }
+    }
+  };
 
 /**
  * Returns the index for a given base period. The 0-indexed base period is the one
@@ -358,7 +360,7 @@ regularSeriesFactory.proto._basePeriodIndex = function _basePeriodIndex(date) {
   let idx = mDate.diff(
     this._options.anchor,
     regularSeriesFactory._momentPeriods[this._options.basePeriod[1]],
-    true // Get decimal piece
+    true, // Get decimal piece
   );
   const decimal = idx % 1;
   idx = Math.trunc(idx);
@@ -385,28 +387,27 @@ regularSeriesFactory.proto._basePeriodIndex = function _basePeriodIndex(date) {
  * @param {number} basePeriodIndex
  * @returns {Object}
  */
-regularSeriesFactory.proto._basePeriodBoundaries = function _basePeriodBoundaries(
-  basePeriodIndex
-) {
-  // Calculate the start of the base period
-  const mStart = moment
-    .utc(this._options.anchor)
-    .add(
-      this._options.basePeriod[0] * basePeriodIndex,
-      regularSeriesFactory._momentPeriods[this._options.basePeriod[1]]
-    );
+regularSeriesFactory.proto._basePeriodBoundaries =
+  function _basePeriodBoundaries(basePeriodIndex) {
+    // Calculate the start of the base period
+    const mStart = moment
+      .utc(this._options.anchor)
+      .add(
+        this._options.basePeriod[0] * basePeriodIndex,
+        regularSeriesFactory._momentPeriods[this._options.basePeriod[1]],
+      );
 
-  // Calculate the end of the base period
-  const mEnd = moment
-    .utc(this._options.anchor)
-    .add(
-      this._options.basePeriod[0] * (basePeriodIndex + 1),
-      regularSeriesFactory._momentPeriods[this._options.basePeriod[1]]
-    );
+    // Calculate the end of the base period
+    const mEnd = moment
+      .utc(this._options.anchor)
+      .add(
+        this._options.basePeriod[0] * (basePeriodIndex + 1),
+        regularSeriesFactory._momentPeriods[this._options.basePeriod[1]],
+      );
 
-  // Return
-  return { start: mStart.toDate(), end: mEnd.toDate() };
-};
+    // Return
+    return { start: mStart.toDate(), end: mEnd.toDate() };
+  };
 
 /**
  * Checks effective frequency and then calls options.subPeriodBoundaries().
@@ -433,7 +434,7 @@ regularSeriesFactory.proto._basePeriodBoundaries = function _basePeriodBoundarie
  */
 regularSeriesFactory.proto._subPeriodBoundaries = function _subPeriodBoundaries(
   basePeriodIndex,
-  subPeriod
+  subPeriod,
 ) {
   // Check effective frequency
   const effectiveMs =
@@ -451,7 +452,7 @@ regularSeriesFactory.proto._subPeriodBoundaries = function _subPeriodBoundaries(
     this,
     baseBoundaries.start,
     baseBoundaries.end,
-    subPeriod
+    subPeriod,
   );
 };
 
@@ -476,7 +477,7 @@ regularSeriesFactory.proto._subPeriod = function _subPeriod(date) {
   const firstBounds = this._subPeriodBoundaries(basePeriodIndex, 1);
   if (check.null(firstBounds.start) || check.null(firstBounds.end)) {
     throw new Error(
-      "INSUFFICIENT_PRECISION: Cannot calculate sub period date boundaries at sub-millisecond precision."
+      "INSUFFICIENT_PRECISION: Cannot calculate sub period date boundaries at sub-millisecond precision.",
     );
   }
 
@@ -487,7 +488,7 @@ regularSeriesFactory.proto._subPeriod = function _subPeriod(date) {
     const rangeMid = Math.round((rangeStart + rangeEnd) / 2);
     const subPeriodBoundaries = this._subPeriodBoundaries(
       basePeriodIndex,
-      rangeMid
+      rangeMid,
     );
 
     // The date may fall before, after, or within the mid-range sub period
@@ -512,7 +513,7 @@ regularSeriesFactory.proto._subPeriod = function _subPeriod(date) {
 
   // None
   throw new Error(
-    "UNALLOCATED_DATE: There is no sub period associated with the specified date."
+    "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
   );
 };
 
@@ -539,7 +540,7 @@ regularSeriesFactory.proto._subPeriod = function _subPeriod(date) {
  */
 regularSeriesFactory.proto._indexInsertLocation = function _indexInsertLocation(
   basePeriodIndex,
-  subPeriod
+  subPeriod,
 ) {
   // Narrow search range using bisection
   let curStart = 0;
@@ -551,7 +552,7 @@ regularSeriesFactory.proto._indexInsertLocation = function _indexInsertLocation(
       this._index[curMid][0],
       this._index[curMid][1],
       basePeriodIndex,
-      subPeriod
+      subPeriod,
     );
 
     if (result < 0) {
@@ -559,7 +560,7 @@ regularSeriesFactory.proto._indexInsertLocation = function _indexInsertLocation(
     } else if (result === 0) {
       // Should not happen
       throw new Error(
-        "ALREADY_IN_INDEX: Specified period is already referenced from the index."
+        "ALREADY_IN_INDEX: Specified period is already referenced from the index.",
       );
     } else {
       curEnd = curMid;
@@ -578,14 +579,14 @@ regularSeriesFactory.proto._indexInsertLocation = function _indexInsertLocation(
       this._index[i][0],
       this._index[i][1],
       basePeriodIndex,
-      subPeriod
+      subPeriod,
     );
     if (result < 0) {
       // Keep looking
     } else if (result === 0) {
       // Should not happen
       throw new Error(
-        "ALREADY_IN_INDEX: Specified period is already referenced from the index."
+        "ALREADY_IN_INDEX: Specified period is already referenced from the index.",
       );
     } else {
       return i;
@@ -611,7 +612,7 @@ regularSeriesFactory.proto._indexInsertLocation = function _indexInsertLocation(
  */
 regularSeriesFactory.proto._indexLocation = function _indexLocation(
   basePeriodIndex,
-  subPeriod
+  subPeriod,
 ) {
   // Narrow search range using bisection
   let curStart = 0;
@@ -623,7 +624,7 @@ regularSeriesFactory.proto._indexLocation = function _indexLocation(
       this._index[curMid][0],
       this._index[curMid][1],
       basePeriodIndex,
-      subPeriod
+      subPeriod,
     );
 
     if (result < 0) {
@@ -641,7 +642,7 @@ regularSeriesFactory.proto._indexLocation = function _indexLocation(
       this._index[i][0],
       this._index[i][1],
       basePeriodIndex,
-      subPeriod
+      subPeriod,
     );
     if (result === 0) {
       return i;
@@ -672,7 +673,7 @@ regularSeriesFactory.proto._comparePeriods = function _comparePeriods(
   bpi1,
   sp1,
   bpi2,
-  sp2
+  sp2,
 ) {
   if (bpi1 < bpi2 || (bpi1 === bpi2 && sp1 < sp2)) {
     return -1;
@@ -787,7 +788,7 @@ regularSeriesFactory.proto.period = function period(...args) {
  * @returns {number}
  */
 regularSeriesFactory.proto.count = function count() {
-  return this.reduce(a => a + 1, 0);
+  return this.reduce((a) => a + 1, 0);
 };
 
 /**
@@ -820,7 +821,7 @@ regularSeriesFactory.proto.last = function last() {
   return regularPeriodFactory(
     this,
     this._index[this._index.length - 1][0],
-    this._index[this._index.length - 1][1]
+    this._index[this._index.length - 1][1],
   );
 };
 
@@ -883,7 +884,7 @@ regularSeriesFactory.proto.eachPeriod = function eachPeriod(fn) {
       period._basePeriodIndex,
       period._subPeriod,
       this.last()._basePeriodIndex,
-      this.last()._subPeriod
+      this.last()._subPeriod,
     ) <= 0
   );
 
@@ -908,10 +909,10 @@ regularSeriesFactory.proto.map = function map(fn) {
   const newSeries = regularSeriesFactory(this._options);
 
   // Iterate on observations
-  this.each(oldPeriod => {
+  this.each((oldPeriod) => {
     const newPeriod = newSeries.period(
       oldPeriod.basePeriodStart(),
-      oldPeriod.subPeriod()
+      oldPeriod.subPeriod(),
     );
     newPeriod.obs.set(fn(oldPeriod.obs.value()));
   });
@@ -937,10 +938,10 @@ regularSeriesFactory.proto.transform = function transform(fn) {
   const newSeries = regularSeriesFactory(this._options);
 
   // Iterate on observations
-  this.each(oldPeriod => {
+  this.each((oldPeriod) => {
     const newPeriod = newSeries.period(
       oldPeriod.basePeriodStart(),
-      oldPeriod.subPeriod()
+      oldPeriod.subPeriod(),
     );
     fn(oldPeriod, newPeriod);
   });
@@ -970,7 +971,7 @@ regularSeriesFactory.proto.reduce = function reduce(fn, initialAccumulator) {
 
   // Iterate on observations
   let accumulator = initialAccumulator;
-  this.each(period => {
+  this.each((period) => {
     accumulator = fn(accumulator, period);
   });
 
@@ -994,12 +995,12 @@ regularSeriesFactory.proto.filter = function filter(fn) {
   const newSeries = regularSeriesFactory(this._options);
 
   // Iterate on observations
-  this.each(oldPeriod => {
+  this.each((oldPeriod) => {
     if (fn(oldPeriod)) {
       // truthy?
       const newPeriod = newSeries.period(
         oldPeriod.basePeriodStart(),
-        oldPeriod.subPeriod()
+        oldPeriod.subPeriod(),
       );
       newPeriod.obs.set(oldPeriod.obs.value());
     }
@@ -1031,20 +1032,20 @@ regularSeriesFactory.proto.subSeries = function subSeries(rpStart, rpEnd) {
   // Check that period objects are associated with this time series
   if (rpStart._series !== this || rpEnd._series !== this) {
     throw new Error(
-      "INVALID_ARGUMENT: Start or end period is associated with a different time series."
+      "INVALID_ARGUMENT: Start or end period is associated with a different time series.",
     );
   }
 
   // Check that start is not after end (same is fine)
   if (rpStart.index() > rpEnd.index()) {
     throw new Error(
-      "INVALID_ARGUMENT: Start period must not be later than end period."
+      "INVALID_ARGUMENT: Start period must not be later than end period.",
     );
   }
 
   // Return a new series
   return this.filter(
-    rp => rp.index() >= rpStart.index() && rp.index() <= rpEnd.index()
+    (rp) => rp.index() >= rpStart.index() && rp.index() <= rpEnd.index(),
   );
 };
 
@@ -1064,7 +1065,7 @@ regularSeriesFactory.proto.overlay = function overlay(rts) {
 
   // Return a new series
   const newSeries = this.clone();
-  rts.each(rp => {
+  rts.each((rp) => {
     newSeries
       .period(rp.basePeriodStart(), rp.subPeriod())
       .obs.set(rp.obs.value());
@@ -1081,7 +1082,7 @@ regularSeriesFactory.proto.overlay = function overlay(rts) {
 regularSeriesFactory.proto.clone = function clone() {
   // Return a new series
   const newSeries = regularSeriesFactory(this._options);
-  this.each(rp => {
+  this.each((rp) => {
     newSeries
       .period(rp.basePeriodStart(), rp.subPeriod())
       .obs.set(rp.obs.value());
@@ -1115,19 +1116,19 @@ regularSeriesFactory.proto.serialize = function serialize() {
     BasePeriod: this._options.basePeriod,
     Anchor: jsonTsDate.create(
       this._options.anchor,
-      this._options.basePeriod[1]
+      this._options.basePeriod[1],
     ),
     SubPeriods: this._options.subPeriods,
-    Observations: []
+    Observations: [],
   };
 
   // Add observations
   const series = this;
-  this.each(rp => {
+  this.each((rp) => {
     // Throw if observation value is not JSON-expressible
     if (!jsonExpressible(rp.obs.value())) {
       throw new Error(
-        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible."
+        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible.",
       );
     }
 
@@ -1146,11 +1147,11 @@ regularSeriesFactory.proto.serialize = function serialize() {
     } else {
       const tsDate = jsonTsDate.create(
         rp.basePeriodStart(),
-        series._options.basePeriod[1]
+        series._options.basePeriod[1],
       );
       if (series._options.subPeriods === 1) {
         jsonTs.Observations.push(
-          [tsDate, rp.obs.value()] // omit sub period
+          [tsDate, rp.obs.value()], // omit sub period
         );
       } else {
         jsonTs.Observations.push([tsDate, rp.subPeriod(), rp.obs.value()]);
@@ -1181,7 +1182,7 @@ const rpProto = {};
 regularPeriodFactory = function regularPeriodFactoryFn(
   series,
   basePeriodIndex,
-  subPeriod
+  subPeriod,
 ) {
   const rp = Object.create(rpProto);
 
@@ -1257,7 +1258,7 @@ rpProto._getBoundaries = function _getBoundaries() {
   // Base period boundaries
   if (!this._basePeriodBoundaries) {
     this._basePeriodBoundaries = this._series._basePeriodBoundaries(
-      this._basePeriodIndex
+      this._basePeriodIndex,
     );
   }
 
@@ -1265,7 +1266,7 @@ rpProto._getBoundaries = function _getBoundaries() {
   if (!this._subPeriodBoundaries) {
     this._subPeriodBoundaries = this._series._subPeriodBoundaries(
       this._basePeriodIndex,
-      this._subPeriod
+      this._subPeriod,
     );
   }
 };
@@ -1455,12 +1456,12 @@ roProto.set = function set(...args) {
   if (!hadObservation) {
     const loc = series._indexInsertLocation(
       period._basePeriodIndex,
-      period._subPeriod
+      period._subPeriod,
     );
     series._index.splice(
       loc, // edit at
       0, // delete none
-      [period._basePeriodIndex, period._subPeriod] // insert this
+      [period._basePeriodIndex, period._subPeriod], // insert this
     );
   }
 
@@ -1500,11 +1501,11 @@ roProto.clear = function clear() {
   if (hadObservation) {
     const loc = series._indexLocation(
       period._basePeriodIndex,
-      period._subPeriod
+      period._subPeriod,
     );
     series._index.splice(
       loc, // edit at
-      1 // delete one
+      1, // delete one
       // insert nothing
     );
   }
@@ -1575,7 +1576,7 @@ roProto.hasForward = function hasForward() {
     period._basePeriodIndex,
     period._subPeriod,
     lastObs[0],
-    lastObs[1]
+    lastObs[1],
   );
   return result < 0;
 };
@@ -1602,7 +1603,7 @@ roProto.hasBack = function hasBack() {
     firstObs[0],
     firstObs[1],
     period._basePeriodIndex,
-    period._subPeriod
+    period._subPeriod,
   );
   return result < 0;
 };
@@ -1624,7 +1625,7 @@ roProto.forward = function forward() {
   if (period.obs.exists()) {
     const loc = series._indexLocation(
       period._basePeriodIndex,
-      period._subPeriod
+      period._subPeriod,
     );
 
     // loc is _index.length - 1 if this is the final observation
@@ -1638,7 +1639,7 @@ roProto.forward = function forward() {
   } else {
     const loc = series._indexInsertLocation(
       period._basePeriodIndex,
-      period._subPeriod
+      period._subPeriod,
     );
 
     // loc is _index.length if insertion would be the final observation
@@ -1669,7 +1670,7 @@ roProto.back = function back() {
   if (period.obs.exists()) {
     const loc = series._indexLocation(
       period._basePeriodIndex,
-      period._subPeriod
+      period._subPeriod,
     );
 
     // loc is 0 if this is the first observation
@@ -1683,7 +1684,7 @@ roProto.back = function back() {
   } else {
     const loc = series._indexInsertLocation(
       period._basePeriodIndex,
-      period._subPeriod
+      period._subPeriod,
     );
 
     // loc is 0 if insertion would be the first observation

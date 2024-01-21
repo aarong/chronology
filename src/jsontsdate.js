@@ -209,7 +209,7 @@ jsonTsDate.parse = function parse(str) {
   }
   if (subms.length > 0 && subms.length % 3 === 0) {
     throw new Error(
-      "NOT_SUPPORTED: Sub-millisecond precision is not supported."
+      "NOT_SUPPORTED: Sub-millisecond precision is not supported.",
     );
   } else if (subms.length > 0) {
     throw new Error("INVALID_ARGUMENT: Invalid sub-millisecond.");
@@ -226,7 +226,7 @@ jsonTsDate.parse = function parse(str) {
       minute,
       second,
       millisecond,
-      zone
+      zone,
     );
   }
   throw new Error("INVALID_ARGUMENT: Invalid time zone.");
@@ -399,10 +399,10 @@ jsonTsDate._assemble = function _assemble(y, m, d, h, n, s, ms, z) {
   // Create ISO date without zone
   let iso8601 = `${this._zeroPad(y, 4)}-${this._zeroPad(m, 2)}-${this._zeroPad(
     d,
-    2
+    2,
   )}T${this._zeroPad(h, 2)}:${this._zeroPad(n, 2)}:${this._zeroPad(
     s,
-    2
+    2,
   )}.${this._zeroPad(ms, 3)}`;
 
   // Add the zone only if specified (otherwise leave ambiguous)

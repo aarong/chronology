@@ -111,7 +111,7 @@ irregularSeriesFactory.proto._find = function _find(date) {
     return {
       before: null,
       at: null,
-      after: searchStart // 0
+      after: searchStart, // 0
     };
   }
   if (
@@ -121,27 +121,27 @@ irregularSeriesFactory.proto._find = function _find(date) {
     return {
       before: searchStart - 1 >= 0 ? searchStart - 1 : null,
       at: searchStart,
-      after: searchEnd
+      after: searchEnd,
     };
   }
   if (date >= this._obs[searchStart].end && date < this._obs[searchEnd].start) {
     return {
       before: searchStart,
       at: null,
-      after: searchEnd
+      after: searchEnd,
     };
   }
   if (date >= this._obs[searchEnd].start && date < this._obs[searchEnd].end) {
     return {
       before: searchStart,
       at: searchEnd,
-      after: searchEnd + 1 <= this._obs.length - 1 ? searchEnd + 1 : null
+      after: searchEnd + 1 <= this._obs.length - 1 ? searchEnd + 1 : null,
     };
   }
   return {
     before: searchEnd, // length - 1
     at: null,
-    after: null
+    after: null,
   };
 };
 
@@ -187,7 +187,7 @@ irregularSeriesFactory.proto.add = function add(start, value, end) {
   // End date must be strictly after the start date
   if (end <= start) {
     throw new Error(
-      "INVALID_ARGUMENT: End date must by strictly later than the start date."
+      "INVALID_ARGUMENT: End date must by strictly later than the start date.",
     );
   }
 
@@ -199,7 +199,7 @@ irregularSeriesFactory.proto.add = function add(start, value, end) {
     (findStart.after !== null && this._obs[findStart.after].start < end)
   ) {
     throw new Error(
-      "COLLISION: New observation would overlap an existing observation."
+      "COLLISION: New observation would overlap an existing observation.",
     );
   }
 
@@ -207,7 +207,7 @@ irregularSeriesFactory.proto.add = function add(start, value, end) {
   const obs = {
     start,
     value,
-    end
+    end,
   };
   if (findStart.after !== null) {
     // Insert before another element
@@ -254,7 +254,7 @@ irregularSeriesFactory.proto.clear = function clear(start, end) {
   // Start date must be strictly before end date
   if (start >= end) {
     throw new Error(
-      "INVALID_ARGUMENT: Start date must be strictly before end date."
+      "INVALID_ARGUMENT: Start date must be strictly before end date.",
     );
   }
 
@@ -445,7 +445,7 @@ irregularSeriesFactory.proto.map = function map(fn) {
   const newSeries = irregularSeriesFactory();
 
   // Iterate on observations
-  this.each(period => {
+  this.each((period) => {
     newSeries.add(period.start(), fn(period.obs.value()), period.end());
   });
 
@@ -474,7 +474,7 @@ irregularSeriesFactory.proto.reduce = function reduce(fn, initialAccumulator) {
 
   // Iterate on observations
   let accumulator = initialAccumulator;
-  this.each(period => {
+  this.each((period) => {
     accumulator = fn(accumulator, period);
   });
 
@@ -499,7 +499,7 @@ irregularSeriesFactory.proto.filter = function filter(fn) {
   const newSeries = irregularSeriesFactory();
 
   // Iterate on observations
-  this.each(period => {
+  this.each((period) => {
     if (fn(period)) {
       // truthy?
       newSeries.add(period.start(), period.obs.value(), period.end());
@@ -527,7 +527,7 @@ irregularSeriesFactory.proto.subSeries = function subSeries(start, end) {
   // Check sequence
   if (start >= end) {
     throw new Error(
-      "INVALID_ARGUMENT: End date must be strictly after start date."
+      "INVALID_ARGUMENT: End date must be strictly after start date.",
     );
   }
 
@@ -570,7 +570,7 @@ irregularSeriesFactory.proto.overlay = function overlay(series) {
 
   // Clone and overlay
   const ret = this.clone();
-  series.each(ip => {
+  series.each((ip) => {
     ret.set(ip.start(), ip.obs.value(), ip.end());
   });
 
@@ -585,7 +585,7 @@ irregularSeriesFactory.proto.overlay = function overlay(series) {
  */
 irregularSeriesFactory.proto.clone = function clone() {
   const series = irregularSeriesFactory();
-  this.each(ip => {
+  this.each((ip) => {
     series.add(ip.start(), ip.obs.value(), ip.end());
   });
   return series;
@@ -601,15 +601,15 @@ irregularSeriesFactory.proto.serialize = function serialize() {
   // Create core object
   const jsonTs = {
     JsonTs: "irregular",
-    Observations: []
+    Observations: [],
   };
 
   // Add observations
-  this.each(ip => {
+  this.each((ip) => {
     // Throw if observation value is not JSON-expressible
     if (!jsonExpressible(ip.obs.value())) {
       throw new Error(
-        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible."
+        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible.",
       );
     }
 
@@ -618,10 +618,7 @@ irregularSeriesFactory.proto.serialize = function serialize() {
     // Is this observation contiguous with the next?
     if (
       !ip.obs.hasForward() ||
-      ip.obs
-        .forward()
-        .start()
-        .getTime() !== ip.end().getTime()
+      ip.obs.forward().start().getTime() !== ip.end().getTime()
     ) {
       obs.push(jsonTsDate.create(ip.end(), "ms"));
     }
@@ -925,7 +922,7 @@ ioProto.set = function set(...args) {
     (findObs.before === null || findObs.after === null)
   ) {
     throw new Error(
-      "INVALID_PERIOD: Cannot assign a value to the period before the first observation, the period after the last observation, or to an empty series."
+      "INVALID_PERIOD: Cannot assign a value to the period before the first observation, the period after the last observation, or to an empty series.",
     );
   }
 
@@ -936,7 +933,7 @@ ioProto.set = function set(...args) {
     series.add(
       series._obs[findObs.before].end,
       args[0],
-      series._obs[findObs.after].start
+      series._obs[findObs.after].start,
     );
   }
 
@@ -962,7 +959,7 @@ ioProto.clear = function clear() {
     (findObs.before === null || findObs.after === null)
   ) {
     throw new Error(
-      "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation."
+      "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation.",
     );
   }
 
@@ -994,14 +991,14 @@ ioProto.value = function value() {
     (findObs.before === null || findObs.after === null)
   ) {
     throw new Error(
-      "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation."
+      "INVALID_PERIOD: Can never assign a value to the period before the first observation and after the last observation.",
     );
   }
 
   // Error if no observation
   if (findObs.at === null) {
     throw new Error(
-      "MISSING: There is no observation spanning the reference date."
+      "MISSING: There is no observation spanning the reference date.",
     );
   }
 

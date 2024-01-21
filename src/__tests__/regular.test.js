@@ -94,10 +94,10 @@ describe("The chronology.regular() factory function", () => {
       expect(() => {
         chronology.regular({
           basePeriod: [1, "y"],
-          subPeriodBoundaries: "abc"
+          subPeriodBoundaries: "abc",
         });
       }).toThrow(
-        new Error("INVALID_ARGUMENT: Invalid options.subPeriodBoundaries.")
+        new Error("INVALID_ARGUMENT: Invalid options.subPeriodBoundaries."),
       );
     });
 
@@ -105,12 +105,12 @@ describe("The chronology.regular() factory function", () => {
       expect(() => {
         chronology.regular({
           basePeriod: [1, "y"],
-          subPeriodBoundaries: (bpStart, bpEnd, spNum) => "abc" // eslint-disable-line no-unused-vars
+          subPeriodBoundaries: (bpStart, bpEnd, spNum) => "abc", // eslint-disable-line no-unused-vars
         });
       }).toThrow(
         new Error(
-          "INVALID_ARGUMENT: Invalid value returned by options.subPeriodBoundaries."
-        )
+          "INVALID_ARGUMENT: Invalid value returned by options.subPeriodBoundaries.",
+        ),
       );
     });
 
@@ -121,12 +121,12 @@ describe("The chronology.regular() factory function", () => {
           // eslint-disable-next-line no-unused-vars
           subPeriodBoundaries(bpStart, bpEnd, spNum) {
             return { start: null, end: bpEnd };
-          }
+          },
         });
       }).toThrow(
         new Error(
-          "INVALID_ARGUMENT: Invalid value returned by options.subPeriodBoundaries."
-        )
+          "INVALID_ARGUMENT: Invalid value returned by options.subPeriodBoundaries.",
+        ),
       );
     });
 
@@ -137,12 +137,12 @@ describe("The chronology.regular() factory function", () => {
           // eslint-disable-next-line no-unused-vars
           subPeriodBoundaries(bpStart, bpEnd, spNum) {
             return { start: bpStart, end: null };
-          }
+          },
         });
       }).toThrow(
         new Error(
-          "INVALID_ARGUMENT: Invalid value returned by options.subPeriodBoundaries."
-        )
+          "INVALID_ARGUMENT: Invalid value returned by options.subPeriodBoundaries.",
+        ),
       );
     });
 
@@ -153,12 +153,12 @@ describe("The chronology.regular() factory function", () => {
           // eslint-disable-next-line no-unused-vars
           subPeriodBoundaries(bpStart, bpEnd, spNum) {
             return { start: new Date(bpStart.getTime() - 1), end: bpEnd };
-          }
+          },
         });
       }).toThrow(
         new Error(
-          "INVALID_ARGUMENT: Invalid start date returned by options.subPeriodBoundaries."
-        )
+          "INVALID_ARGUMENT: Invalid start date returned by options.subPeriodBoundaries.",
+        ),
       );
     });
 
@@ -172,12 +172,12 @@ describe("The chronology.regular() factory function", () => {
               return { start: new Date(bpStart.getTime() + 1), end: bpEnd };
             }
             return { start: bpStart, end: bpEnd };
-          }
+          },
         });
       }).toThrow(
         new Error(
-          "INVALID_ARGUMENT: Invalid start date returned by options.subPeriodBoundaries."
-        )
+          "INVALID_ARGUMENT: Invalid start date returned by options.subPeriodBoundaries.",
+        ),
       );
     });
 
@@ -188,12 +188,12 @@ describe("The chronology.regular() factory function", () => {
           // eslint-disable-next-line no-unused-vars
           subPeriodBoundaries(bpStart, bpEnd, spNum) {
             return { start: bpEnd, end: new Date(bpEnd.getTime() + 1) };
-          }
+          },
         });
       }).toThrow(
         new Error(
-          "INVALID_ARGUMENT: Invalid start date returned by options.subPeriodBoundaries."
-        )
+          "INVALID_ARGUMENT: Invalid start date returned by options.subPeriodBoundaries.",
+        ),
       );
     });
 
@@ -204,12 +204,12 @@ describe("The chronology.regular() factory function", () => {
           // eslint-disable-next-line no-unused-vars
           subPeriodBoundaries(bpStart, bpEnd, spNum) {
             return { start: bpStart, end: bpStart };
-          }
+          },
         });
       }).toThrow(
         new Error(
-          "INVALID_ARGUMENT: Invalid end date returned by options.subPeriodBoundaries."
-        )
+          "INVALID_ARGUMENT: Invalid end date returned by options.subPeriodBoundaries.",
+        ),
       );
     });
 
@@ -220,12 +220,12 @@ describe("The chronology.regular() factory function", () => {
           // eslint-disable-next-line no-unused-vars
           subPeriodBoundaries(bpStart, bpEnd, spNum) {
             return { start: bpStart, end: new Date(bpEnd.getTime() + 1) };
-          }
+          },
         });
       }).toThrow(
         new Error(
-          "INVALID_ARGUMENT: Invalid end date returned by options.subPeriodBoundaries."
-        )
+          "INVALID_ARGUMENT: Invalid end date returned by options.subPeriodBoundaries.",
+        ),
       );
     });
   });
@@ -237,15 +237,15 @@ describe("The chronology.regular() factory function", () => {
         chronology.regular({
           basePeriod: [1, basePeriods[i]],
           anchor: new Date(0),
-          subPeriods: 10
-        })
+          subPeriods: 10,
+        }),
       ).toBeInstanceOf(Object);
       expect(
         chronology.regular({
           basePeriod: [1, basePeriods[i].toUpperCase()],
           anchor: new Date(0),
-          subPeriods: 10
-        })
+          subPeriods: 10,
+        }),
       ).toBeInstanceOf(Object);
     }
   });
@@ -269,7 +269,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "y"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-01-01 00:00:00.000Z"));
@@ -279,7 +279,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "y"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -291,7 +291,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "q"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-10-01 00:00:00.000Z"));
@@ -301,7 +301,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "q"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -313,7 +313,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "m"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-01 00:00:00.000Z"));
@@ -323,7 +323,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "m"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -335,7 +335,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "w"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-25 00:00:00.000Z"));
@@ -345,7 +345,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "w"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -357,7 +357,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "d"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-31 00:00:00.000Z"));
@@ -367,7 +367,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "d"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -379,7 +379,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "h"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-31 23:00:00.000Z"));
@@ -389,7 +389,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "h"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -401,7 +401,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "n"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-31 23:59:00.000Z"));
@@ -411,7 +411,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "n"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -423,7 +423,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "s"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-31 23:59:59.000Z"));
@@ -433,7 +433,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "s"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -445,7 +445,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "ms"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-31 23:59:59.999Z"));
@@ -455,7 +455,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [1, "ms"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -469,7 +469,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "y"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1968-01-01 00:00:00.000Z"));
@@ -479,7 +479,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "y"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -491,7 +491,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "q"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-07-01 00:00:00.000Z"));
@@ -501,7 +501,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "q"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -513,7 +513,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "m"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-11-01 00:00:00.000Z"));
@@ -523,7 +523,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "m"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -535,7 +535,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "w"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-18 00:00:00.000Z"));
@@ -545,7 +545,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "w"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -557,7 +557,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "d"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-30 00:00:00.000Z"));
@@ -567,7 +567,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "d"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -579,7 +579,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "h"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-31 22:00:00.000Z"));
@@ -589,7 +589,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "h"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -601,7 +601,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "n"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-31 23:58:00.000Z"));
@@ -611,7 +611,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "n"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -623,7 +623,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "s"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-31 23:59:58.000Z"));
@@ -633,7 +633,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "s"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -645,7 +645,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly before the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "ms"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(-1);
         expect(bounds.start).toEqual(new Date("1969-12-31 23:59:59.998Z"));
@@ -655,7 +655,7 @@ describe("The regular._basePeriodBoundaries() function", () => {
       it("should return correctly after the anchor", () => {
         const rts = chronology.regular({
           basePeriod: [2, "ms"],
-          anchor: new Date(0)
+          anchor: new Date(0),
         });
         const bounds = rts._basePeriodBoundaries(0);
         expect(bounds.start).toEqual(new Date("1970-01-01 00:00:00.000Z"));
@@ -671,7 +671,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
       const rts = chronology.regular({
         basePeriod: [2, "y"],
         anchor: new Date(0),
-        subPeriods: 2
+        subPeriods: 2,
       });
       const subBounds1 = rts._subPeriodBoundaries(0, 1);
       expect(subBounds1.start).toEqual(new Date("1970-01-01T00:00:00.000Z"));
@@ -685,16 +685,16 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
       const rts = chronology.regular({
         basePeriod: [2, "q"],
         anchor: new Date(0),
-        subPeriods: 2
+        subPeriods: 2,
       });
       const subBounds1 = rts._subPeriodBoundaries(0, 1);
       expect(subBounds1.start).toEqual(new Date("1970-01-01T00:00:00.000Z"));
       expect(subBounds1.end).toEqual(
-        new Date(0 + (181 * 24 * 60 * 60 * 1000) / 2)
+        new Date(0 + (181 * 24 * 60 * 60 * 1000) / 2),
       );
       const subBounds2 = rts._subPeriodBoundaries(0, 2);
       expect(subBounds2.start).toEqual(
-        new Date(0 + (181 * 24 * 60 * 60 * 1000) / 2)
+        new Date(0 + (181 * 24 * 60 * 60 * 1000) / 2),
       );
       expect(subBounds2.end).toEqual(new Date("1970-07-01T00:00:00.000Z"));
     });
@@ -703,16 +703,16 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
       const rts = chronology.regular({
         basePeriod: [2, "m"],
         anchor: new Date(0),
-        subPeriods: 2
+        subPeriods: 2,
       });
       const subBounds1 = rts._subPeriodBoundaries(0, 1);
       expect(subBounds1.start).toEqual(new Date("1970-01-01T00:00:00.000Z"));
       expect(subBounds1.end).toEqual(
-        new Date(0 + (59 * 24 * 60 * 60 * 1000) / 2)
+        new Date(0 + (59 * 24 * 60 * 60 * 1000) / 2),
       );
       const subBounds2 = rts._subPeriodBoundaries(0, 2);
       expect(subBounds2.start).toEqual(
-        new Date(0 + (59 * 24 * 60 * 60 * 1000) / 2)
+        new Date(0 + (59 * 24 * 60 * 60 * 1000) / 2),
       );
       expect(subBounds2.end).toEqual(new Date("1970-03-01T00:00:00.000Z"));
     });
@@ -721,7 +721,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
       const rts = chronology.regular({
         basePeriod: [2, "w"],
         anchor: new Date(0),
-        subPeriods: 2
+        subPeriods: 2,
       });
       const subBounds1 = rts._subPeriodBoundaries(0, 1);
       expect(subBounds1.start).toEqual(new Date("1970-01-01T00:00:00.000Z"));
@@ -735,7 +735,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
       const rts = chronology.regular({
         basePeriod: [2, "d"],
         anchor: new Date(0),
-        subPeriods: 2
+        subPeriods: 2,
       });
       const subBounds1 = rts._subPeriodBoundaries(0, 1);
       expect(subBounds1.start).toEqual(new Date("1970-01-01T00:00:00.000Z"));
@@ -749,7 +749,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
       const rts = chronology.regular({
         basePeriod: [2, "h"],
         anchor: new Date(0),
-        subPeriods: 2
+        subPeriods: 2,
       });
       const subBounds1 = rts._subPeriodBoundaries(0, 1);
       expect(subBounds1.start).toEqual(new Date("1970-01-01T00:00:00.000Z"));
@@ -763,7 +763,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
       const rts = chronology.regular({
         basePeriod: [2, "n"],
         anchor: new Date(0),
-        subPeriods: 2
+        subPeriods: 2,
       });
       const subBounds1 = rts._subPeriodBoundaries(0, 1);
       expect(subBounds1.start).toEqual(new Date("1970-01-01T00:00:00.000Z"));
@@ -777,7 +777,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
       const rts = chronology.regular({
         basePeriod: [2, "s"],
         anchor: new Date(0),
-        subPeriods: 2
+        subPeriods: 2,
       });
       const subBounds1 = rts._subPeriodBoundaries(0, 1);
       expect(subBounds1.start).toEqual(new Date("1970-01-01T00:00:00.000Z"));
@@ -791,7 +791,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
       const rts = chronology.regular({
         basePeriod: [2, "ms"],
         anchor: new Date(0),
-        subPeriods: 2
+        subPeriods: 2,
       });
       const subBounds1 = rts._subPeriodBoundaries(0, 1);
       expect(subBounds1.start).toEqual(new Date("1970-01-01T00:00:00.000Z"));
@@ -806,7 +806,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for years on date side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "y"],
-        subPeriods: 365 * 24 * 60 * 60 * 1000
+        subPeriods: 365 * 24 * 60 * 60 * 1000,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.date(subBounds.start)).toBe(true);
@@ -816,7 +816,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for years on null side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "y"],
-        subPeriods: 365 * 24 * 60 * 60 * 1000 + 1
+        subPeriods: 365 * 24 * 60 * 60 * 1000 + 1,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.null(subBounds.start)).toBe(true);
@@ -826,7 +826,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for quarters on date side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "q"],
-        subPeriods: 90 * 24 * 60 * 60 * 1000
+        subPeriods: 90 * 24 * 60 * 60 * 1000,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.date(subBounds.start)).toBe(true);
@@ -836,7 +836,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for quarters on null side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "q"],
-        subPeriods: 90 * 24 * 60 * 60 * 1000 + 1
+        subPeriods: 90 * 24 * 60 * 60 * 1000 + 1,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.null(subBounds.start)).toBe(true);
@@ -846,7 +846,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for months on date side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "m"],
-        subPeriods: 28 * 24 * 60 * 60 * 1000
+        subPeriods: 28 * 24 * 60 * 60 * 1000,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.date(subBounds.start)).toBe(true);
@@ -856,7 +856,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for months on null side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "m"],
-        subPeriods: 28 * 24 * 60 * 60 * 1000 + 1
+        subPeriods: 28 * 24 * 60 * 60 * 1000 + 1,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.null(subBounds.start)).toBe(true);
@@ -866,7 +866,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for weeks on date side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "w"],
-        subPeriods: 7 * 24 * 60 * 60 * 1000
+        subPeriods: 7 * 24 * 60 * 60 * 1000,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.date(subBounds.start)).toBe(true);
@@ -876,7 +876,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for weeks on null side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "w"],
-        subPeriods: 7 * 24 * 60 * 60 * 1000 + 1
+        subPeriods: 7 * 24 * 60 * 60 * 1000 + 1,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.null(subBounds.start)).toBe(true);
@@ -886,7 +886,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for days on date side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "d"],
-        subPeriods: 24 * 60 * 60 * 1000
+        subPeriods: 24 * 60 * 60 * 1000,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.date(subBounds.start)).toBe(true);
@@ -896,7 +896,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for days on null side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "d"],
-        subPeriods: 24 * 60 * 60 * 1000 + 1
+        subPeriods: 24 * 60 * 60 * 1000 + 1,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.null(subBounds.start)).toBe(true);
@@ -906,7 +906,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for hours on date side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "h"],
-        subPeriods: 60 * 60 * 1000
+        subPeriods: 60 * 60 * 1000,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.date(subBounds.start)).toBe(true);
@@ -916,7 +916,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for hours on null side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "h"],
-        subPeriods: 60 * 60 * 1000 + 1
+        subPeriods: 60 * 60 * 1000 + 1,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.null(subBounds.start)).toBe(true);
@@ -926,7 +926,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for minutes on date side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "n"],
-        subPeriods: 60 * 1000
+        subPeriods: 60 * 1000,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.date(subBounds.start)).toBe(true);
@@ -936,7 +936,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for minutes on null side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "n"],
-        subPeriods: 60 * 1000 + 1
+        subPeriods: 60 * 1000 + 1,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.null(subBounds.start)).toBe(true);
@@ -946,7 +946,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for seconds on date side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "s"],
-        subPeriods: 1000
+        subPeriods: 1000,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.date(subBounds.start)).toBe(true);
@@ -956,7 +956,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for seconds on null side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "s"],
-        subPeriods: 1000 + 1
+        subPeriods: 1000 + 1,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.null(subBounds.start)).toBe(true);
@@ -966,7 +966,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for milliseconds on date side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "ms"],
-        subPeriods: 1
+        subPeriods: 1,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.date(subBounds.start)).toBe(true);
@@ -976,7 +976,7 @@ describe("The regular._subPeriodBoundaries() function and uniform default functi
     it("should work correctly for milliseconds on null side of boundary", () => {
       const rts = chronology.regular({
         basePeriod: [1, "ms"],
-        subPeriods: 2
+        subPeriods: 2,
       });
       const subBounds = rts._subPeriodBoundaries(0, 1);
       expect(check.null(subBounds.start)).toBe(true);
@@ -1013,9 +1013,9 @@ describe("The regular._subPeriod() function", () => {
           // Omit the first and last day of the year
           return {
             start: new Date(bpStart.getTime() + 24 * 60 * 60 * 1000),
-            end: new Date(bpEnd.getTime() - 24 * 60 * 60 * 1000)
+            end: new Date(bpEnd.getTime() - 24 * 60 * 60 * 1000),
           };
-        }
+        },
       });
 
       // Start of year
@@ -1023,8 +1023,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T00:00:00.000Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
 
       // One boundary
@@ -1032,8 +1032,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T23:59:59.999Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
       expect(rts._subPeriod(new Date("2000-01-02T00:00:00.000Z"))).toBe(1);
 
@@ -1046,8 +1046,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-12-31T00:00:00.000Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
 
       // End of year
@@ -1055,8 +1055,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-12-31T23:59:59.999Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
     });
 
@@ -1068,9 +1068,9 @@ describe("The regular._subPeriod() function", () => {
           // Omit the first and last 100 ms
           return {
             start: new Date(bpStart.getTime() + 100),
-            end: new Date(bpEnd.getTime() - 100)
+            end: new Date(bpEnd.getTime() - 100),
           };
-        }
+        },
       });
 
       // Start of second
@@ -1078,8 +1078,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T00:00:00.000Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
 
       // One boundary
@@ -1087,8 +1087,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T00:00:00.099Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
       expect(rts._subPeriod(new Date("2000-01-01T00:00:00.100Z"))).toBe(1);
 
@@ -1101,8 +1101,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T00:00:01.900Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
 
       // End of second
@@ -1110,8 +1110,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T00:00:01.999Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
     });
   });
@@ -1126,20 +1126,14 @@ describe("The regular._subPeriod() function", () => {
           if (spNum === 1) {
             return {
               start: bpStart,
-              end: moment
-                .utc(bpStart)
-                .add(6, "M")
-                .toDate()
+              end: moment.utc(bpStart).add(6, "M").toDate(),
             };
           }
           return {
-            start: moment
-              .utc(bpStart)
-              .add(6, "M")
-              .toDate(),
-            end: bpEnd
+            start: moment.utc(bpStart).add(6, "M").toDate(),
+            end: bpEnd,
           };
-        }
+        },
       });
 
       // Start of base period
@@ -1162,20 +1156,14 @@ describe("The regular._subPeriod() function", () => {
           if (spNum === 1) {
             return {
               start: bpStart,
-              end: moment
-                .utc(bpStart)
-                .add(1, "s")
-                .toDate()
+              end: moment.utc(bpStart).add(1, "s").toDate(),
             };
           }
           return {
-            start: moment
-              .utc(bpStart)
-              .add(1, "s")
-              .toDate(),
-            end: bpEnd
+            start: moment.utc(bpStart).add(1, "s").toDate(),
+            end: bpEnd,
           };
-        }
+        },
       });
 
       // Start of base period
@@ -1200,27 +1188,15 @@ describe("The regular._subPeriod() function", () => {
           // Sub period 2 runs Aug-Nov
           if (spNum === 1) {
             return {
-              start: moment
-                .utc(bpStart)
-                .add(1, "M")
-                .toDate(),
-              end: moment
-                .utc(bpStart)
-                .add(5, "M")
-                .toDate()
+              start: moment.utc(bpStart).add(1, "M").toDate(),
+              end: moment.utc(bpStart).add(5, "M").toDate(),
             };
           }
           return {
-            start: moment
-              .utc(bpStart)
-              .add(7, "M")
-              .toDate(),
-            end: moment
-              .utc(bpStart)
-              .add(11, "M")
-              .toDate()
+            start: moment.utc(bpStart).add(7, "M").toDate(),
+            end: moment.utc(bpStart).add(11, "M").toDate(),
           };
-        }
+        },
       });
 
       // Start of base period
@@ -1228,8 +1204,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T00:00:00.000Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
 
       // Start of first sub period
@@ -1237,8 +1213,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-31T23:59:59.999Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
       expect(rts._subPeriod(new Date("2000-02-01T00:00:00.000Z"))).toBe(1);
 
@@ -1248,8 +1224,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-06-01T00:00:00.000Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
 
       // Start of second sub period
@@ -1257,8 +1233,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-07-31T23:59:59.999Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
       expect(rts._subPeriod(new Date("2000-08-01T00:00:00.000Z"))).toBe(2);
 
@@ -1268,8 +1244,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-12-01T00:00:00.000Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
 
       // End of base period
@@ -1277,8 +1253,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-12-31T23:59:59.999Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
     });
 
@@ -1291,27 +1267,15 @@ describe("The regular._subPeriod() function", () => {
           // Sub period 2 runs 1100 to 1900
           if (spNum === 1) {
             return {
-              start: moment
-                .utc(bpStart)
-                .add(100, "ms")
-                .toDate(),
-              end: moment
-                .utc(bpStart)
-                .add(900, "ms")
-                .toDate()
+              start: moment.utc(bpStart).add(100, "ms").toDate(),
+              end: moment.utc(bpStart).add(900, "ms").toDate(),
             };
           }
           return {
-            start: moment
-              .utc(bpStart)
-              .add(1100, "ms")
-              .toDate(),
-            end: moment
-              .utc(bpStart)
-              .add(1900, "ms")
-              .toDate()
+            start: moment.utc(bpStart).add(1100, "ms").toDate(),
+            end: moment.utc(bpStart).add(1900, "ms").toDate(),
           };
-        }
+        },
       });
 
       // Start of base period
@@ -1319,8 +1283,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T00:00:00.000Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
 
       // Start of first sub period
@@ -1328,8 +1292,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T00:00:00.099Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
       expect(rts._subPeriod(new Date("2000-01-01T00:00:00.100Z"))).toBe(1);
 
@@ -1339,8 +1303,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T00:00:00.900Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
 
       // Start of second sub period
@@ -1348,8 +1312,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T00:00:01.099Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
       expect(rts._subPeriod(new Date("2000-01-01T00:00:01.100Z"))).toBe(2);
 
@@ -1359,8 +1323,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T00:00:01.900Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
 
       // End of base period
@@ -1368,8 +1332,8 @@ describe("The regular._subPeriod() function", () => {
         rts._subPeriod(new Date("2000-01-01T00:00:01.999Z"));
       }).toThrow(
         new Error(
-          "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-        )
+          "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+        ),
       );
     });
   });
@@ -1378,7 +1342,7 @@ describe("The regular._subPeriod() function", () => {
     it("should return correctly for years (bpn = 1)", () => {
       const rts = chronology.regular({
         basePeriod: [1, "y"],
-        subPeriods: 365 * 24 * 60 * 60 * 1000
+        subPeriods: 365 * 24 * 60 * 60 * 1000,
         // Uniform sub period boundaries
       });
 
@@ -1393,7 +1357,7 @@ describe("The regular._subPeriod() function", () => {
     it("should return correctly for seconds (bpn > 1)", () => {
       const rts = chronology.regular({
         basePeriod: [2, "s"],
-        subPeriods: 2000
+        subPeriods: 2000,
         // Uniform sub period boundaries
       });
 
@@ -1413,28 +1377,28 @@ describe("The regular._subPeriod() function", () => {
         // eslint-disable-next-line no-unused-vars
         subPeriodBoundaries(bpStart, bpEnd, spNum) {
           return { start: null, end: null };
-        }
+        },
       });
       expect(() => {
         rts._subPeriod(new Date(0), 1);
       }).toThrow(
         new Error(
-          "INSUFFICIENT_PRECISION: Cannot calculate sub period date boundaries at sub-millisecond precision."
-        )
+          "INSUFFICIENT_PRECISION: Cannot calculate sub period date boundaries at sub-millisecond precision.",
+        ),
       );
     });
 
     it("should throw if internally-calcualted effective frequency is too high", () => {
       const rts = chronology.regular({
         basePeriod: [1, "y"],
-        subPeriods: 365 * 24 * 60 * 60 * 1000 + 1
+        subPeriods: 365 * 24 * 60 * 60 * 1000 + 1,
       });
       expect(() => {
         rts._subPeriod(new Date(0), 1);
       }).toThrow(
         new Error(
-          "INSUFFICIENT_PRECISION: Cannot calculate sub period date boundaries at sub-millisecond precision."
-        )
+          "INSUFFICIENT_PRECISION: Cannot calculate sub period date boundaries at sub-millisecond precision.",
+        ),
       );
     });
   });
@@ -1472,7 +1436,7 @@ describe("The regular.anchor() function", () => {
   it("should return the anchor", () => {
     const rts = chronology.regular({
       basePeriod: [1, "y"],
-      anchor: new Date("1990-01-01T00:00:00.000Z")
+      anchor: new Date("1990-01-01T00:00:00.000Z"),
     });
     expect(rts.anchor()).toEqual(new Date("1990-01-01T00:00:00.000Z"));
   });
@@ -1482,7 +1446,7 @@ describe("The regular.subPeriods() function", () => {
   it("should return sub periods", () => {
     const rts = chronology.regular({
       basePeriod: [1, "y"],
-      subPeriods: 999
+      subPeriods: 999,
     });
     expect(rts.subPeriods()).toBe(999);
   });
@@ -1512,30 +1476,30 @@ describe("The regular.period() function", () => {
           subPeriodBoundaries(bpStart, bpEnd, spNum) {
             return {
               start: bpStart,
-              end: new Date(bpStart.getTime() + 1)
+              end: new Date(bpStart.getTime() + 1),
             };
-          }
+          },
         });
         expect(() => {
           rts.period(new Date("2000-01-01T00:00:00.001Z"));
         }).toThrow(
           new Error(
-            "UNALLOCATED_DATE: There is no sub period associated with the specified date."
-          )
+            "UNALLOCATED_DATE: There is no sub period associated with the specified date.",
+          ),
         );
       });
 
       it("should throw on too-frequent (internal)", () => {
         const rts = chronology.regular({
           basePeriod: [1, "ms"],
-          subPeriods: 2
+          subPeriods: 2,
         });
         expect(() => {
           rts.period(new Date(0));
         }).toThrow(
           new Error(
-            "INSUFFICIENT_PRECISION: Cannot calculate sub period date boundaries at sub-millisecond precision."
-          )
+            "INSUFFICIENT_PRECISION: Cannot calculate sub period date boundaries at sub-millisecond precision.",
+          ),
         );
       });
 
@@ -1546,16 +1510,16 @@ describe("The regular.period() function", () => {
           subPeriodBoundaries(bpStart, bpEnd, spNum) {
             return {
               start: null,
-              end: null
+              end: null,
             };
-          }
+          },
         });
         expect(() => {
           rts.period(new Date(0));
         }).toThrow(
           new Error(
-            "INSUFFICIENT_PRECISION: Cannot calculate sub period date boundaries at sub-millisecond precision."
-          )
+            "INSUFFICIENT_PRECISION: Cannot calculate sub period date boundaries at sub-millisecond precision.",
+          ),
         );
       });
     });
@@ -1595,7 +1559,7 @@ describe("The regular.period() function", () => {
     it("should return an object for period(date) usage", () => {
       const rts = chronology.regular({
         basePeriod: [1, "y"],
-        anchor: new Date(0)
+        anchor: new Date(0),
       });
       const period = rts.period(new Date(0));
       expect(period).toBeInstanceOf(Object);
@@ -1611,7 +1575,7 @@ describe("The regular.period() function", () => {
     it("should return an object for period(basePeriodDate, subPeriod) usage", () => {
       const rts = chronology.regular({
         basePeriod: [1, "y"],
-        anchor: new Date(0)
+        anchor: new Date(0),
       });
       const period = rts.period(new Date(0), 1);
       expect(period).toBeInstanceOf(Object);
@@ -1656,7 +1620,7 @@ describe("The regular.first() function", () => {
     // period (again 9 vs 10)
     const rts = chronology.regular({
       basePeriod: [1, "y"],
-      subPeriods: 10 // Uniform
+      subPeriods: 10, // Uniform
     });
     rts
       .period(new Date("2009-11-01T00:00:00.000Z"))
@@ -1678,20 +1642,14 @@ describe("The regular.first() function", () => {
         if (spNum === 1) {
           return {
             start: bpStart,
-            end: moment
-              .utc(bpStart)
-              .add(6, "M")
-              .toDate()
+            end: moment.utc(bpStart).add(6, "M").toDate(),
           };
         }
         return {
-          start: moment
-            .utc(bpStart)
-            .add(6, "M")
-            .toDate(),
-          end: bpEnd
+          start: moment.utc(bpStart).add(6, "M").toDate(),
+          end: bpEnd,
         };
-      }
+      },
     });
     rts.period(new Date("2003-01-01T00:00:00.000Z")).obs.set("val1");
     rts.period(new Date("2002-01-01T00:00:00.000Z")).obs.set("val2");
@@ -1723,7 +1681,7 @@ describe("The regular.last() function", () => {
     // period (again 10 vs 9)
     const rts = chronology.regular({
       basePeriod: [1, "y"],
-      subPeriods: 10 // Uniform
+      subPeriods: 10, // Uniform
     });
     rts.period(new Date("2009-01-01T00:00:00.000Z")).obs.set("val1"); // bpi = 9   spn=1
     rts.period(new Date("2010-11-01T00:00:00.000Z")).obs.set("val2"); // bpi = 10  spn=9
@@ -1743,20 +1701,14 @@ describe("The regular.last() function", () => {
         if (spNum === 1) {
           return {
             start: bpStart,
-            end: moment
-              .utc(bpStart)
-              .add(6, "M")
-              .toDate()
+            end: moment.utc(bpStart).add(6, "M").toDate(),
           };
         }
         return {
-          start: moment
-            .utc(bpStart)
-            .add(6, "M")
-            .toDate(),
-          end: bpEnd
+          start: moment.utc(bpStart).add(6, "M").toDate(),
+          end: bpEnd,
         };
-      }
+      },
     });
     rts.period(new Date("2003-01-01T00:00:00.000Z")).obs.set("val1");
     rts.period(new Date("2002-01-01T00:00:00.000Z")).obs.set("val2");
@@ -1835,7 +1787,7 @@ describe("The regular.each() function", () => {
     rts.period(new Date()).obs.set("123");
 
     let callCount = 0;
-    rts.each(period => {
+    rts.each((period) => {
       if (callCount === 0) {
         period.forward().obs.set("456");
       }
@@ -1849,7 +1801,7 @@ describe("The regular.each() function", () => {
     rts.period(new Date()).obs.set("123");
 
     let callCount = 0;
-    rts.each(period => {
+    rts.each((period) => {
       if (callCount === 0) {
         period.back().obs.set("456");
       }
@@ -1924,7 +1876,7 @@ describe("The regular.eachPeriod() function", () => {
     rts.period(new Date()).obs.set("123");
 
     let callCount = 0;
-    rts.eachPeriod(period => {
+    rts.eachPeriod((period) => {
       if (callCount === 0) {
         period.forward(5).obs.set("456");
       }
@@ -1938,7 +1890,7 @@ describe("The regular.eachPeriod() function", () => {
     rts.period(new Date()).obs.set("123");
 
     let callCount = 0;
-    rts.eachPeriod(period => {
+    rts.eachPeriod((period) => {
       if (callCount === 0) {
         period.back(5).obs.set("456");
       }
@@ -1973,7 +1925,7 @@ describe("The regular.map() function", () => {
 
   it("should return an empty series there are no observations", () => {
     const rts = chronology.regular({ basePeriod: [1, "y"] });
-    const newSeries = rts.map(val => val);
+    const newSeries = rts.map((val) => val);
     expect(newSeries._index.length).toBe(0);
   });
 
@@ -1985,7 +1937,7 @@ describe("The regular.map() function", () => {
       period = period.forward();
     }
 
-    const newSeries = rts.map(val => val * 2);
+    const newSeries = rts.map((val) => val * 2);
 
     let newPeriod = newSeries.first();
     for (let i = 0; i < 10; i += 1) {
@@ -2015,7 +1967,7 @@ describe("The regular.transform() function", () => {
 
   it("should return an empty series there are no observations", () => {
     const rts = chronology.regular({ basePeriod: [1, "y"] });
-    const newSeries = rts.transform(val => val);
+    const newSeries = rts.transform((val) => val);
     expect(newSeries._index.length).toBe(0);
   });
 
@@ -2117,7 +2069,7 @@ describe("The regular.filter() function", () => {
       period = period.forward();
     }
 
-    const newSeries = rts.filter(p => p.obs.value() < 5);
+    const newSeries = rts.filter((p) => p.obs.value() < 5);
 
     let newPeriod = newSeries.period(new Date(0));
     for (let i = 0; i < 5; i += 1) {
@@ -2152,12 +2104,12 @@ describe("The regular.subSeries() function", () => {
     expect(() => {
       rts1.subSeries(
         rts2.period(new Date("2000-01-01")),
-        rts1.period(new Date("2000-01-01"))
+        rts1.period(new Date("2000-01-01")),
       );
     }).toThrow(
       new Error(
-        "INVALID_ARGUMENT: Start or end period is associated with a different time series."
-      )
+        "INVALID_ARGUMENT: Start or end period is associated with a different time series.",
+      ),
     );
   });
 
@@ -2167,12 +2119,12 @@ describe("The regular.subSeries() function", () => {
     expect(() => {
       rts1.subSeries(
         rts1.period(new Date("2000-01-01")),
-        rts2.period(new Date("2000-01-01"))
+        rts2.period(new Date("2000-01-01")),
       );
     }).toThrow(
       new Error(
-        "INVALID_ARGUMENT: Start or end period is associated with a different time series."
-      )
+        "INVALID_ARGUMENT: Start or end period is associated with a different time series.",
+      ),
     );
   });
 
@@ -2181,12 +2133,12 @@ describe("The regular.subSeries() function", () => {
     expect(() => {
       rts.subSeries(
         rts.period(new Date("2000-01-01")),
-        rts.period(new Date("1999-01-01"))
+        rts.period(new Date("1999-01-01")),
       );
     }).toThrow(
       new Error(
-        "INVALID_ARGUMENT: Start period must not be later than end period."
-      )
+        "INVALID_ARGUMENT: Start period must not be later than end period.",
+      ),
     );
   });
 
@@ -2199,7 +2151,7 @@ describe("The regular.subSeries() function", () => {
     }
     const subSeries = rts.subSeries(
       rts.period(new Date("2003-01-01")),
-      rts.period(new Date("2006-01-01"))
+      rts.period(new Date("2006-01-01")),
     );
     expect(subSeries.first().start()).toEqual(new Date("2003-01-01"));
     expect(subSeries.last().start()).toEqual(new Date("2006-01-01"));
@@ -2218,7 +2170,7 @@ describe("The regular.subSeries() function", () => {
     }
     const subSeries = rts.subSeries(
       rts.period(new Date("2003-01-01")),
-      rts.period(new Date("2003-01-01"))
+      rts.period(new Date("2003-01-01")),
     );
     expect(subSeries.first().start()).toEqual(new Date("2003-01-01"));
     expect(subSeries.last().start()).toEqual(new Date("2003-01-01"));
@@ -2294,7 +2246,7 @@ describe("The regular.serialize() function", () => {
     const rts = chronology.regular({
       basePeriod: [1, "MS"],
       anchor: new Date(123), // Local date still yields UTC serialization below
-      subPeriods: 2
+      subPeriods: 2,
     });
 
     const period = rts.period(new Date(0), 1);
@@ -2304,8 +2256,8 @@ describe("The regular.serialize() function", () => {
       rts.serialize();
     }).toThrow(
       new Error(
-        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible."
-      )
+        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible.",
+      ),
     );
   });
 
@@ -2313,7 +2265,7 @@ describe("The regular.serialize() function", () => {
     const rts = chronology.regular({
       basePeriod: [1, "MS"],
       anchor: new Date(123), // Local date still yields UTC serialization below
-      subPeriods: 2
+      subPeriods: 2,
     });
 
     const a = {};
@@ -2326,8 +2278,8 @@ describe("The regular.serialize() function", () => {
       rts.serialize();
     }).toThrow(
       new Error(
-        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible."
-      )
+        "NOT_SERIALIZABLE: One or more observation values is not JSON-expressible.",
+      ),
     );
   });
 
@@ -2335,7 +2287,7 @@ describe("The regular.serialize() function", () => {
     const rts = chronology.regular({
       basePeriod: [1, "y"],
       anchor: new Date("1970-01-01T00:00:00.000Z"),
-      subPeriods: 1
+      subPeriods: 1,
     });
 
     expect(JSON.parse(rts.serialize())).toEqual({
@@ -2343,7 +2295,7 @@ describe("The regular.serialize() function", () => {
       BasePeriod: [1, "y"],
       Anchor: "1970Z",
       SubPeriods: 1,
-      Observations: []
+      Observations: [],
     });
   });
 
@@ -2351,7 +2303,7 @@ describe("The regular.serialize() function", () => {
     const rts = chronology.regular({
       basePeriod: [1, "y"],
       anchor: new Date("1970-01-01T00:00:00.000Z"),
-      subPeriods: 1
+      subPeriods: 1,
     });
 
     let period = rts.period(new Date(0), 1);
@@ -2380,8 +2332,8 @@ describe("The regular.serialize() function", () => {
         ["1973Z", 789],
         [{ an: "object" }],
         ["1976Z", "a string"],
-        [["an array"]]
-      ]
+        [["an array"]],
+      ],
     });
   });
 
@@ -2389,7 +2341,7 @@ describe("The regular.serialize() function", () => {
     const rts = chronology.regular({
       basePeriod: [1, "MS"],
       anchor: new Date(123), // Local date still yields UTC serialization below
-      subPeriods: 2
+      subPeriods: 2,
     });
 
     let period = rts.period(new Date(0), 1);
@@ -2418,8 +2370,8 @@ describe("The regular.serialize() function", () => {
         ["1970-01-01T00:00:00.001Z", 2, 789],
         [{ an: "object" }],
         ["1970-01-01T00:00:00.003Z", 1, "a string"],
-        [["an array"]]
-      ]
+        [["an array"]],
+      ],
     });
   });
 });
@@ -2439,11 +2391,11 @@ describe("The regularPeriod._getBoundaries() function", () => {
     period._getBoundaries();
     expect(period._basePeriodBoundaries).toEqual({
       start: new Date("1970-01-01T00:00:00.000Z"),
-      end: new Date("1971-01-01T00:00:00.000Z")
+      end: new Date("1971-01-01T00:00:00.000Z"),
     });
     expect(period._subPeriodBoundaries).toEqual({
       start: new Date("1970-01-01T00:00:00.000Z"),
-      end: new Date("1971-01-01T00:00:00.000Z")
+      end: new Date("1971-01-01T00:00:00.000Z"),
     });
   });
 });
@@ -2460,7 +2412,7 @@ describe("The regularPeriod.start() function", () => {
   it("should return null if too-frequent (internal)", () => {
     const rts = chronology.regular({
       basePeriod: [1, "ms"],
-      subPeriods: 2
+      subPeriods: 2,
     });
     const period = rts.period(new Date(0), 2);
     expect(period.start()).toBeNull();
@@ -2472,7 +2424,7 @@ describe("The regularPeriod.start() function", () => {
       // eslint-disable-next-line no-unused-vars
       subPeriodBoundaries(bpStart, bpEnd, spNum) {
         return { start: null, end: null };
-      }
+      },
     });
     const period = rts.period(new Date(0), 1);
     expect(period.start()).toBeNull();
@@ -2481,7 +2433,7 @@ describe("The regularPeriod.start() function", () => {
   it("should return the start of the sub period if possible", () => {
     const rts = chronology.regular({
       basePeriod: [1, "d"],
-      subPeriods: 2 // Uniform
+      subPeriods: 2, // Uniform
     });
     const period1 = rts.period(new Date(0), 1);
     expect(period1.start()).toEqual(new Date("1970-01-01T00:00:00.000Z"));
@@ -2494,7 +2446,7 @@ describe("The regularPeriod.end() function", () => {
   it("should return null if too-frequent (internal)", () => {
     const rts = chronology.regular({
       basePeriod: [1, "ms"],
-      subPeriods: 2
+      subPeriods: 2,
     });
     const period = rts.period(new Date(0), 2);
     expect(period.end()).toBeNull();
@@ -2506,7 +2458,7 @@ describe("The regularPeriod.end() function", () => {
       // eslint-disable-next-line no-unused-vars
       subPeriodBoundaries(bpStart, bpEnd, spNum) {
         return { start: null, end: null };
-      }
+      },
     });
     const period = rts.period(new Date(0), 1);
     expect(period.end()).toBeNull();
@@ -2515,7 +2467,7 @@ describe("The regularPeriod.end() function", () => {
   it("should return the start of the sub period if possible", () => {
     const rts = chronology.regular({
       basePeriod: [1, "d"],
-      subPeriods: 2 // Uniform
+      subPeriods: 2, // Uniform
     });
     const period1 = rts.period(new Date(0), 1);
     expect(period1.end()).toEqual(new Date("1970-01-01T12:00:00.000Z"));
@@ -2528,11 +2480,11 @@ describe("The regularPeriod.basePeriodStart() function", () => {
   it("should return the start of the base period", () => {
     const rts = chronology.regular({
       basePeriod: [1, "d"],
-      subPeriods: 2 // Uniform
+      subPeriods: 2, // Uniform
     });
     const period1 = rts.period(new Date(0), 2);
     expect(period1.basePeriodStart()).toEqual(
-      new Date("1970-01-01T00:00:00.000Z")
+      new Date("1970-01-01T00:00:00.000Z"),
     );
   });
 });
@@ -2541,11 +2493,11 @@ describe("The regularPeriod.basePeriodEnd() function", () => {
   it("should return the end of the base period", () => {
     const rts = chronology.regular({
       basePeriod: [1, "d"],
-      subPeriods: 2 // Uniform
+      subPeriods: 2, // Uniform
     });
     const period1 = rts.period(new Date(0), 1);
     expect(period1.basePeriodEnd()).toEqual(
-      new Date("1970-01-02T00:00:00.000Z")
+      new Date("1970-01-02T00:00:00.000Z"),
     );
   });
 });
@@ -2554,7 +2506,7 @@ describe("The regularPeriod.subPeriod() function", () => {
   it("should return the subPeriod", () => {
     const rts = chronology.regular({
       basePeriod: [1, "d"],
-      subPeriods: 2 // Uniform
+      subPeriods: 2, // Uniform
     });
     const period1 = rts.period(new Date(0), 1);
     expect(period1.subPeriod()).toBe(1);
@@ -2568,7 +2520,7 @@ describe("The regularPeriod.index() function", () => {
     const rts = chronology.regular({
       basePeriod: [1, "d"],
       subPeriods: 2,
-      anchor: new Date("1970-01-01Z")
+      anchor: new Date("1970-01-01Z"),
     });
     expect(rts.period(new Date("1969-12-30Z"), 2).index()).toBe(-3);
     expect(rts.period(new Date("1969-12-31Z"), 1).index()).toBe(-2);
@@ -2615,7 +2567,7 @@ describe("The regularPeriod.forward() function", () => {
   it("should work with subPeriods > 1", () => {
     const rts = chronology.regular({
       basePeriod: [1, "d"],
-      subPeriods: 2 // Uniform
+      subPeriods: 2, // Uniform
     });
     let period = rts.period(new Date("1970-01-01T00:00:00.000Z"));
 
@@ -2680,7 +2632,7 @@ describe("The regularPeriod.back() function", () => {
   it("should work with subPeriods > 1", () => {
     const rts = chronology.regular({
       basePeriod: [1, "d"],
-      subPeriods: 2 // Uniform
+      subPeriods: 2, // Uniform
     });
     let period = rts.period(new Date("1970-01-01T00:00:00.000Z"));
 
@@ -2731,7 +2683,7 @@ describe("The regularPeriod.obs.set() function", () => {
     const rts = chronology.regular({
       basePeriod: [1, "m"],
       anchor: new Date("1970-01-01Z"),
-      subPeriods: 2
+      subPeriods: 2,
     });
     const period0 = rts.period(new Date("1969-12-10Z"));
     period0.obs.set("SOME_VAL_0");
@@ -2744,15 +2696,15 @@ describe("The regularPeriod.obs.set() function", () => {
     period3.obs.set("SOME_VAL_4"); // Overwrite
     expect(rts._obs).toEqual({
       "-1": {
-        "1": "SOME_VAL_0"
+        1: "SOME_VAL_0",
       },
-      "0": {
-        "1": "SOME_VAL",
-        "2": "SOME_VAL_2"
+      0: {
+        1: "SOME_VAL",
+        2: "SOME_VAL_2",
       },
-      "1": {
-        "2": "SOME_VAL_4"
-      }
+      1: {
+        2: "SOME_VAL_4",
+      },
     });
   });
 
@@ -2760,7 +2712,7 @@ describe("The regularPeriod.obs.set() function", () => {
     let rts = chronology.regular({
       basePeriod: [1, "d"],
       anchor: new Date("1970-01-01T00:00:00.000Z"),
-      subPeriods: 2
+      subPeriods: 2,
     });
 
     let period = rts.period(new Date("1970-01-01T00:00:00.000Z"));
@@ -2774,23 +2726,35 @@ describe("The regularPeriod.obs.set() function", () => {
     // Add to end of index
     period = period.forward(2);
     period.obs.set("123");
-    expect(rts._index).toEqual([[0, 1], [1, 1]]);
+    expect(rts._index).toEqual([
+      [0, 1],
+      [1, 1],
+    ]);
 
     // Add to middle of index
     period = period.back(1);
     period.obs.set("123");
-    expect(rts._index).toEqual([[0, 1], [0, 2], [1, 1]]);
+    expect(rts._index).toEqual([
+      [0, 1],
+      [0, 2],
+      [1, 1],
+    ]);
 
     // Add to beginning of index
     period = period.back(2);
     period.obs.set("123");
-    expect(rts._index).toEqual([[-1, 2], [0, 1], [0, 2], [1, 1]]);
+    expect(rts._index).toEqual([
+      [-1, 2],
+      [0, 1],
+      [0, 2],
+      [1, 1],
+    ]);
 
     // Test bisection by adding lots of observations
     rts = chronology.regular({
       basePeriod: [1, "d"],
       anchor: new Date("1970-01-01T00:00:00.000Z"),
-      subPeriods: 2
+      subPeriods: 2,
     });
 
     // Add to first 100 sub period 1s
@@ -2841,15 +2805,12 @@ describe("The regularPeriod.obs.clear() function", () => {
     const rts = chronology.regular({
       basePeriod: [1, "y"],
       anchor: new Date("1970-01-01Z"),
-      subPeriods: 2
+      subPeriods: 2,
     });
     rts.period(new Date("1970-03-01Z")).obs.set("obs1");
-    rts
-      .period(new Date("1970-09-01Z"))
-      .obs.set("obs2")
-      .obs.clear();
+    rts.period(new Date("1970-09-01Z")).obs.set("obs2").obs.clear();
     expect(rts._obs).toEqual({
-      "0": { "1": "obs1" }
+      0: { 1: "obs1" },
     });
   });
 
@@ -2857,12 +2818,9 @@ describe("The regularPeriod.obs.clear() function", () => {
     const rts = chronology.regular({
       basePeriod: [1, "y"],
       anchor: new Date("1970-01-01Z"),
-      subPeriods: 2
+      subPeriods: 2,
     });
-    rts
-      .period(new Date("1970-09-01Z"))
-      .obs.set("obs1")
-      .obs.clear();
+    rts.period(new Date("1970-09-01Z")).obs.set("obs1").obs.clear();
     expect(rts._obs).toEqual({});
   });
 
@@ -2870,7 +2828,7 @@ describe("The regularPeriod.obs.clear() function", () => {
     const rts = chronology.regular({
       basePeriod: [1, "d"],
       anchor: new Date("1970-01-01T00:00:00.000Z"),
-      subPeriods: 2
+      subPeriods: 2,
     });
 
     let period = rts.period(new Date("1970-01-01T00:00:00.000Z"));
@@ -2883,16 +2841,28 @@ describe("The regularPeriod.obs.clear() function", () => {
     period = period.forward();
     period.obs.set("123");
 
-    expect(rts._index).toEqual([[0, 1], [0, 2], [1, 1], [1, 2]]);
+    expect(rts._index).toEqual([
+      [0, 1],
+      [0, 2],
+      [1, 1],
+      [1, 2],
+    ]);
 
     // Remove from end
     period.obs.clear();
-    expect(rts._index).toEqual([[0, 1], [0, 2], [1, 1]]);
+    expect(rts._index).toEqual([
+      [0, 1],
+      [0, 2],
+      [1, 1],
+    ]);
 
     // Remove from middle
     period = period.back(2);
     period.obs.clear();
-    expect(rts._index).toEqual([[0, 1], [1, 1]]);
+    expect(rts._index).toEqual([
+      [0, 1],
+      [1, 1],
+    ]);
 
     // Remove from start
     period = period.back(1);
@@ -2917,7 +2887,7 @@ describe("The regularPeriod.obs.exists() function", () => {
     const rts = chronology.regular({
       basePeriod: [1, "y"],
       anchor: new Date("1970-01-01Z"),
-      subPeriods: 2
+      subPeriods: 2,
     });
 
     const period1 = rts.period(new Date("1970-01-01Z"), 1);
@@ -2990,7 +2960,7 @@ describe("The regularPeriod.obs.hasForward() function", () => {
     it("should return false if nothing after current observation", () => {
       const rts = chronology.regular({
         basePeriod: [1, "y"],
-        subPeriods: 2
+        subPeriods: 2,
       });
       let period = rts.period(new Date());
       period.obs.set("123");
@@ -3002,7 +2972,7 @@ describe("The regularPeriod.obs.hasForward() function", () => {
     it("should return true if there is a next observation in the current base period", () => {
       const rts = chronology.regular({
         basePeriod: [1, "d"],
-        subPeriods: 2
+        subPeriods: 2,
       });
       let period = rts.period(new Date(), 2);
       period.obs.set("123");
@@ -3014,7 +2984,7 @@ describe("The regularPeriod.obs.hasForward() function", () => {
     it("should return true if there is a next observation in a later base period", () => {
       const rts = chronology.regular({
         basePeriod: [1, "d"],
-        subPeriods: 2
+        subPeriods: 2,
       });
       let period = rts.period(new Date(), 2);
       period.obs.set("123");
@@ -3055,7 +3025,7 @@ describe("The regularPeriod.obs.hasBack() function", () => {
     it("should return false if nothing before current observation", () => {
       const rts = chronology.regular({
         basePeriod: [1, "y"],
-        subPeriods: 2
+        subPeriods: 2,
       });
       let period = rts.period(new Date());
       period.obs.set("123");
@@ -3067,7 +3037,7 @@ describe("The regularPeriod.obs.hasBack() function", () => {
     it("should return true if there is a previous observation in the current base period", () => {
       const rts = chronology.regular({
         basePeriod: [1, "d"],
-        subPeriods: 2
+        subPeriods: 2,
       });
       let period = rts.period(new Date(), 2);
       period.obs.set("123");
@@ -3079,7 +3049,7 @@ describe("The regularPeriod.obs.hasBack() function", () => {
     it("should return true if there is a previous observation in an earlier base period", () => {
       const rts = chronology.regular({
         basePeriod: [1, "d"],
-        subPeriods: 2
+        subPeriods: 2,
       });
       let period = rts.period(new Date(), 2);
       period.obs.set("123");
@@ -3111,7 +3081,7 @@ describe("The regularPeriod.obs.forward() function", () => {
     it("should return the next observation", () => {
       const rts = chronology.regular({
         basePeriod: [1, "y"],
-        anchor: new Date("2000-01-01T00:00:00.000Z")
+        anchor: new Date("2000-01-01T00:00:00.000Z"),
       });
       let period = rts.period(new Date("2000-01-01T00:00:00.000Z"));
       period.obs.set("123");
@@ -3132,7 +3102,7 @@ describe("The regularPeriod.obs.forward() function", () => {
       const rts = chronology.regular({
         basePeriod: [1, "d"],
         anchor: new Date("2000-01-01T00:00:00.000Z"),
-        subPeriods: 3
+        subPeriods: 3,
       });
       const period = rts.period(new Date());
       period.obs.set("123");
@@ -3145,7 +3115,7 @@ describe("The regularPeriod.obs.forward() function", () => {
       const rts = chronology.regular({
         basePeriod: [1, "d"],
         anchor: new Date("2000-01-01T00:00:00.000Z"),
-        subPeriods: 3
+        subPeriods: 3,
       });
       let period = rts.period(new Date("2000-01-01T00:00:00.000Z"), 3);
       period.obs.set("123");
@@ -3165,7 +3135,7 @@ describe("The regularPeriod.obs.forward() function", () => {
       const rts = chronology.regular({
         basePeriod: [1, "d"],
         anchor: new Date("2000-01-01T00:00:00.000Z"),
-        subPeriods: 3
+        subPeriods: 3,
       });
       let period = rts.period(new Date("2000-01-01T00:00:00.000Z"), 3);
       period.obs.set("123");
@@ -3204,7 +3174,7 @@ describe("The regularPeriod.obs.back() function", () => {
     it("should return the previous observation", () => {
       const rts = chronology.regular({
         basePeriod: [1, "y"],
-        anchor: new Date("2000-01-01T00:00:00.000Z")
+        anchor: new Date("2000-01-01T00:00:00.000Z"),
       });
       let period = rts.period(new Date("2000-01-01T00:00:00.000Z"));
       period.obs.set("123");
@@ -3225,7 +3195,7 @@ describe("The regularPeriod.obs.back() function", () => {
       const rts = chronology.regular({
         basePeriod: [1, "d"],
         anchor: new Date("2000-01-01T00:00:00.000Z"),
-        subPeriods: 3
+        subPeriods: 3,
       });
       const period = rts.period(new Date());
       period.obs.set("123");
@@ -3238,7 +3208,7 @@ describe("The regularPeriod.obs.back() function", () => {
       const rts = chronology.regular({
         basePeriod: [1, "d"],
         anchor: new Date("2000-01-01T00:00:00.000Z"),
-        subPeriods: 3
+        subPeriods: 3,
       });
       let period = rts.period(new Date("2000-01-01T00:00:00.000Z"), 1);
       period.obs.set("123");
@@ -3258,7 +3228,7 @@ describe("The regularPeriod.obs.back() function", () => {
       const rts = chronology.regular({
         basePeriod: [1, "d"],
         anchor: new Date("2000-01-01T00:00:00.000Z"),
-        subPeriods: 3
+        subPeriods: 3,
       });
       let period = rts.period(new Date("2000-01-01T00:00:00.000Z"), 1);
       period.obs.set("123");
